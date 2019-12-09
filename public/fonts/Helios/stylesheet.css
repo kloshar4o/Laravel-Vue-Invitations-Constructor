@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'HeliosLight';
+    src: local('HeliosLight'),
+        url('hinted-HeliosLight.woff2') format('woff2'),
+        url('hinted-HeliosLight.woff') format('woff'),
+        url('hinted-HeliosLight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HeliosThin';
+    src: local('HeliosThin'),
+        url('hinted-HeliosThin.woff2') format('woff2'),
+        url('hinted-HeliosThin.woff') format('woff'),
+        url('hinted-HeliosThin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
