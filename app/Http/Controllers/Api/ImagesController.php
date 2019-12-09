@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ImageResource;
 use Illuminate\Http\Request;
 use App\Image;
+use App\ImageType;
 
 class ImagesController extends Controller
 {
@@ -16,8 +17,8 @@ class ImagesController extends Controller
      */
     public function index()
     {
-
-        return ImageResource::collection(Image::paginate(10));
+        $books = ImageType::with('images')->get();
+        return $books;
     }
 
     /**

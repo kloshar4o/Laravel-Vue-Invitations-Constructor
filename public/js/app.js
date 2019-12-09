@@ -7752,7 +7752,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var invitations_constructor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! invitations_constructor */ "./node_modules/invitations_constructor/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var invitations_constructor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! invitations_constructor */ "./node_modules/invitations_constructor/index.js");
 //
 //
 //
@@ -7770,7 +7772,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('constructor', invitations_constructor__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('constructor', invitations_constructor__WEBPACK_IMPORTED_MODULE_2__["default"]);
+
+var getImages = function getImages(callback) {
+  axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/images').then(function (response) {
+    callback(null, response.data);
+  })["catch"](function (error) {
+    callback(error, error.response.data);
+  });
+};
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -7831,90 +7843,30 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('constructor', invitations_
     updateOptions: function updateOptions(options) {
       this.options = options;
     },
-    fetchData: function fetchData() {
-      this.data = {
-        cats: [{
-          id: 1,
-          menu_name: 'Заголовок',
-          title: 'ВЫБЕРИТЕ ЗАГОЛОВОК',
-          type: 'svg',
-          images: [{
-            id: 1,
-            src: 'img/headers/micro-party.svg'
-          }, {
-            id: 2,
-            src: 'img/headers/pozdravlyayu.svg'
-          }, {
-            id: 3,
-            src: 'img/headers/spasibo.svg'
-          }, {
-            id: 4,
-            src: 'img/headers/spasibo-za-zakaz.svg'
-          }]
-        }, {
-          id: 2,
-          menu_name: 'Фон',
-          title: 'Выберите фон',
-          type: 'background',
-          images: [{
-            id: 1,
-            src: 'img/background/01.jpg'
-          }, {
-            id: 2,
-            src: 'img/background/02.jpg'
-          }, {
-            id: 3,
-            src: 'img/background/03.jpg'
-          }, {
-            id: 4,
-            src: 'img/background/04.jpg'
-          }]
-        }, {
-          id: 3,
-          menu_name: 'Элементы',
-          title: 'Выберите элементы',
-          type: 'img',
-          images: [{
-            id: 1,
-            src: 'img/elements/01.png'
-          }, {
-            id: 2,
-            src: 'img/elements/02.png'
-          }, {
-            id: 3,
-            src: 'img/elements/03.png'
-          }, {
-            id: 4,
-            src: 'img/elements/04.png'
-          }, {
-            id: 5,
-            src: 'img/elements/05.png'
-          }]
-        }, {
-          id: 4,
-          menu_name: 'Стикеры',
-          title: 'Выберите стикеры',
-          type: 'img',
-          images: [{
-            id: 1,
-            src: 'img/stickers/01.png'
-          }, {
-            id: 3,
-            src: 'img/stickers/03.png'
-          }, {
-            id: 4,
-            src: 'img/stickers/04.png'
-          }, {
-            id: 5,
-            src: 'img/stickers/05.png'
-          }]
-        }]
-      };
-      console.log(this.data);
+    setData: function setData(err, data) {
+      if (err) {
+        this.error = err.toString();
+      } else {
+        this.data = {};
+        this.data.cats = data;
+      }
     }
   },
-  created: function created() {
-    this.fetchData();
+  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+    getImages(function (err, data) {
+      next(function (vm) {
+        return vm.setData(err, data);
+      });
+    });
+  },
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    var _this = this;
+
+    getUsers(function (err, data) {
+      _this.setData(err, data);
+
+      next();
+    });
   }
 });
 
