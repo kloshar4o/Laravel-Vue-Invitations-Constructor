@@ -2436,7 +2436,11 @@ a:hover {
 }
 
 .header__menubtn {
-    margin-right: 20px;
+    height: 100%;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .header__menubtn svg {
@@ -2909,6 +2913,8 @@ a:hover {
     text-align: center;
     justify-content: center;
     align-items: center;
+    text-decoration: none !important;
+
 }
 
 .bigbtn:hover {
@@ -3110,7 +3116,12 @@ a:hover {
     top: 50%;
     transform: translateY(-50%);
 }
-
+.colorHolder {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
 .loader_wrap{
     position: absolute;
     left: 0;

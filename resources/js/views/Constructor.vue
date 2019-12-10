@@ -16,14 +16,14 @@
 <script>
     import Vue from 'vue';
     import axios from 'axios';
-    import constructor from 'invitations_constructor';
+    import constructor from '../constructor/invitations.vue';
 
     Vue.component('constructor', constructor)
 
     const getImages = callback => {
 
         axios
-            .get('/api/images')
+            .get('/postcard/api/images')
             .then(response => {
                 callback(null, response.data);
             }).catch(error => {
@@ -67,6 +67,7 @@
                 } else {
                     this.data = {};
                     this.data.cats = data;
+
                 }
             },
         },

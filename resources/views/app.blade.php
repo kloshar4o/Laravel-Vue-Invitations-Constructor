@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vue SPA Demo</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/postcard/css/main.css">
 </head>
 <body>
 <div id="app">
@@ -17,6 +17,6 @@
     <div class="loader"></div>
 </div>
 
-<script src="{{ mix('js/app.js') }}"></script>
+<script src="/postcard/js/app.js"></script>
 </body>
 </html>

@@ -9,17 +9,19 @@
                         </div>
                     </div>
                     <div class="header__logo">
-                        <picture>
-                            <img src="img/logo.png" alt="">
-                        </picture>
+                        <router-link @click.native="addLoader" :to="{ name: 'home' }">
+                            <picture>
+                                <img src="img/logo.png" alt="">
+                            </picture>
+                        </router-link>
                     </div>
                     <div class="header__text"><span>Онлайн-редактор открыток для консультантов </span>
                     </div>
 
                     <p @click.native="test()">
-                        <router-link @click.native="addLoader" :to="{ name: 'home' }">Home</router-link>
+                        <!--
                         <router-link @click.native="addLoader" :to="{ name: 'hello' }">Hello World</router-link>
-                        <router-link @click.native="addLoader" :to="{ name: 'users.index', params: { page: 1 }}">Users</router-link>
+                        <router-link @click.native="addLoader" :to="{ name: 'users.index', params: { page: 1 }}">Users</router-link>-->
                     </p>
 
                     <div class="header__link"><a href="#Вернуться-на-сайт">Вернуться на сайт</a>
@@ -40,13 +42,13 @@
 <script>
 
     export default {
-        data(){
+        data() {
             return {
                 loading: false
             }
         },
-        methods:{
-            addLoader(){
+        methods: {
+            addLoader() {
                 this.loading = true;
             }
         }
