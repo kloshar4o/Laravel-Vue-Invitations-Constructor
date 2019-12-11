@@ -1,6 +1,7 @@
 <template>
 
     <constructor
+        v-if="!error"
         :images="data"
         :textAreas="textAreas"
         :sizes="sizes"
@@ -9,6 +10,10 @@
         @optionsUpdated="updateOptions">
 
     </constructor>
+
+    <div v-else="error">
+        {{error}}
+    </div>
 
 </template>
 
@@ -34,6 +39,7 @@
     export default {
         data() {
             return {
+                error: null,
                 options: null,
                 data: null,
                 open: false,

@@ -8439,6 +8439,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -8455,6 +8460,7 @@ var getImages = function getImages(callback) {
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      error: null,
       options: null,
       data: null,
       open: false,
@@ -50553,16 +50559,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("constructor", {
-    attrs: {
-      images: _vm.data,
-      textAreas: _vm.textAreas,
-      sizes: _vm.sizes,
-      options: _vm.options,
-      lists: _vm.lists
-    },
-    on: { optionsUpdated: _vm.updateOptions }
-  })
+  return !_vm.error
+    ? _c("constructor", {
+        attrs: {
+          images: _vm.data,
+          textAreas: _vm.textAreas,
+          sizes: _vm.sizes,
+          options: _vm.options,
+          lists: _vm.lists
+        },
+        on: { optionsUpdated: _vm.updateOptions }
+      })
+    : _c("div", [_vm._v("\n    " + _vm._s(_vm.error) + "\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -66519,7 +66527,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xamp\htdocs\invitations\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\invitations_laravel\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })
