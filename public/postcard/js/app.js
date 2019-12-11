@@ -8058,12 +8058,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
 
         case 'options__content__image':
-          classess.push({
+          classess.push([cat.folder, {
             'svgimg__item': isSvg,
             'background__item': isBg,
             'scrollblock__item': isImg,
             'active': this.options.background.active === i && isBg
-          });
+          }]);
           break;
       }
 
@@ -8082,7 +8082,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       img.onload = function () {
         console.log(w);
-        var maxw = 150;
+        var maxw = 200;
         var w = this.width;
         var h = this.height;
         var ratio = 0;

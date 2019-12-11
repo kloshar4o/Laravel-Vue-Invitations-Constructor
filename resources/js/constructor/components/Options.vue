@@ -108,12 +108,12 @@
                         break;
 
                     case 'options__content__image':
-                        classess.push({
+                        classess.push([cat.folder,{
                             'svgimg__item': isSvg,
                             'background__item': isBg,
                             'scrollblock__item': isImg,
                             'active': this.options.background.active === i && isBg
-                        });
+                        }]);
                         break;
                 }
                 return classess;
@@ -133,7 +133,7 @@
                 img.onload = function() {
 
                     console.log(w)
-                    let maxw = 150;
+                    let maxw = 200;
                     let w = this.width;
                     let h = this.height;
                     let ratio = 0;
