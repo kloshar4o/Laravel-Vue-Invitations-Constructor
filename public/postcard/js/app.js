@@ -7798,6 +7798,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -49678,7 +49681,11 @@ var render = function() {
                               _c("simple-svg", {
                                 ref: "svg" + i,
                                 refInFor: true,
-                                attrs: { src: el.src },
+                                attrs: {
+                                  width: "100%",
+                                  height: "100%",
+                                  src: el.src
+                                },
                                 on: {
                                   load: function($event) {
                                     return _vm.svgLoaded(i)

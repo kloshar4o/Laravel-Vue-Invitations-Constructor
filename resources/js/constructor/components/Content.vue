@@ -37,7 +37,8 @@
                     'height': this.options.size.height + 'px',
                     'background': (this.options.background.src) ? 'url(' + this.options.background.src + ')' : 'white',}">
 
-                    <div class="overlayWhite" :style="{'background-color': 'rgba(255, 255, 255, ' + options.background.opacity + ' )'}"></div>
+                    <div class="overlayWhite"
+                         :style="{'background-color': 'rgba(255, 255, 255, ' + options.background.opacity + ' )'}"></div>
 
                     <drr v-for="(el, i) in options.drags" ref="drrs"
                          :key="i"
@@ -53,10 +54,11 @@
                         <div class="dragHolder">
 
                             <div class="svgHolder" v-if="el.type === 'svg'" :style="{fill: el.color}">
-                                <simple-svg
-                                        :ref="'svg' + i"
-                                        :src="el.src"
-                                        @load="svgLoaded(i)">
+                                <simple-svg width="100%"
+                                            height="100%"
+                                            :ref="'svg' + i"
+                                            :src="el.src"
+                                            @load="svgLoaded(i)">
                                 </simple-svg>
                             </div>
 
@@ -67,7 +69,8 @@
                             <div class="handle handle-mr delete" @click.prevent="$delete(options.drags, i)"
                                  @touchend.prevent="$delete(options.drags, i)"></div>
 
-                            <div class="colorHolder" v-if="el.type === 'svg'" @touchstart.prevent="$event.target.click()" >
+                            <div class="colorHolder" v-if="el.type === 'svg'"
+                                 @touchstart.prevent="$event.target.click()">
                                 <compact-picker @input="colorUpdate($event, el)" :value="el.color"></compact-picker>
                                 <div @click.prevent="showColor($event)" class="handle handle-mb color"></div>
                             </div>
@@ -111,18 +114,18 @@
 
     export default {
         props: ['options', 'menu', 'generate'],
-        data(){
-            return{
-                reorder : false,
+        data() {
+            return {
+                reorder: false,
                 scaleTimes: 2
             }
         },
         methods: {
-            selectDrr(i){
+            selectDrr(i) {
 
                 this.$refs['drrs'].forEach((drr, index) => {
 
-                    if(index !== i){
+                    if (index !== i) {
                         drr.deselect();
                         drr.$el.style['z-index'] = 0
                     } else {
@@ -147,14 +150,14 @@
                 })
             },
             svgLoaded(i) {
-                if(this.reorder){
+                if (this.reorder) {
                     this.reorder = false
                     return
                 }
 
                 let prop = this.options.drags[i];
 
-                if(prop.x === -999){
+                if (prop.x === -999) {
                     let el = this.$refs['svg' + i][0].$el;
 
                     prop.h = el.scrollHeight;
@@ -167,7 +170,7 @@
                 }
             },
             imgLoaded(props) {
-                if(props.x === -999)
+                if (props.x === -999)
                     props.x = (this.$refs.printBox.clientWidth / 2) - props.w / 2;
             },
             scale(x, el) {
