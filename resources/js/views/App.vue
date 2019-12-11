@@ -9,7 +9,7 @@
                         </div>
                     </div>
                     <div class="header__logo">
-                        <router-link @click.native="addLoader" :to="{ name: 'home' }">
+                        <router-link :to="{ name: 'home' }">
                             <picture>
                                 <img src="img/logo.png" alt="">
                             </picture>
@@ -17,11 +17,9 @@
                     </div>
                     <div class="header__text"><span>Онлайн-редактор открыток для консультантов </span>
                     </div>
-
-                    <p @click.native="test()">
-                        <!--
-                        <router-link @click.native="addLoader" :to="{ name: 'hello' }">Hello World</router-link>
-                        <router-link @click.native="addLoader" :to="{ name: 'users.index', params: { page: 1 }}">Users</router-link>-->
+                    <p>
+                        <router-link :to="{ name: 'hello' }">Hello World</router-link>
+                        <router-link :to="{ name: 'users.index', params: { page: 1 }}">Users</router-link>
                     </p>
 
                     <div class="header__link"><a href="#Вернуться-на-сайт">Вернуться на сайт</a>
@@ -30,27 +28,9 @@
             </div>
         </header>
 
+        <div v-if="$root.loading" class="loader_wrap"><div class="loader"></div></div>
+        <router-view v-else></router-view>
 
-        <router-view></router-view>
-
-        <div class="loader_wrap">
-            <div class="loader"></div>
-        </div>
     </div>
 </template>
 
-<script>
-
-    export default {
-        data() {
-            return {
-                loading: false
-            }
-        },
-        methods: {
-            addLoader() {
-                this.loading = true;
-            }
-        }
-    }
-</script>

@@ -13,11 +13,6 @@
     <app></app>
 </div>
 
-
-<div class="loader_wrap">
-    <div class="loader"></div>
-</div>
-
 <script src="/postcard/js/app.js"></script>
 </body>
 </html>

@@ -132,7 +132,6 @@
 
                 img.onload = function() {
 
-                    console.log(w)
                     let maxw = 200;
                     let w = this.width;
                     let h = this.height;

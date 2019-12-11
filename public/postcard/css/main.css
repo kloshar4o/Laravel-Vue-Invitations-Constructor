@@ -3144,15 +3144,12 @@ a:hover {
     content: "asdasdasd";
     background: white;
     z-index: 99;
-    background: rgba(0, 0, 0, .7);
+    background: rgba(0, 0, 0, .2);
     justify-content: center;
     align-items: center;
-    display: none;
-}
-
-.loading .loader_wrap {
     display: flex;
 }
+
 
 .loader {
     margin: 100px auto;

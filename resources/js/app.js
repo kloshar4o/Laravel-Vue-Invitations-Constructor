@@ -8,9 +8,14 @@ import Constructor from './views/Constructor'
 import Login from './views/Login';
 import UsersIndex from './views/UsersIndex';
 
+
 const router = new VueRouter({
     mode: 'history',
     routes: [
+        {
+            path: '/postcard/',
+            redirect: '/postcard/client'
+        },
         {
             path: '/postcard/admin',
             name: 'login',
@@ -36,6 +41,21 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: '#app',
-    components: { App },
+    components: {App},
+    data() {
+        return {
+            loading: true
+        }
+    },
     router,
+});
+
+router.beforeEach((to, from, next) => {
+    app.loading = true
+    next()
+});
+
+router.afterEach((to, from) => {
+   app.loading = false
+
 });
