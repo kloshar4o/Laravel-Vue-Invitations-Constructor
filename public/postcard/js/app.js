@@ -8070,38 +8070,57 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return classess;
     },
     setOption: function setOption(type, image, j) {
-      this.menu.open = false;
+      var _this = this;
+
       var defoultValues = {
-        w: 100,
-        h: 100,
         x: -999,
         y: 100,
         angle: 0
       };
+      var img = new Image();
+      img.src = image.src;
 
-      switch (type) {
-        case 'svg':
-        case 'img':
-          this.options.drags.push(_objectSpread({}, image, {}, defoultValues, {
-            type: type,
-            color: {}
-          }));
-          break;
+      img.onload = function () {
+        console.log(w);
+        var maxw = 150;
+        var w = this.width;
+        var h = this.height;
+        var ratio = 0;
 
-        case 'background':
-          if (j === this.options.background.active) {
-            this.options.background.active = '';
-            this.options.background.src = '';
-          } else {
-            this.options.background = {
-              opacity: this.options.background.opacity || 0.5,
-              src: image.src,
-              active: j
-            };
-          }
+        if (w > maxw) {
+          ratio = maxw / w;
+          w = maxw;
+          h = h * ratio;
+        }
 
-          break;
-      }
+        defoultValues.w = w;
+        defoultValues.h = h;
+
+        switch (type) {
+          case 'svg':
+          case 'img':
+            _this.options.drags.push(_objectSpread({}, image, {}, defoultValues, {
+              type: type,
+              color: {}
+            }));
+
+            break;
+
+          case 'background':
+            if (j === _this.options.background.active) {
+              _this.options.background.active = '';
+              _this.options.background.src = '';
+            } else {
+              _this.options.background = {
+                opacity: _this.options.background.opacity || 0.5,
+                src: image.src,
+                active: j
+              };
+            }
+
+            break;
+        }
+      };
     }
   }
 });

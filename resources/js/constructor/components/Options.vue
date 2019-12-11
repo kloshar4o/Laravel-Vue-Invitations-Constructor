@@ -119,42 +119,63 @@
                 return classess;
             },
             setOption(type, image, j) {
+                let _this = this;
 
-                this.menu.open = false;
                 let defoultValues = {
-                    w: 100,
-                    h: 100,
                     x: -999,
                     y: 100,
                     angle: 0,
-                }
+                };
 
-                switch (type) {
-                    case 'svg':
-                    case 'img':
-                        this.options.drags.push({
-                            ...image,
-                            ...defoultValues,
-                            type: type,
-                            color: {},
-                        });
-                        break;
+                let img = new Image();
+                img.src = image.src;
 
-                    case 'background':
+                img.onload = function() {
 
-                        if (j === this.options.background.active) {
-                            this.options.background.active = '';
-                            this.options.background.src = ''
-                        } else {
-                            this.options.background = {
-                                opacity: this.options.background.opacity || 0.5,
-                                src: image.src,
-                                active: j
-                            };
-                        }
-                        break;
+                    console.log(w)
+                    let maxw = 150;
+                    let w = this.width;
+                    let h = this.height;
+                    let ratio = 0;
 
-                }
+                    if(w > maxw){
+                        ratio = maxw / w;
+                        w = maxw;
+                        h = h * ratio;
+                    }
+
+                    defoultValues.w = w;
+                    defoultValues.h = h;
+
+
+                    switch (type) {
+                        case 'svg':
+                        case 'img':
+                            _this.options.drags.push({
+                                ...image,
+                                ...defoultValues,
+                                type: type,
+                                color: {},
+                            });
+                            break;
+
+                        case 'background':
+
+                            if (j === _this.options.background.active) {
+                                _this.options.background.active = '';
+                                _this.options.background.src = ''
+                            } else {
+                                _this.options.background = {
+                                    opacity: _this.options.background.opacity || 0.5,
+                                    src: image.src,
+                                    active: j
+                                };
+                            }
+                            break;
+
+                    }
+                };
+
 
             }
         }
