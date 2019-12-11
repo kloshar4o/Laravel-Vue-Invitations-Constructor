@@ -2,7 +2,7 @@
 
     <div :class="classes('constructor__option')">
         <div :class="classes('options js__tab-content', cat, i)"
-             v-for="(cat, i) in [].concat(data.cats, menu.textAreas ,menu.lists)"
+             v-for="(cat, i) in [].concat(imagesData, menu.textAreas ,menu.lists)"
              :key="cat.id"
              :id="i">
 
@@ -75,7 +75,7 @@
 
 <script>
     export default {
-        props: ['data', 'options', 'menu'],
+        props: ['imagesData', 'options', 'menu'],
         methods: {
             classes(tagClass, cat = {}, i = 0) {
                 let isBg = cat.type === 'background';

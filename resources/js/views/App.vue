@@ -9,7 +9,7 @@
                         </div>
                     </div>
                     <div class="header__logo">
-                        <router-link :to="{ name: 'home' }">
+                        <router-link :to="$root.appPath">
                             <picture>
                                 <img src="img/logo.png" alt="">
                             </picture>
@@ -18,8 +18,7 @@
                     <div class="header__text"><span>Онлайн-редактор открыток для консультантов </span>
                     </div>
                     <p>
-                        <router-link :to="{ name: 'hello' }">Hello World</router-link>
-                        <router-link :to="{ name: 'users.index', params: { page: 1 }}">Users</router-link>
+                        <router-link :to="{ name: 'Login' }">Login</router-link>
                     </p>
 
                     <div class="header__link"><a href="#Вернуться-на-сайт">Вернуться на сайт</a>
@@ -28,9 +27,26 @@
             </div>
         </header>
 
+
+
+        <div v-if="$root.errors" class="errors">
+            <ul>
+                <li v-for="err in $root.errors">{{err}}</li>
+            </ul>
+        </div>
+
         <div v-if="$root.loading" class="loader_wrap"><div class="loader"></div></div>
         <router-view v-else></router-view>
 
     </div>
 </template>
+
+<script>
+    export default {
+
+        created(){
+
+        }
+    }
+</script>
 

@@ -3,38 +3,38 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import App from './views/App'
-import Constructor from './views/Constructor'
-import Login from './views/Login';
-import UsersIndex from './views/UsersIndex';
+import App from './views/App.vue'
+import Constructor from './views/Constructor.vue'
+import Login from './views/Login.vue';
+import Page404 from './views/404.vue';
+import axios from 'axios';
+
+let pagesToLoadImages = ['', 'client', 'consultant'];
+let appPath = '/postcard/';
 
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/postcard/',
-            redirect: '/postcard/client'
+            path: appPath,
+            name: 'Constructor',
+            component: Constructor,
         },
         {
-            path: '/postcard/admin',
-            name: 'login',
+            path: appPath + 'admin',
+            name: 'Login',
             component: Login
         },
         {
-            path: '/postcard/consultant',
-            name: 'home',
-            component: Constructor
+            path: appPath + '404',
+            name: '404',
+            component: Page404
         },
         {
-            path: '/postcard/client',
-            name: 'home',
-            component: Constructor
-        },
-        {
-            path: '/postcard/user/pages/:page',
-            name: 'users.index',
-            component: UsersIndex,
+            path: appPath + ':user',
+            name: 'Constructor',
+            component: Constructor,
         },
     ],
 });
@@ -42,20 +42,62 @@ const router = new VueRouter({
 const app = new Vue({
     el: '#app',
     components: {App},
+    router,
     data() {
         return {
-            loading: true
+            appPath: '/postcard/',
+            errors: {},
+            data: {},
+            loading: false,
         }
     },
-    router,
-});
+    methods: {
+        setData(err, data, query) {
+
+            this.loading = false;
+
+            if (err) {
+                this.errors[query] = err.toString();
+            } else {
+                this.data[query] = data;
+            }
+
+        },
+        fetchApi(query, callback) {
+
+            axios.get(appPath + 'api/' + query).then(response => {
+
+                callback(null, response.data);
+
+            }).catch(error => {
+
+                console.log(error)
+                callback(error, error.response.data);
+
+            });
+        },
+        getData(query, curPath, callback) {
+            if(!this.data[query]){
+                pagesToLoadImages.forEach(page => {
+                    if (appPath + page === curPath) {
+
+                        this.loading = true;
+                        this.fetchApi(query, (err, data) => {
+
+                            callback(err, data, query)
+                        });
+                    }
+                });
+            }
+        }
+    },
+}).$mount;
 
 router.beforeEach((to, from, next) => {
-    app.loading = true
+    app.loading = true;
     next()
 });
 
 router.afterEach((to, from) => {
-   app.loading = false
-
+    app.loading = false
 });

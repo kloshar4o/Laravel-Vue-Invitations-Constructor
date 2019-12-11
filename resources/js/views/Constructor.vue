@@ -1,8 +1,9 @@
 <template>
 
+
     <constructor
-        v-if="!error"
-        :images="data"
+
+        :imagesData="$root.data.images"
         :textAreas="textAreas"
         :sizes="sizes"
         :options="options"
@@ -11,43 +12,26 @@
 
     </constructor>
 
-    <div v-else="error">
-        {{error}}
-    </div>
 
 </template>
 
 
 <script>
     import Vue from 'vue';
-    import axios from 'axios';
-    import constructor from '../constructor/invitations.vue';
+    import constructor from './constructor/app';
 
     Vue.component('constructor', constructor)
-
-    const getImages = callback => {
-
-        axios
-            .get('/postcard/api/images')
-            .then(response => {
-                callback(null, response.data);
-            }).catch(error => {
-            callback(error, error.response.data);
-        });
-    };
 
     export default {
         data() {
             return {
                 error: null,
                 options: null,
-                data: null,
-                open: false,
                 lists: [
-                    {menu_name: 'Список средств', title: 'Список средств', type:'lists', id: 'listoffunds'}
+                    {menu_name: 'Список средств', title: 'Список средств', type: 'lists', id: 'listoffunds'}
                 ],
                 textAreas: [
-                    {menu_name: 'Подпись',            title: 'Подпись',            type: 'textAreas', id: 'signature'},
+                    {menu_name: 'Подпись', title: 'Подпись', type: 'textAreas', id: 'signature'},
                     {menu_name: 'Ссылка на страницу', title: 'Ссылка на страницу', type: 'textAreas', id: 'pagelink'},
                 ],
                 sizes: [
@@ -65,32 +49,23 @@
             updateOptions(options) {
                 this.options = options
             },
-            setData(err, data) {
-
-
-                if (err) {
-                    this.error = err.toString();
-                } else {
-                    this.data = {};
-                    this.data.cats = data;
-
-                }
-            },
         },
         beforeRouteEnter(to, from, next) {
+            const user = to.params.user;
 
-            getImages((err, data) => {
-                next(vm => vm.setData(err, data));
-            });
-
-        },
-        beforeRouteUpdate(to, from, next) {
-
-
-            getUsers((err, data) => {
-                this.setData(err, data);
-                next();
-            });
+            console.log(to)
+            if (user === 'client' || user === 'consultant' || !user) {
+                next(vm => {
+                    vm.$root.getData('images', to.path, (err, data, query) => {
+                        vm.$root.setData(err, data, query);
+                        vm.$forceUpdate();
+                    })
+                })
+            } else {
+                next(vm => {
+                    vm.$router.push({name: '404'});
+                })
+            }
         }
     }
 </script>
