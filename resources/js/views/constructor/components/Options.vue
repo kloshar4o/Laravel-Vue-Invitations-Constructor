@@ -74,6 +74,8 @@
 </template>
 
 <script>
+
+
     export default {
         props: ['imagesData', 'options', 'menu'],
         methods: {

@@ -11,11 +11,11 @@
 |
 */
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/{any}', 'SinglePageController@index')->where('any', '.*');
 
-Route::get('/admin', 'AdminController@index');
+//Route::get('/admin', 'AdminController@index');
 
 
 

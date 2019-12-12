@@ -19,8 +19,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+Route::post('auth/register', 'AuthController@register');
+Route::post('auth/login', 'AuthController@login');
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+
+    Route::post('auth/logout', 'AuthController@logout');
+
+    Route::get('tasks', 'TaskController@index');
+    Route::get('tasks/{id}', 'TaskController@show');
+    Route::post('tasks', 'TaskController@store');
+    Route::put('tasks/{id}', 'TaskController@update');
+    Route::delete('tasks/{id}', 'TaskController@destroy');
+
+});
+
+Route::group(['middleware' => 'jwt.refresh'], function () {
+    Route::get('auth/refresh', 'AuthController@refresh');
+});
 
 Route::namespace('Api')->group(function () {
-    Route::get('/users', 'UsersController@index');
     Route::get('/images', 'ImagesController@index');
 });

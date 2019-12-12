@@ -1,25 +1,66 @@
 <template>
-    <div>
-<!--        <div class="alert alert-danger" v-if="error">
-            <p>There was an error, unable to sign in with those credentials.</p>
+    <div id="wrapper">
+        <div class="login">
+            <form action="#" class="formlog" autocomplete="off" @submit.prevent="login" method="post">
+
+
+                <h3>Режим администратора</h3>
+                <span>
+                    <router-link :to="{ name: 'Constructor' }">Онлайн-редактор</router-link> открыток
+                </span>
+
+
+                <div class="alert alert-danger" v-if="$root.errors.form">
+                    <p>Ошибка авторизации неправильный логин или пароль</p>
+                </div>
+
+                <input type="email" id="email" class="form-control" placeholder="E-mail" v-model="email" required>
+                <input type="password" id="password" class="form-control" v-model="password" placeholder="Пароль" required>
+
+                <button type="submit">Войти</button><br><br>
+            </form>
         </div>
-        <form autocomplete="off" @submit.prevent="login" method="post">
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" class="form-control" placeholder="user@example.com" v-model="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" class="form-control" v-model="password" required>
-            </div>
-            <button type="submit" class="btn btn-default">Sign in</button>
-        </form>-->
     </div>
 </template>
 
 <script>
     export default {
-        mounted(){
+        data(){
+            return {
+                email: null,
+                password: null,
+                error: false
+            }
+        },    methods: {
+            login(){
+                let app = this;
+                app.$root.loading = true;
+                this.$auth.login({
+                    params: {
+                        email: app.email,
+                        password: app.password
+                    },
+                    success: function (res) {
+
+                        console.log(res)
+                        app.$root.loading = false;
+                    },
+                    error: function (res) {
+                        console.log(res)
+                        app.$root.errors.form = true;
+                        app.$root.loading = false;
+
+                    },
+                    rememberMe: true,
+                    redirect: {name : 'Admin'},
+                    fetchUser: true,
+                });
+            },
+        },
+        beforeRouteLeave (to, from, next) {
+            this.$root.errors.form = false;
+            next();
         }
+
     }
 </script>

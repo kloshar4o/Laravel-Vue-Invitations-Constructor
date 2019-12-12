@@ -1727,8 +1727,11 @@ a:hover {
     padding-left: 48px;
     padding-top: 34px;
     padding-bottom: 30px;
+    display: none;
 }
-
+.constructor__admin.active {
+    display: flex;
+}
 .constructor__content {
     -ms-flex: 1;
     -webkit-box-flex: 1;
@@ -2333,8 +2336,15 @@ a:hover {
 }
 
 .elementtable picture {
-    border-top: 1px solid #e6e6e6;
-    border-bottom: 1px solid #e6e6e6;
+    height: 100px;
+    width: 100px;
+    display: block;
+}
+.elementtable picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
 }
 
 .elementtable button {
@@ -2474,6 +2484,7 @@ a:hover {
 .header a {
     color: #fbc9ba;
     font-size: 12px;
+    padding: 10px;
 }
 
 .header a:hover {
@@ -2572,7 +2583,9 @@ a:hover {
     color: #a2a2a2;
     font-size: 12px;
 }
-
+.header.header-admin .header__logo span a{
+    padding: 0;
+}
 .header.header-admin .header__text {
     margin-left: auto;
     margin-right: auto;
@@ -3150,7 +3163,6 @@ a:hover {
     display: flex;
 }
 
-
 .loader {
     margin: 100px auto;
     font-size: 25px;
@@ -3267,4 +3279,28 @@ a:hover {
     width: calc(50% - 10px);
     height: auto;
     margin: 5px;
+}
+.alert.alert-danger {
+    color:
+        red;
+    padding: 10px;
+}
+
+.title {
+    font-size: 2em;
+    display: block;
+    padding: 15px;
+}
+.has-error input{
+    border-color: red;
+}
+
+.has-error span{
+    border-color: red;
+}
+.help-block {
+    margin: 0 !important;
+    text-align: left;
+    padding-bottom: 5px;
+    color: red;
 }
