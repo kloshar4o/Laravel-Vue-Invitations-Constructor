@@ -9011,7 +9011,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {}
 });
@@ -9309,21 +9308,37 @@ __webpack_require__.r(__webpack_exports__);
           password: app.password
         },
         success: function success() {
-          app.$router.push({
-            name: 'Admin'
+          this.$auth.login({
+            params: {
+              email: app.email,
+              password: app.password
+            },
+            success: function success() {},
+            error: function error() {},
+            rememberMe: true,
+            redirect: {
+              name: 'Admin'
+            },
+            fetchUser: true
           });
-          app.$root.loading = false;
         },
         error: function error(resp) {
+          console.log(resp.response.data.errors);
           app.$root.loading = false;
           app.error = true;
-          app.errors = resp.response.data.errors;
+          app.$root.errors.register = resp.response.data.errors;
         },
         redirect: null
       });
     }
   },
-  created: function created() {}
+  created: function created() {
+    this.$root.errors.register = this.$root.errors.register || {};
+  },
+  beforeRouteLeave: function beforeRouteLeave(to, from, next) {
+    this.$root.errors.register = false;
+    next();
+  }
 });
 
 /***/ }),
@@ -50895,11 +50910,11 @@ var render = function() {
             "div",
             {
               staticClass: "form-group",
-              class: { "has-error": _vm.error && _vm.errors.name }
+              class: { "has-error": _vm.$root.errors.register.name }
             },
             [
-              _vm._l(_vm.errors.name, function(err) {
-                return _vm.error && _vm.errors.name
+              _vm._l(_vm.$root.errors.register.name, function(err) {
+                return _vm.$root.errors.register.name
                   ? _c("span", { staticClass: "help-block" }, [
                       _vm._v(_vm._s(err))
                     ])
@@ -50935,11 +50950,11 @@ var render = function() {
             "div",
             {
               staticClass: "form-group",
-              class: { "has-error": _vm.error && _vm.errors.email }
+              class: { "has-error": _vm.$root.errors.register.email }
             },
             [
-              _vm._l(_vm.errors.email, function(err) {
-                return _vm.error && _vm.errors.email
+              _vm._l(_vm.$root.errors.register.email, function(err) {
+                return _vm.$root.errors.register.email
                   ? _c("span", { staticClass: "help-block" }, [
                       _vm._v(_vm._s(err))
                     ])
@@ -50975,11 +50990,11 @@ var render = function() {
             "div",
             {
               staticClass: "form-group",
-              class: { "has-error": _vm.error && _vm.errors.password }
+              class: { "has-error": _vm.$root.errors.register.password }
             },
             [
-              _vm._l(_vm.errors.password, function(err) {
-                return _vm.error && _vm.errors.password
+              _vm._l(_vm.$root.errors.register.password, function(err) {
+                return _vm.$root.errors.register.password
                   ? _c("span", { staticClass: "help-block" }, [
                       _vm._v(_vm._s(err))
                     ])
@@ -68768,7 +68783,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\invitations_laravel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xamp\htdocs\invitations_laravel\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })
