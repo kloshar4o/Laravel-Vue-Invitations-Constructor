@@ -2394,6 +2394,7 @@ a:hover {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    cursor: move;
 }
 
 .updown svg {
@@ -2405,21 +2406,23 @@ a:hover {
     transition: .2s;
 }
 
-.updown svg:hover {
+.updown:hover svg {
     fill: #000;
+}
+
+.svg.unactive{
+    display:none;
 }
 
 .updown__up {
     width: 20px;
     height: 15px;
     margin-bottom: 3px;
-    cursor: pointer;
 }
 
 .updown__down {
     width: 20px;
     height: 15px;
-    cursor: pointer;
 }
 
 .header {

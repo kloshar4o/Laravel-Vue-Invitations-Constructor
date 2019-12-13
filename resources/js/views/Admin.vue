@@ -52,41 +52,48 @@
                             </div>
                             <div class="elementtable__tr elementtable__tr-5"></div>
                         </div>
-
-                        <div class="elementtable__row"
-                             v-for="(image, j) in orderBy(cat.images, 'sort')"
-                             :key="j">
-                            <div class="elementtable__tr elementtable__tr-1">
-                                <picture>
-                                    <img :src="image.src" alt="IMG">
-                                </picture>
-                            </div>
-                            <div class="elementtable__tr elementtable__tr-2">
-                                <input type="checkbox" name="name">
-                            </div>
-                            <div class="elementtable__tr elementtable__tr-3">
-                                <input type="checkbox" name="name">
-                            </div>
-                            <div class="elementtable__tr elementtable__tr-4">
-                                <div class="updown">
-                                    <div class="updown__up">
-                                        <svg class="svg svg-up" width="50" height="50">
-                                            <use xlink:href="ico/sprite/sprite.svg#up"></use>
-                                        </svg>
-                                    </div>
-                                    <div class="updown__down">
-                                        <svg class="svg svg-down" width="50" height="50">
-                                            <use xlink:href="ico/sprite/sprite.svg#down"></use>
-                                        </svg>
+                        <draggable
+                            v-model="cat.images"
+                            handle=".updown_handle"
+                            @start="drag=true"
+                            @end="drag=false"
+                            @change="log($event, i)">
+                            <div class="elementtable__row"
+                                 v-for="(image, j) in orderBy(cat.images, 'sort')"
+                                 :key="j">
+                                <div class="elementtable__tr elementtable__tr-1">
+                                    <picture>
+                                        <img :src="image.src" alt="IMG">
+                                    </picture>
+                                </div>
+                                <div class="elementtable__tr elementtable__tr-2">
+                                    <input type="checkbox" name="name" v-model="image.show_client">
+                                </div>
+                                <div class="elementtable__tr elementtable__tr-3">
+                                    <input type="checkbox" name="name" v-model="image.show_consultant">
+                                </div>
+                                <div class="elementtable__tr elementtable__tr-4">
+                                    <div class="updown updown_handle">
+                                        <div class="updown__up">
+                                            <svg class="svg svg-up" width="50" height="50"
+                                                 :class="{unactive: j === 0}">
+                                                <use xlink:href="ico/sprite/sprite.svg#up"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="updown__down">
+                                            <svg class="svg svg-down" width="50" height="50"
+                                                 :class="{unactive: j === cat.images.length -1}">
+                                                <use xlink:href="ico/sprite/sprite.svg#down"></use>
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="elementtable__tr elementtable__tr-5">
+                                    <button><span>Удалить</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="elementtable__tr elementtable__tr-5">
-                                <button><span>Удалить</span>
-                                </button>
-                            </div>
-                        </div>
-
+                        </draggable>
                     </div>
                 </div>
             </div>
@@ -99,12 +106,15 @@
 
     import Vue from 'vue'
     import Vue2Filters from 'vue2-filters'
+    import draggable from 'vuedraggable'
+
     Vue.use(Vue2Filters)
+    Vue.component('draggable', draggable)
 
 
     export default {
         mixins: [Vue2Filters.mixin],
-        data(){
+        data() {
             return {
                 openMenu: false,
                 menu: {
@@ -115,7 +125,50 @@
         created() {
         },
         methods: {
+            log(ev, catIndex){
+                let imgs = this.$root.data.images[catIndex].images;
 
+                imgs.forEach((img, i) => {
+                    img.sort = i
+                });
+
+                this.$forceUpdate();
+
+            },/*
+            async changePosition(catIndex, imgSort, direction, swithSort = null) {
+
+
+                let imgs = this.$root.data.images[catIndex].images;
+                let imgSwithSort = swithSort || (direction === 'up') ? imgSort - 1 : imgSort + 1;
+                let skipId = null;
+                let newIndexes = [];
+
+
+                imgs.forEach(img => {
+
+                    if (img.id !== skipId && img.sort === imgSwithSort) {
+                        img.sort = imgSort;
+                        skipId = img.id;
+                        newIndexes.push(img.sort);
+                    }
+
+                    if (img.id !== skipId && img.sort === imgSort) {
+                        img.sort = imgSwithSort;
+                        skipId = img.id;
+                        newIndexes.push(img.sort);
+                    }
+
+                    if(img.id !== skipId){
+                        newIndexes.push(img.sort);
+                    }
+                });
+
+                console.log(imgs[0])
+                imgs = newIndexes.map(i => imgs[i]);
+                console.log(imgs[0])
+
+                this.$forceUpdate();
+            }*/
         },
         beforeRouteEnter(to, from, next) {
 
