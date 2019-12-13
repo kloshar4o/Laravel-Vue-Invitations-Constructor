@@ -41,4 +41,5 @@ Route::group(['middleware' => 'jwt.refresh'], function () {
 Route::namespace('Api')->group(function () {
     Route::get('/images', 'ImagesController@index');
     Route::post('/images/sort', 'ImagesController@sort');
+    Route::post('/images/save', 'ImagesController@save');
 });

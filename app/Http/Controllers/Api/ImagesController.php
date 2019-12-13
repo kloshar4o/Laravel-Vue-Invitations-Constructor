@@ -8,16 +8,12 @@ use Illuminate\Http\Request;
 use App\Image;
 use App\ImageType;
 
+
 class ImagesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $books = ImageType::with([
+        $images = ImageType::with([
 
             'images' => function ($query) {
                 $query->orderBy('sort');
@@ -27,7 +23,7 @@ class ImagesController extends Controller
             ->get();
 
 
-        return $books;
+        return $images;
     }
 
     public function sort(Request $request)
@@ -42,51 +38,41 @@ class ImagesController extends Controller
             $imageData->save();
         }
 
-        return ['message' => 'Сортировка сохранена'] ;
+        return response()->json(['message' => 'Сортировка сохранена']);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function save(Request $request)
+
     {
-        //
+
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+
+        $file = $request->file;
+        $fileFolder = $request->folder;
+        $fileName = $file->getClientOriginalName();
+
+
+        $request->file->move(public_path("img/$fileFolder/"), $fileName);
+
+        $image = New Image;
+
+
+        $image->src = "img/$fileFolder/$fileName";
+        $image->image_types_id = $request->cat;
+        $image->sort = $request->sort;
+        $image->show_client = 1;
+        $image->show_consultant = 1;
+        $image->save();
+
+
+
+        return response()->json(['message' => "Файл $fileName загружен", 'image' => $image]);
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

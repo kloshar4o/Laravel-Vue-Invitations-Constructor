@@ -8990,6 +8990,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -9003,6 +9019,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('draggable', vuedraggable__
   mixins: [vue2_filters__WEBPACK_IMPORTED_MODULE_2___default.a.mixin],
   data: function data() {
     return {
+      file: '',
+      success: '',
       openMenu: false,
       drag: false,
       menu: {
@@ -9012,7 +9030,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('draggable', vuedraggable__
   },
   created: function created() {},
   methods: {
-    uploadChanges: function uploadChanges(ev, images) {
+    uploadSort: function uploadSort(ev, images) {
       if (ev.newIndex !== ev.oldIndex) {
         images.forEach(function (img, i) {
           img.sort = i;
@@ -9028,6 +9046,38 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('draggable', vuedraggable__
           });
         });
       }
+    },
+    onFileChange: function onFileChange(e, cat) {
+      cat.files = e.target.files;
+      this.$forceUpdate();
+    },
+    uploadImage: function uploadImage(e, cat, catIndex) {
+      var _this = this;
+
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      Array.from(cat.files).forEach(function (file) {
+        var app = _this;
+        var formData = new FormData();
+        var totalImages = app.$root.data.images[catIndex].images.length;
+        formData.append('file', file);
+        formData.append('folder', cat.folder);
+        formData.append('cat', cat.id);
+        formData.append('sort', totalImages);
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/images/save', formData, config).then(function (res) {
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.$toast.open(res.data.message);
+          cat.images.push(res.data.image);
+          app.$forceUpdate();
+        })["catch"](function (error) {
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.$toast.open({
+            message: error.toString(),
+            type: 'error'
+          });
+        });
+      });
     }
   },
   computed: {
@@ -54221,13 +54271,81 @@ var render = function() {
               _c("div", { staticClass: "admincontent elementcontent" }, [
                 _c("h3", [_vm._v("Элементы")]),
                 _vm._v(" "),
-                _vm._m(1, true),
+                _c(
+                  "form",
+                  {
+                    attrs: { enctype: "multipart/form-data" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.uploadImage($event, cat, i)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "elementcontent__btn" }, [
+                      _c(
+                        "label",
+                        { staticClass: "btn", attrs: { for: cat.id + "file" } },
+                        [_vm._v(" Выберите файл ")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        staticStyle: { display: "none" },
+                        attrs: {
+                          type: "file",
+                          multiple: "",
+                          id: cat.id + "file"
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.onFileChange($event, cat)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "btn",
+                          attrs: { for: cat.id + "submit" }
+                        },
+                        [_vm._v(" Загрузить")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticStyle: { display: "none" },
+                        attrs: {
+                          type: "submit",
+                          id: cat.id + "submit",
+                          disabled: !cat.files
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    cat.files
+                      ? _c(
+                          "div",
+                          { staticClass: "files" },
+                          [
+                            _c("p", [_vm._v("Файлы для загрузки:")]),
+                            _vm._v(" "),
+                            _vm._l(cat.files, function(file) {
+                              return _c("span", [_vm._v(_vm._s(file.name))])
+                            })
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ]
+                ),
                 _vm._v(" "),
                 _c(
                   "div",
                   { staticClass: "elementtable" },
                   [
-                    _vm._m(2, true),
+                    _vm._m(1, true),
                     _vm._v(" "),
                     _c(
                       "draggable",
@@ -54240,7 +54358,7 @@ var render = function() {
                             },
                             end: function($event) {
                               _vm.drag = false
-                              _vm.uploadChanges($event, cat.images)
+                              _vm.uploadSort($event, cat.images)
                             }
                           },
                           model: {
@@ -54524,16 +54642,6 @@ var staticRenderFns = [
       _c("a", { attrs: { href: "#" } }, [_vm._v("Открытки консультантов")]),
       _vm._v(" "),
       _c("a", { attrs: { href: "#" } }, [_vm._v("Открытки клиентов")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "elementcontent__btn" }, [
-      _c("button", { staticClass: "btn" }, [_vm._v("Выберите файл")]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn" }, [_vm._v("Загрузить")])
     ])
   },
   function() {

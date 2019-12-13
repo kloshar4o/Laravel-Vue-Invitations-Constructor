@@ -16,6 +16,7 @@
             </div>
         </header>
 
+
         <div id="wrapper">
             <div class="constructor__menu js__scroll" :class="{active: openMenu}">
                 <div class="menu">
@@ -37,10 +38,25 @@
                  :id="i">
                 <div class="admincontent elementcontent">
                     <h3>Элементы</h3>
-                    <div class="elementcontent__btn">
-                        <button class="btn">Выберите файл</button>
-                        <button class="btn">Загрузить</button>
-                    </div>
+
+                    <form @submit.prevent="uploadImage($event, cat, i)" enctype="multipart/form-data">
+
+                        <div class="elementcontent__btn">
+                            <label class="btn" :for="cat.id + 'file'"> Выберите файл </label>
+                            <input type="file" multiple :id="cat.id + 'file'" class="form-control"
+                                   @change="onFileChange($event, cat)" style="display: none;">
+
+                            <label class="btn" :for="cat.id + 'submit'"> Загрузить</label>
+                            <input type="submit" :id="cat.id + 'submit'" style="display: none;" :disabled="!cat.files">
+                        </div>
+
+                        <div v-if="cat.files" class="files">
+                            <p>Файлы для загрузки:</p>
+                            <span v-for="file in cat.files">{{file.name}}</span>
+                        </div>
+
+                    </form>
+
                     <div class="elementtable">
                         <div class="elementtable__head">
                             <div class="elementtable__tr elementtable__tr-1"></div>
@@ -60,7 +76,7 @@
                             v-model="cat.images"
                             handle=".updown_handle"
                             @start="drag=true"
-                            @end="drag=false; uploadChanges($event, cat.images) ">
+                            @end="drag=false; uploadSort($event, cat.images) ">
 
                             <transition-group type="transition" :name="!drag ? 'flip-list' : null">
 
@@ -127,11 +143,12 @@
     Vue.use(Vue2Filters)
     Vue.component('draggable', draggable)
 
-
     export default {
         mixins: [Vue2Filters.mixin],
         data() {
             return {
+                file: '',
+                success: '',
                 openMenu: false,
                 drag: false,
                 menu: {
@@ -142,7 +159,7 @@
         created() {
         },
         methods: {
-            uploadChanges(ev, images) {
+            uploadSort(ev, images) {
                 if (ev.newIndex !== ev.oldIndex) {
 
                     images.forEach((img, i) => {
@@ -165,9 +182,48 @@
                         });
                 }
             },
+            onFileChange(e, cat) {
+
+                cat.files = e.target.files;
+
+                this.$forceUpdate();
+
+            },
+            uploadImage(e, cat, catIndex) {
+
+                const config = {
+                    headers: {'content-type': 'multipart/form-data'}
+                };
+
+                Array.from(cat.files).forEach(file => {
+                    let app = this;
+                    let formData = new FormData();
+                    let totalImages =  app.$root.data.images[catIndex].images.length;
+
+                    formData.append('file', file);
+                    formData.append('folder', cat.folder);
+                    formData.append('cat', cat.id);
+                    formData.append('sort', totalImages);
+
+                    axios.post('/images/save', formData, config)
+                        .then(function (res) {
+
+                            Vue.$toast.open(res.data.message);
+                            cat.images.push(res.data.image);
+                            app.$forceUpdate();
+
+                        })
+                        .catch(function (error) {
+
+                            Vue.$toast.open({
+                                message: error.toString(),
+                                type: 'error',
+                            });
+                        });
+                })
+            }
         },
         computed: {
-
             dragOptions() {
                 return {
                     animation: 200,
@@ -175,7 +231,7 @@
                     disabled: false,
                     ghostClass: "ghost"
                 };
-            }
+            },
         },
         beforeRouteEnter(to, from, next) {
 
@@ -187,6 +243,39 @@
                 })
             })
 
-        }
+        },
     }
 </script>
+
+<!--
+&lt;!&ndash; SASS styling &ndash;&gt;
+<style lang="scss" scoped>
+    .dropbox {
+        outline: 2px dashed grey; /* the dash box */
+        outline-offset: -10px;
+        background: lightcyan;
+        color: dimgray;
+        padding: 10px 10px;
+        min-height: 200px; /* minimum height */
+        position: relative;
+        cursor: pointer;
+    }
+
+    .input-file {
+        opacity: 0; /* invisible but it's there! */
+        width: 100%;
+        height: 200px;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .dropbox:hover {
+        background: lightblue; /* when mouse over to the drop zone, change color */
+    }
+
+    .dropbox p {
+        font-size: 1.2em;
+        text-align: center;
+        padding: 50px 0;
+    }
+</style>-->
