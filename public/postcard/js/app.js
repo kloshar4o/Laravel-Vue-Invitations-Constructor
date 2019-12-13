@@ -9620,6 +9620,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -9891,6 +9892,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setOption: function setOption(type, image, j) {
       var _this = this;
 
+      var maxw = 200;
       var defoultValues = {
         x: -999,
         y: 200,
@@ -9900,7 +9902,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       img.src = image.src;
 
       img.onload = function () {
-        var maxw = 200;
         var w = this.width;
         var h = this.height;
         var ratio = 0;
@@ -9909,6 +9910,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           ratio = maxw / w;
           w = maxw;
           h = h * ratio;
+        }
+
+        if (h < 100) {
+          h *= 2;
+          w *= 2;
         }
 
         defoultValues.w = w;
@@ -55162,14 +55168,12 @@ var render = function() {
                       el.type === "svg"
                         ? _c(
                             "div",
-                            {
-                              staticClass: "svgHolder",
-                              style: { fill: el.color }
-                            },
+                            { staticClass: "svgHolder" },
                             [
                               _c("simple-svg", {
                                 ref: "svg" + i,
                                 refInFor: true,
+                                style: { fill: el.color },
                                 attrs: {
                                   width: "100%",
                                   height: "100%",
@@ -75941,7 +75945,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xamp\htdocs\invitations_laravel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\invitations_laravel\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

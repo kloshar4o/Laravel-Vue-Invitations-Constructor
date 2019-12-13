@@ -122,6 +122,9 @@
             },
             setOption(type, image, j) {
                 let _this = this;
+                let maxw = 200;
+
+
 
                 let defoultValues = {
                     x: -999,
@@ -134,15 +137,20 @@
 
                 img.onload = function() {
 
-                    let maxw = 200;
                     let w = this.width;
                     let h = this.height;
                     let ratio = 0;
+
 
                     if(w > maxw){
                         ratio = maxw / w;
                         w = maxw;
                         h = h * ratio;
+                    }
+
+                    if(h < 100){
+                        h *= 2
+                        w *= 2
                     }
 
                     defoultValues.w = w;

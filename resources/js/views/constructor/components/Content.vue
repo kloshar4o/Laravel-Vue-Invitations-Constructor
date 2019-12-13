@@ -53,10 +53,11 @@
 
                         <div class="dragHolder">
 
-                            <div class="svgHolder" v-if="el.type === 'svg'" :style="{fill: el.color}">
+                            <div class="svgHolder" v-if="el.type === 'svg'">
                                 <simple-svg width="100%"
                                             height="100%"
                                             :ref="'svg' + i"
+                                            :style="{fill: el.color}"
                                             :src="el.src"
                                             @load="svgLoaded(i)">
                                 </simple-svg>
