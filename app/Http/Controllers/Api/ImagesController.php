@@ -30,6 +30,21 @@ class ImagesController extends Controller
         return $books;
     }
 
+    public function sort(Request $request)
+    {
+
+        $images = $request->all()['images'];
+
+        foreach ($images as $image) {
+
+            $imageData = Image::find($image['id']);
+            $imageData->sort = $image['sort'];
+            $imageData->save();
+        }
+
+        return ['message' => 'Сортировка сохранена'] ;
+    }
+
     /**
      * Store a newly created resource in storage.
      *

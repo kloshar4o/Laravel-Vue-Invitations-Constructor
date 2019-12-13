@@ -60,8 +60,7 @@
                             v-model="cat.images"
                             handle=".updown_handle"
                             @start="drag=true"
-                            @end="drag=false"
-                            @change="log($event, i)">
+                            @end="drag=false; uploadChanges($event, cat.images) ">
 
                             <transition-group type="transition" :name="!drag ? 'flip-list' : null">
 
@@ -117,9 +116,14 @@
 
 
     import Vue from 'vue'
+    import axios from 'axios'
     import Vue2Filters from 'vue2-filters'
     import draggable from 'vuedraggable'
 
+    import VueToast from 'vue-toast-notification';
+    import 'vue-toast-notification/dist/index.css';
+
+    Vue.use(VueToast);
     Vue.use(Vue2Filters)
     Vue.component('draggable', draggable)
 
@@ -138,15 +142,28 @@
         created() {
         },
         methods: {
-            log(ev, catIndex){
-                let imgs = this.$root.data.images[catIndex].images;
+            uploadChanges(ev, images) {
+                if (ev.newIndex !== ev.oldIndex) {
 
-                imgs.forEach((img, i) => {
-                    img.sort = i
-                });
+                    images.forEach((img, i) => {
+                        img.sort = i
+                    });
 
-                this.$forceUpdate();
+                    axios
+                        .post('images/sort', {
+                            images: images
+                        })
+                        .then(res => {
+                            Vue.$toast.open(res.data.message);
+                        })
+                        .catch(error => {
 
+                            Vue.$toast.open({
+                                message: error.toString(),
+                                type: 'error',
+                            });
+                        });
+                }
             },
         },
         computed: {
