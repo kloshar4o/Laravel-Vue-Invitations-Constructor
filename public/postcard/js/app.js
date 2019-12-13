@@ -8973,6 +8973,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8983,6 +8995,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('draggable', vuedraggable__
   data: function data() {
     return {
       openMenu: false,
+      drag: false,
       menu: {
         active: 0
       }
@@ -8997,33 +9010,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('draggable', vuedraggable__
       });
       this.$forceUpdate();
     }
-    /*
-    async changePosition(catIndex, imgSort, direction, swithSort = null) {
-        let imgs = this.$root.data.images[catIndex].images;
-      let imgSwithSort = swithSort || (direction === 'up') ? imgSort - 1 : imgSort + 1;
-      let skipId = null;
-      let newIndexes = [];
-        imgs.forEach(img => {
-           if (img.id !== skipId && img.sort === imgSwithSort) {
-              img.sort = imgSort;
-              skipId = img.id;
-              newIndexes.push(img.sort);
-          }
-           if (img.id !== skipId && img.sort === imgSort) {
-              img.sort = imgSwithSort;
-              skipId = img.id;
-              newIndexes.push(img.sort);
-          }
-           if(img.id !== skipId){
-              newIndexes.push(img.sort);
-          }
-      });
-       console.log(imgs[0])
-      imgs = newIndexes.map(i => imgs[i]);
-      console.log(imgs[0])
-       this.$forceUpdate();
-    }*/
-
+  },
+  computed: {
+    dragOptions: function dragOptions() {
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost"
+      };
+    }
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     next(function (vm) {
@@ -9913,7 +9909,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
 
         if (h < 100) {
-          console.log('change size x2');
           h *= 2;
           w *= 2;
         }
@@ -54198,232 +54193,279 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "draggable",
-                      {
-                        attrs: { handle: ".updown_handle" },
-                        on: {
-                          start: function($event) {
-                            _vm.drag = true
+                      _vm._b(
+                        {
+                          attrs: { tag: "div", handle: ".updown_handle" },
+                          on: {
+                            start: function($event) {
+                              _vm.drag = true
+                            },
+                            end: function($event) {
+                              _vm.drag = false
+                            },
+                            change: function($event) {
+                              return _vm.log($event, i)
+                            }
                           },
-                          end: function($event) {
-                            _vm.drag = false
-                          },
-                          change: function($event) {
-                            return _vm.log($event, i)
+                          model: {
+                            value: cat.images,
+                            callback: function($$v) {
+                              _vm.$set(cat, "images", $$v)
+                            },
+                            expression: "cat.images"
                           }
                         },
-                        model: {
-                          value: cat.images,
-                          callback: function($$v) {
-                            _vm.$set(cat, "images", $$v)
+                        "draggable",
+                        _vm.dragOptions,
+                        false
+                      ),
+                      [
+                        _c(
+                          "transition-group",
+                          {
+                            attrs: {
+                              type: "transition",
+                              name: !_vm.drag ? "flip-list" : null
+                            }
                           },
-                          expression: "cat.images"
-                        }
-                      },
-                      _vm._l(_vm.orderBy(cat.images, "sort"), function(
-                        image,
-                        j
-                      ) {
-                        return _c(
-                          "div",
-                          { key: j, staticClass: "elementtable__row" },
-                          [
-                            _c(
+                          _vm._l(_vm.orderBy(cat.images, "sort"), function(
+                            image,
+                            j
+                          ) {
+                            return _c(
                               "div",
                               {
-                                staticClass:
-                                  "elementtable__tr elementtable__tr-1"
-                              },
-                              [
-                                _c("picture", [
-                                  _c("img", {
-                                    attrs: { src: image.src, alt: "IMG" }
-                                  })
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "elementtable__tr elementtable__tr-2"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: image.show_client,
-                                      expression: "image.show_client"
-                                    }
-                                  ],
-                                  attrs: { type: "checkbox", name: "name" },
-                                  domProps: {
-                                    checked: Array.isArray(image.show_client)
-                                      ? _vm._i(image.show_client, null) > -1
-                                      : image.show_client
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      var $$a = image.show_client,
-                                        $$el = $event.target,
-                                        $$c = $$el.checked ? true : false
-                                      if (Array.isArray($$a)) {
-                                        var $$v = null,
-                                          $$i = _vm._i($$a, $$v)
-                                        if ($$el.checked) {
-                                          $$i < 0 &&
-                                            _vm.$set(
-                                              image,
-                                              "show_client",
-                                              $$a.concat([$$v])
-                                            )
-                                        } else {
-                                          $$i > -1 &&
-                                            _vm.$set(
-                                              image,
-                                              "show_client",
-                                              $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1))
-                                            )
-                                        }
-                                      } else {
-                                        _vm.$set(image, "show_client", $$c)
-                                      }
-                                    }
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "elementtable__tr elementtable__tr-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: image.show_consultant,
-                                      expression: "image.show_consultant"
-                                    }
-                                  ],
-                                  attrs: { type: "checkbox", name: "name" },
-                                  domProps: {
-                                    checked: Array.isArray(
-                                      image.show_consultant
-                                    )
-                                      ? _vm._i(image.show_consultant, null) > -1
-                                      : image.show_consultant
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      var $$a = image.show_consultant,
-                                        $$el = $event.target,
-                                        $$c = $$el.checked ? true : false
-                                      if (Array.isArray($$a)) {
-                                        var $$v = null,
-                                          $$i = _vm._i($$a, $$v)
-                                        if ($$el.checked) {
-                                          $$i < 0 &&
-                                            _vm.$set(
-                                              image,
-                                              "show_consultant",
-                                              $$a.concat([$$v])
-                                            )
-                                        } else {
-                                          $$i > -1 &&
-                                            _vm.$set(
-                                              image,
-                                              "show_consultant",
-                                              $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1))
-                                            )
-                                        }
-                                      } else {
-                                        _vm.$set(image, "show_consultant", $$c)
-                                      }
-                                    }
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "elementtable__tr elementtable__tr-4"
+                                key: image.id,
+                                staticClass: "elementtable__row"
                               },
                               [
                                 _c(
                                   "div",
-                                  { staticClass: "updown updown_handle" },
+                                  {
+                                    staticClass:
+                                      "elementtable__tr elementtable__tr-1"
+                                  },
                                   [
-                                    _c("div", { staticClass: "updown__up" }, [
-                                      _c(
-                                        "svg",
+                                    _c("picture", [
+                                      _c("img", {
+                                        attrs: { src: image.src, alt: "IMG" }
+                                      })
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "elementtable__tr elementtable__tr-2"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
                                         {
-                                          staticClass: "svg svg-up",
-                                          class: { unactive: j === 0 },
-                                          attrs: { width: "50", height: "50" }
-                                        },
-                                        [
-                                          _c("use", {
-                                            attrs: {
-                                              "xlink:href":
-                                                "ico/sprite/sprite.svg#up"
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: image.show_client,
+                                          expression: "image.show_client"
+                                        }
+                                      ],
+                                      attrs: { type: "checkbox", name: "name" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          image.show_client
+                                        )
+                                          ? _vm._i(image.show_client, null) > -1
+                                          : image.show_client
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = image.show_client,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  image,
+                                                  "show_client",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  image,
+                                                  "show_client",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
                                             }
-                                          })
-                                        ]
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "updown__down" }, [
-                                      _c(
-                                        "svg",
+                                          } else {
+                                            _vm.$set(image, "show_client", $$c)
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "elementtable__tr elementtable__tr-3"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
                                         {
-                                          staticClass: "svg svg-down",
-                                          class: {
-                                            unactive:
-                                              j === cat.images.length - 1
-                                          },
-                                          attrs: { width: "50", height: "50" }
-                                        },
-                                        [
-                                          _c("use", {
-                                            attrs: {
-                                              "xlink:href":
-                                                "ico/sprite/sprite.svg#down"
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: image.show_consultant,
+                                          expression: "image.show_consultant"
+                                        }
+                                      ],
+                                      attrs: { type: "checkbox", name: "name" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          image.show_consultant
+                                        )
+                                          ? _vm._i(
+                                              image.show_consultant,
+                                              null
+                                            ) > -1
+                                          : image.show_consultant
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = image.show_consultant,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  image,
+                                                  "show_consultant",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  image,
+                                                  "show_consultant",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
                                             }
-                                          })
-                                        ]
-                                      )
+                                          } else {
+                                            _vm.$set(
+                                              image,
+                                              "show_consultant",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "elementtable__tr elementtable__tr-4"
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "updown updown_handle" },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "updown__up" },
+                                          [
+                                            _c(
+                                              "svg",
+                                              {
+                                                staticClass: "svg svg-up",
+                                                class: { unactive: j === 0 },
+                                                attrs: {
+                                                  width: "50",
+                                                  height: "50"
+                                                }
+                                              },
+                                              [
+                                                _c("use", {
+                                                  attrs: {
+                                                    "xlink:href":
+                                                      "ico/sprite/sprite.svg#up"
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "updown__down" },
+                                          [
+                                            _c(
+                                              "svg",
+                                              {
+                                                staticClass: "svg svg-down",
+                                                class: {
+                                                  unactive:
+                                                    j === cat.images.length - 1
+                                                },
+                                                attrs: {
+                                                  width: "50",
+                                                  height: "50"
+                                                }
+                                              },
+                                              [
+                                                _c("use", {
+                                                  attrs: {
+                                                    "xlink:href":
+                                                      "ico/sprite/sprite.svg#down"
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "elementtable__tr elementtable__tr-5"
+                                  },
+                                  [
+                                    _c("button", [
+                                      _c("span", [_vm._v("Удалить")])
                                     ])
                                   ]
                                 )
                               ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "elementtable__tr elementtable__tr-5"
-                              },
-                              [_c("button", [_c("span", [_vm._v("Удалить")])])]
                             )
-                          ]
+                          }),
+                          0
                         )
-                      }),
-                      0
+                      ],
+                      1
                     )
                   ],
                   1

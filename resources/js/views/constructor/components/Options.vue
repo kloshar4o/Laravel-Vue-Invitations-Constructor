@@ -149,7 +149,6 @@
                     }
 
                     if(h < 100){
-                        console.log('change size x2')
                         h *= 2
                         w *= 2
                     }
