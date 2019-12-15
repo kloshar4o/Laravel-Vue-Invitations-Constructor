@@ -3,13 +3,15 @@
         <header class="header header-admin">
             <div class="header__wrap">
                 <div class="header__menubtn js__open-menu">
-                    <div class="hamburger" @click="menu.open = !menu.open;" :class="{active: menu.open}"><span></span>
+                    <div class="hamburger" @click="menu = !menu;" :class="{active: menu}"><span></span>
                     </div>
                 </div>
                 <div class="header__logo"><b>Режим администратора</b> <span>
                     <router-link :to="{ name: 'Constructor' }">Онлайн-редактор</router-link> открыток</span>
                 </div>
-                <div class="header__text link"><a href="#">Открытки консультантов</a> <a href="#">Открытки клиентов</a>
+                <div class="header__text link">
+                    <a href="#" @click="goTo('consultant')">Открытки консультантов</a>
+                    <a href="#" @click="goTo('client')">Открытки клиентов</a>
                 </div>
                 <div class="header__link"><a href="#" @click.prevent="$auth.logout()" v-if="$auth.check()">Выйти</a>
                 </div>
@@ -17,14 +19,14 @@
         </header>
 
 
-        <div id="wrapper" @click="menu.open = false">
-            <div class="constructor__menu js__scroll" :class="{active: menu.open}">
+        <div id="wrapper" @click="menu = false">
+            <div class="constructor__menu js__scroll" :class="{active: menu}">
                 <div class="menu">
                     <div v-for="(menuItem, i) in $root.data.images" class="menu__item js__tab-btn"
                          :key="menuItem.id"
                          :ref="'menu'"
-                         :class="{ 'active': menu.active === i }"
-                         @click="menu.active = i">
+                         :class="{ 'active': page === menuItem.folder }"
+                         @click="goTo(menuItem.folder)">
 
                         <span>{{menuItem.menu_name}}</span>
                     </div>
@@ -33,7 +35,7 @@
 
             <div class="constructor__admin"
                  v-for="(cat, i) in $root.data.images"
-                 :class="{ 'active': menu.active === i }"
+                 :class="{ 'active': page === cat.folder }"
                  :key="cat.id"
                  :id="i">
                 <div class="admincontent elementcontent">
@@ -41,10 +43,12 @@
 
                     <UploadForm :cat="cat" @upload="ImagesTableKey++" :index="i"></UploadForm>
 
-                    <ImagesTable :cat="cat" :menuOpen="menu.open" :key="ImagesTableKey"></ImagesTable>
+                    <ImagesTable :cat="cat" :menuOpen="menu" :key="ImagesTableKey"></ImagesTable>
 
                 </div>
             </div>
+
+            <CardsTable :page="page" @updatedParamas="updatedParamas"></CardsTable>
 
         </div>
     </div>
@@ -52,28 +56,44 @@
 <script>
     import UploadForm from './components/imagesUpload.vue';
     import ImagesTable from './components/imagesTable.vue';
+    import CardsTable from './components/cardsTable.vue';
 
     export default {
-        components: {UploadForm, ImagesTable},
+        components: {UploadForm, ImagesTable, CardsTable},
         data() {
             return {
                 ImagesTableKey: 1,
-                menu: {
-                    open: false,
-                    active: 0,
-                }
+                page: this.$router.currentRoute.params.page,
+                menu: false,
+                params: {
+                    client: { page: 1},
+                    consultant: { page: 1},
+                },
             }
+        },
+        methods: {
+            updatedParamas({page, params}){
+                this.params[page] = params;
+            },
+            goTo(page){
+
+                if(page !== this.page){
+
+                    this.$router.push({path: page, query: this.params[page]} );
+                    this.$root.adminPage = page;
+                    this.page = page;
+                }
+            },
         },
         beforeRouteEnter(to, from, next) {
 
             next(vm => {
-
-                vm.$root.getData('images', to.path, (err, data, query) => {
+                vm.$root.getData('images', 'admin', (err, data, query) => {
                     vm.$root.setData(err, data, query);
                     vm.$forceUpdate();
-                })
+                });
             })
-
         },
+
     }
 </script>

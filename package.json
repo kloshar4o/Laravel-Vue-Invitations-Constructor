@@ -28,6 +28,7 @@
         "bootstrap-sass": "^3.4.1",
         "invitations_constructor": "github:kloshar4o/invitations#master",
         "laravel-vue-pagination": "^2.3.1",
+        "moment": "^2.24.0",
         "vue-axios": "^2.1.5",
         "vue-clipboard2": "^0.3.1",
         "vue-nprogress": "^0.1.5",

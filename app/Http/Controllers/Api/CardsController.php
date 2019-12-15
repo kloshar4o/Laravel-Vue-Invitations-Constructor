@@ -10,10 +10,23 @@ use App\Card;
 class CardsController extends Controller
 {
 
-    public function index()
+    public function index($user)
     {
 
-        return Card::paginate(2)->get();
+        $cards = Card::where('user', $user)->orderBy('id');
+
+
+        $stats = collect(
+            [
+                'downloaded' => (int) $cards->sum('downloaded'),
+                'shared' => (int) $cards->sum('shared'),
+            ]
+        );
+
+
+        $data = $stats->merge($cards->paginate(2));
+
+        return $data;
     }
 
     public function single($card)
@@ -55,5 +68,9 @@ class CardsController extends Controller
             'toast' => "Карточка $card->name успешно создана",
             'id' => $card->id
         ]);
+    }
+
+    public function destroy($id){
+        Card::find($id)->delete();
     }
 }

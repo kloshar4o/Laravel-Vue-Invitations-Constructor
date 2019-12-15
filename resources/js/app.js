@@ -16,7 +16,7 @@ import Single from './views/Single.vue';
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 
-let pagesToLoadImages = ['client', 'consultant', 'admin'];
+let axiosPages = ['client', 'consultant', 'admin'];
 let appPath = '/postcard/';
 
 
@@ -47,11 +47,18 @@ const router = new VueRouter({
             }
         },
         {
-            path: appPath + 'admin',
+            path: appPath + 'admin/:page',
             name: 'Admin',
             component: Admin,
             meta: {
                 auth: true
+            }
+        },
+        {
+            path: appPath + 'admin/',
+            redirect: {
+                name: 'Admin',
+                params: {page: 'dashboard'}
             }
         },
         {
@@ -79,12 +86,12 @@ Vue.use(require('@websanova/vue-auth'), {
     auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
     http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
     router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-    authRedirect:  {path: appPath + 'login'},
+    authRedirect: {path: appPath + 'login'},
     forbiddenRedirect: {path: appPath + 'admin'},
     notFoundRedirect: {path: appPath + 'admin'},
     registerData: {url: 'auth/register', method: 'POST', redirect: appPath + 'login'},
     loginData: {url: 'auth/login', method: 'POST', redirect: appPath + 'admin', fetchUser: true},
-    logoutData:  {url: 'auth/logout', method: 'POST', redirect: appPath + 'login' , makeRequest: false},
+    logoutData: {url: 'auth/logout', method: 'POST', redirect: appPath + 'login', makeRequest: false},
 });
 
 
@@ -128,8 +135,9 @@ const app = new Vue({
         },
         getData(query, curPath, callback) {
             if (!this.data[query]) {
-                pagesToLoadImages.forEach(page => {
-                    if (appPath + page === curPath) {
+
+                axiosPages.forEach(page => {
+                    if (appPath + page === curPath || curPath === page) {
 
                         this.loading = true;
                         this.fetchApi(query, (err, data) => {
@@ -141,7 +149,7 @@ const app = new Vue({
             }
         }
     },
-    created(){
+    created() {
         this.appPath = appPath;
     }
 });

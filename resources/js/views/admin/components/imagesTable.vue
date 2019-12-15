@@ -27,7 +27,7 @@
 
                     <div class="elementtable__tr elementtable__tr-1">
                         <picture>
-                            <img :src="image.src" alt="IMG">
+                            <img :src="'../' + image.src" alt="IMG">
                         </picture>
                     </div>
                     <div class="elementtable__tr elementtable__tr-2">

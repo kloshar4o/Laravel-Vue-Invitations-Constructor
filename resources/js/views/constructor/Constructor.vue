@@ -23,7 +23,7 @@
 
 
                     <!--<router-link :to="{ name: 'Constructor' }">Редактор</router-link>-->
-                    <router-link :to="{ name: 'Admin' }" v-if="$auth.check()">Админ</router-link>
+                    <router-link :to="{ name: 'Admin', params: {page: $root.adminPage || 'client'} }" v-if="$auth.check()">Админ</router-link>
 
                     <router-link :to="{ name: 'Login' }" v-if="!$auth.check()">Логин</router-link>
 

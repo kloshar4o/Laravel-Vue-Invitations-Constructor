@@ -183,6 +183,7 @@
 
                 let BoxComponent = this.$parent.$refs.content
                 let box = BoxComponent.$refs.printBox;
+                box.parentElement.style.opacity = 0;
 
                 const scaleBox = x => box.style.transform = 'scale(' + x + ')';
 
@@ -223,6 +224,7 @@
 
                         //Scale back to 1
                         scaleBox(1);
+                        box.parentElement.style.opacity = 1;
 
                     })
                     .catch(error => {

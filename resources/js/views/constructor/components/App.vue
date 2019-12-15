@@ -14,7 +14,7 @@
 
                     <VContentButtons :options="options" @clearOptions="clearOptions" :generate="generate"></VContentButtons>
 
-                    <VContent :options="options" :menu="menu" @closeMenu="$emit('closeMenu')" ref="content"></VContent>
+                    <VContent :options="options" @closeMenu="$emit('closeMenu')" ref="content"></VContent>
 
                     <div class="canvas__footer" v-show="options.products.length">
                         <span>Список средств</span>

@@ -1,8 +1,8 @@
 <template>
     <div ref="printBox" class="canvas" :style="{
-                    'width': this.options.size.width + 'px',
-                    'height': this.options.size.height + 'px',
-                    'background': (this.options.background.src) ? 'url(' + this.options.background.src + ')' : 'white',}">
+                    'width': options.size.width + 'px',
+                    'height': options.size.height + 'px',
+                    'background': (options.background.src) ? 'url(' + options.background.src + ')' : 'white',}">
 
         <div class="overlayWhite"
              :style="{'background-color': 'rgba(255, 255, 255, ' + options.background.opacity + ' )'}"></div>
@@ -67,7 +67,7 @@
 
 
     export default {
-        props: ['options', 'menu'],
+        props: ['options'],
         components: {drr, Compact, VueSimpleSVG},
         methods: {
             selectDrr(i) {
