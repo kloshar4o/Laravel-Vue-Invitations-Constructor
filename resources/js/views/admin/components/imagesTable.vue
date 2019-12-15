@@ -96,8 +96,7 @@
                 axios
                     .post('images/' + command, objects)
                     .then(res => {
-                        if (msg)
-                            Vue.$toast.open(msg);
+                        //if (msg) Vue.$toast.open(msg);
                     })
                     .catch(error => {
 

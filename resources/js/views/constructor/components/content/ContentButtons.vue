@@ -156,7 +156,7 @@
                     })
                     .then(res => {
 
-                        Vue.$toast.open(res.data.toast);
+                        //Vue.$toast.open(res.data.toast);
                         app.cardId = res.data.id;
 
                     })

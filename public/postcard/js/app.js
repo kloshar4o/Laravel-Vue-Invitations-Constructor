@@ -9571,8 +9571,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('draggable', vuedraggable__
   methods: {
     Api: function Api(command, objects) {
       var msg = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('images/' + command, objects).then(function (res) {
-        if (msg) vue__WEBPACK_IMPORTED_MODULE_0___default.a.$toast.open(msg);
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('images/' + command, objects).then(function (res) {//if (msg) Vue.$toast.open(msg);
       })["catch"](function (error) {
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.$toast.open({
           message: error.toString(),
@@ -9690,7 +9689,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_I
       formData.append('cat', cat.id);
       formData.append('sort', totalImages);
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/images/save', formData, config).then(function (res) {
-        vue__WEBPACK_IMPORTED_MODULE_0___default.a.$toast.open(res.data.toast);
+        //Vue.$toast.open(res.data.toast);
         if (res.data.image) cat.images.push(res.data.image);
       })["catch"](function (error) {
         var validator = error.response.data.messeges;
@@ -10589,7 +10588,7 @@ window.jQuery = $;
         shared: app.shared,
         data: app.options
       }).then(function (res) {
-        vue__WEBPACK_IMPORTED_MODULE_1___default.a.$toast.open(res.data.toast);
+        //Vue.$toast.open(res.data.toast);
         app.cardId = res.data.id;
       })["catch"](function (err) {
         app.name = app.generateName();

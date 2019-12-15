@@ -53,7 +53,7 @@
                 axios.post('/images/save', formData, config)
                     .then(res => {
 
-                        Vue.$toast.open(res.data.toast);
+                        //Vue.$toast.open(res.data.toast);
 
                         if (res.data.image)
                             cat.images.push(res.data.image);
