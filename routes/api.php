@@ -26,12 +26,6 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     Route::post('auth/logout', 'AuthController@logout');
 
-    Route::get('tasks', 'TaskController@index');
-    Route::get('tasks/{id}', 'TaskController@show');
-    Route::post('tasks', 'TaskController@store');
-    Route::put('tasks/{id}', 'TaskController@update');
-    Route::delete('tasks/{id}', 'TaskController@destroy');
-
 });
 
 Route::group(['middleware' => 'jwt.refresh'], function () {
@@ -40,6 +34,13 @@ Route::group(['middleware' => 'jwt.refresh'], function () {
 
 Route::namespace('Api')->group(function () {
     Route::get('/images', 'ImagesController@index');
-    Route::post('/images/sort', 'ImagesController@sort');
+    Route::post('/images/update', 'ImagesController@update');
     Route::post('/images/save', 'ImagesController@save');
+    Route::post('/images/destroy', 'ImagesController@destroy');
+
+    Route::get('/cards/single/{name}', 'CardsController@single');
+    Route::get('/cards/{page}', 'CardsController@index');
+    Route::post('/cards/show', 'CardsController@show');
+    Route::post('/cards/store', 'CardsController@store');
+
 });

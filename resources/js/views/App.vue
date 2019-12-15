@@ -4,17 +4,8 @@
         <div v-if="$root.loading" class="loader_wrap">
             <div class="loader"></div>
         </div>
-        <router-view v-else></router-view>
+        <router-view></router-view>
 
     </div>
 </template>
-
-<script>
-    export default {
-
-        created() {
-
-        }
-    }
-</script>
 

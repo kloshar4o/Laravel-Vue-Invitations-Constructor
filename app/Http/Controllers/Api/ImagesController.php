@@ -7,7 +7,8 @@ use App\Http\Resources\ImageResource;
 use Illuminate\Http\Request;
 use App\Image;
 use App\ImageType;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ImagesController extends Controller
 {
@@ -22,44 +23,83 @@ class ImagesController extends Controller
             ->orderBy('sort')
             ->get();
 
+        foreach ($images as $image) {
+            switch ($image->type) {
+                case 'img':
+                case 'background':
+                    $image->accepted = '.jpg, .jpeg, .png';
+                    break;
+                case 'svg':
+                    $image->accepted = '.svg';
+                    break;
+            }
+        }
 
         return $images;
     }
 
-    public function sort(Request $request)
+    public function update(Request $request)
     {
 
-        $images = $request->all()['images'];
+        $images = $request->all();
 
-        foreach ($images as $image) {
+        foreach ($images as $imageValues) {
 
-            $imageData = Image::find($image['id']);
-            $imageData->sort = $image['sort'];
+            $imageData = Image::find($imageValues['id']);
+
+            foreach ($imageValues as $key => $value) {
+                $imageData[$key] = $value;
+            }
+
             $imageData->save();
         }
 
-        return response()->json(['message' => 'Сортировка сохранена']);
+        return;
 
     }
 
     public function save(Request $request)
 
     {
-
-        $request->validate([
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-
         $file = $request->file;
         $fileFolder = $request->folder;
         $fileName = $file->getClientOriginalName();
 
+        $validator = Validator::make(
+            $request->all(),
+            ['file' => 'required|mimes:jpeg,png,jpg,gif,svg|max:20000'],
+            ['mimes' => $fileName . ' должен быть одного из следующих типов: :values.']
+        );
 
-        $request->file->move(public_path("img/$fileFolder/"), $fileName);
+
+        //Validate type
+        if ($validator->fails()) {
+            return response()->json([
+                'messeges' => $validator->errors(),
+
+            ], 422);
+        }
+
+
+        //Validate if exist
+        $exists = Storage::disk('images')
+            ->exists("$fileFolder/$fileName");
+
+        if ($exists)
+            return response()->json([
+                'toast' => [
+                    'message' => "Файл $fileName в папке $fileFolder уже существует",
+                    'type' => 'error',
+                    'duration' => 20000
+                ]
+            ]);
+        else
+            Storage::disk('images')
+                ->putFileAs($fileFolder, $file, $fileName);
+
+
 
         $image = New Image;
-
 
         $image->src = "img/$fileFolder/$fileName";
         $image->image_types_id = $request->cat;
@@ -69,9 +109,23 @@ class ImagesController extends Controller
         $image->save();
 
 
+        return response()->json([
+            'toast' => "Файл $fileName загружен",
+            'image' => $image
+        ]);
 
-        return response()->json(['message' => "Файл $fileName загружен", 'image' => $image]);
+    }
 
+    public function destroy(Request $image){
+        $id = $image->id;
+        $path = $image->src;
+
+        Storage::disk('constructor')
+            ->delete($path);
+
+        Image::find($id)
+            ->delete();
+        return;
     }
 
 

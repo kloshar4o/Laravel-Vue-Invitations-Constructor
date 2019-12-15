@@ -3,10 +3,12 @@
         <header class="header">
             <div class="container">
                 <div class="header__wrap">
+
                     <div class="header__menubtn js__open-menu">
-                        <div class="hamburger"><span></span>
+                        <div class="hamburger" @click="openMenu = !openMenu;" :class="{active: openMenu}"><span></span>
                         </div>
                     </div>
+
                     <div class="header__logo">
                         <router-link :to="{ name: 'Constructor' }">
                             <picture>
@@ -14,7 +16,9 @@
                             </picture>
                         </router-link>
                     </div>
-                    <div class="header__text"><span>Онлайн-редактор открыток для консультантов </span>
+
+                    <div class="header__text">
+                        <span>Онлайн-редактор открыток для консультантов</span>
                     </div>
 
 
@@ -42,6 +46,8 @@
             :sizes="sizes"
             :options="options"
             :lists="lists"
+            :openMenu="openMenu"
+            @closeMenu="openMenu = false"
             @optionsUpdated="updateOptions">
 
         </constructor>
@@ -51,7 +57,7 @@
 
 <script>
     import Vue from 'vue';
-    import constructor from './constructor/app';
+    import constructor from './components/app';
 
     Vue.component('constructor', constructor)
 
@@ -60,6 +66,7 @@
             return {
                 error: null,
                 options: null,
+                openMenu: false,
                 lists: [
                     {menu_name: 'Список средств', title: 'Список средств', type: 'lists', id: 'listoffunds'}
                 ],
@@ -103,8 +110,8 @@
 
                 next(vm => {
                     if (user === 'client' || user === 'consultant') {
-
-                        vm.$root.getData('images', to.path, (err, data, query) => {
+                        vm.$root.user = user;
+                        vm.$root.getData('images', to.path, (err, data, query, user) => {
                             vm.$root.setData(err, data, query);
                             vm.$forceUpdate();
                         })

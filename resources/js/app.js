@@ -4,11 +4,14 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 
 import App from './views/App.vue'
-import Constructor from './views/Constructor.vue'
-import Login from './views/Login.vue';
-import Register from './views/Register.vue';
-import Admin from './views/Admin.vue';
 import Page404 from './views/404.vue';
+import Constructor from './views/constructor/Constructor.vue'
+
+import Admin from './views/admin/Admin.vue';
+import Login from './views/admin/auth/Login.vue';
+import Register from './views/admin/auth/Register.vue';
+
+import Single from './views/Single.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -56,10 +59,16 @@ const router = new VueRouter({
             name: '404',
             component: Page404
         },
+
         {
             path: appPath + ':user',
             name: 'Constructor',
             component: Constructor,
+        },
+        {
+            path: appPath + ':user/:cardName',
+            name: 'Single',
+            component: Single,
         },
     ],
 });

@@ -1252,15 +1252,18 @@ html, body {
     color: #000000;
     height: 100%;
 }
+#wrapper{
 
-#wrapper {
+    min-height: 100%;
+    min-width: 1000px;
+    overflow: auto;
+}
+
+#wrapper, .VOptions {
     display: -ms-flexbox;
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
-    min-height: 100%;
-    min-width: 1000px;
-    overflow: auto;
 }
 
 .container {
@@ -2428,6 +2431,7 @@ a:hover {
 .header {
     height: 63px;
     background-color: #000;
+    min-width: 1000px;
 }
 
 .header__wrap {
@@ -3160,7 +3164,7 @@ a:hover {
     bottom: 0;
     content: "asdasdasd";
     background: white;
-    z-index: 99;
+    z-index: 99998;
     background: rgba(0, 0, 0, .2);
     justify-content: center;
     align-items: center;
@@ -3313,9 +3317,17 @@ a:hover {
     border: solid 1px gainsboro;
     padding: 10px;
 }
+.files p {
+    margin-bottom:5px;
+}
 .files span {
-    display: inline-block;
-    padding: 10px 0;
+    padding: 5px 0;
+    list-style-type: decimal;
+    display: list-item;
+    margin-left: 20px;
+    text-indent: 1px;
+    color: gray;
+    font-size: 15px;
 }
 .files span:after{
     content: ', ';
@@ -3323,4 +3335,178 @@ a:hover {
 }
 .files span:last-child:after{
     content: ''
+}
+
+.files .btn{
+    display: block;
+    margin: inherit;
+    margin-top: inherit;
+    text-align: center;
+    height: inherit;
+    margin-top: 10px;
+}
+
+
+.vdr {
+    border: 1px solid #a4a4a4;
+}
+
+.drr-stick, .handle {
+    width: 18px !important;
+    height: 18px !important;
+    background-image: url('../img/drag.jpg') !important;
+    background-size: cover !important;
+}
+
+.handle.handle-mr, .handle.handle-mt, .handle.handle-mb {
+    display: none;
+    width: 22px !important;
+    height: 22px !important;
+    border: none;
+    cursor: pointer;
+    border-radius: 100%;
+    z-index: 10;
+}
+
+.handle.handle-mr {
+    margin-top: -11px;
+    margin-left: 15px;
+    left: 100%;
+    background-image: url('../img/close.png') !important;
+    position: absolute;
+    top: 50%;
+}
+
+.drr-stick.drr-stick-ro {
+    background-image: url('../img/rotate.png') !important;
+    height: 22px !important;
+    width: 22px !important;
+    background-size: cover;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    top: -38px !important;
+    margin-left: -11px !important;
+    border: none !important;
+    border-radius: 100% !important;
+}
+
+.ro-stick-handle {
+    display: none;
+}
+
+.handle.handle-mr:before, .drr-stick.drr-stick-ro:before, .handle.handle-mb:before {
+    content: '';
+    display: block;
+    border-color: #a4a4a4;
+    border-style: solid;
+    border-width: 0;
+}
+
+.handle.handle-mr:before {
+    width: 10px;
+    margin-top: calc(50% - 1px);
+    margin-left: -10px;
+    border-bottom-width: 1px;
+}
+
+.drr-stick.drr-stick-ro:before {
+    height: 10px;
+    margin-left: calc(50% - 1px);
+    margin-top: 100%;
+    border-left-width: 1px;
+}
+
+.handle.handle-mb:before {
+    height: 13px;
+    margin-left: calc(50% - 1px);
+    border-left-width: 1px;
+    transform: translateY(-100%);
+}
+
+.active .handle.handle-mr, .active .handle.handle-mb {
+    display: block;
+}
+
+.drr.active::before {
+    outline: solid 1px #a4a4a4 !important;
+    outline-offset: 5px;
+}
+
+.drr-stick-tl, .drr-stick-bl {
+    margin-left: -11px !important;
+}
+
+.drr-stick-tr, .drr-stick-br {
+    right: -11px !important;
+}
+
+.drr-stick-tl, .drr-stick-tr {
+    margin-top: -11px !important;
+}
+
+.drr-stick-bl, .drr-stick-br {
+    margin-bottom: -11px !important;
+}
+
+.vc-compact {
+    width: 245px !important;
+    display: none;
+    margin: auto;
+    position: relative;
+}
+
+.drr.active .showColors div .vc-compact {
+    display: block;
+}
+
+.svgHolder .vc-compact {
+    margin: auto;
+    margin-top: auto;
+    margin-top: 27px;
+
+}
+
+.handle.handle-mb.color {
+    left: 50%;
+    position: absolute;
+    top: 100%;
+    margin-left: -9px;
+    margin-top: 18px;
+    background-image: url('../img/color.jpg') !important;
+    z-index: 1;
+}
+
+.handle:focus, .handle:active {
+    opacity: .5 !important;
+}
+
+.notices {
+    z-index: 99999 !important;
+}
+
+.myPipPop {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    min-height: 100vh;
+    background: rgba(255, 255, 255, .8);
+    display: flex;
+}
+
+.myPipPop #copylink {
+    display: block;
+    margin: auto;
+    background-color:  white;
+}
+.constructor__content.single {
+    display: flex;
+    justify-content: center;
+}
+.constructor__content.single .drr{
+    cursor: inherit;
+}
+.constructor__content.single .drr:before{
+    display: none;
 }

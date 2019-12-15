@@ -1,4 +1,25 @@
 <template>
+<div class="VOptions">
+    <div class="constructor__menu js__scroll" :class="{active : openMenu}">
+        <div class="menu">
+
+            <div class="menu__item" data-fancybox data-src="#selectsize">
+                <span>Размер {{openMenu}}</span>
+                <em>Для поста {{options.size.name}} <br> {{options.size.width}} x {{options.size.height}}px</em>
+            </div>
+
+            <div v-for="(menuItem, i) in [].concat(imagesData, menu.textAreas, menu.lists)" class="menu__item js__tab-btn"
+                 :key="menuItem.id"
+                 :ref="'menu'"
+                 :class="{ 'active': menu.active === i }"
+                 @click="menu.active = i">
+
+                <span>{{menuItem.menu_name}}</span>
+            </div>
+
+        </div>
+
+    </div>
 
     <div :class="classes('constructor__option')">
         <div :class="classes('options js__tab-content', cat, i)"
@@ -22,7 +43,7 @@
                 <div :class="classes('options__content', cat, i)">
                     <div :class="classes('options__content__child', cat, i)">
 
-                        <slot v-if="cat.type === 'textAreas'">
+                        <slot v-if="cat.type === 'textAreas'" >
                             <div class="blocktextarea">
                                 <textarea :name="cat.id" :placeholder="cat.menu_name" v-model="options[cat.id]"></textarea>
                                 <span @click="options[cat.id] = ''">
@@ -36,7 +57,7 @@
 
                         <slot v-else-if="cat.type === 'lists'">
                             <div class="blocktext" v-for="(product, i) in options.products" :key="i">
-                                <input type="text" placeholder="Название" v-model="product.menu_name">
+                                <input type="text" placeholder="Название" v-model="product.name">
                                 <input type="text" placeholder="Ссылка" v-model="product.link">
                                 <svg class="svg svg-x" width="50" height="50" @click="$delete(options.products, i)">
                                     <use xlink:href="ico/sprite/sprite.svg#x"></use>
@@ -52,11 +73,12 @@
                             </div>
                         </slot>
 
-                        <slot else="">
-                            <div :class="classes('options__content__image', cat, j)"
-                                 v-for="(image, j) in cat.images"
+                        <slot v-else >
+                            <div :class="classes('options__content__image', cat, j, image.id)"
+                                 v-if="image['show_'+$root.user]"
+                                 v-for="(image, j) in orderBy(cat.images, 'sort')"
                                  :key="j"
-                                 @click="setOption(cat.type, image, j)">
+                                 @click="setOption(cat.type, image, j); $emit('closeMenu')">
 
                                 <img :src="image.src" alt="IMG">
                             </div>
@@ -71,15 +93,20 @@
 
     </div>
 
+</div>
 </template>
 
 <script>
+    import Vue from 'vue';
 
+    import Vue2Filters from 'vue2-filters'
+    Vue.use(Vue2Filters)
 
     export default {
-        props: ['imagesData', 'options', 'menu'],
+        props: ['menu', 'options',  'imagesData', 'openMenu'],
+        mixins: [Vue2Filters.mixin],
         methods: {
-            classes(tagClass, cat = {}, i = 0) {
+            classes(tagClass, cat = {}, i = 0, imageId = 0) {
                 let isBg = cat.type === 'background';
                 let isImg = cat.type === 'img';
                 let isSvg = cat.type === 'svg';
@@ -88,7 +115,7 @@
                 switch (tagClass) {
                     case 'constructor__option':
                         classess.push({
-                            'active': this.menu.open
+                            'active': this.openMenu
                         });
                         break;
 
@@ -114,14 +141,14 @@
                             'svgimg__item': isSvg,
                             'background__item': isBg,
                             'scrollblock__item': isImg,
-                            'active': this.options.background.active === i && isBg
+                            'active': this.options.background.active === imageId && isBg
                         }]);
                         break;
                 }
                 return classess;
             },
             setOption(type, image, j) {
-                let _this = this;
+                let app = this;
                 let maxw = 200;
 
 
@@ -160,7 +187,7 @@
                     switch (type) {
                         case 'svg':
                         case 'img':
-                            _this.options.drags.push({
+                            app.options.drags.push({
                                 ...image,
                                 ...defoultValues,
                                 type: type,
@@ -170,14 +197,14 @@
 
                         case 'background':
 
-                            if (j === _this.options.background.active) {
-                                _this.options.background.active = '';
-                                _this.options.background.src = ''
+                            if (j === app.options.background.active) {
+                                app.options.background.active = '';
+                                app.options.background.src = ''
                             } else {
-                                _this.options.background = {
-                                    opacity: _this.options.background.opacity || 0.5,
+                                app.options.background = {
+                                    opacity: app.options.background.opacity || 0.5,
                                     src: image.src,
-                                    active: j
+                                    active: image.id,
                                 };
                             }
                             break;
