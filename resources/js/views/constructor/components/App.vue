@@ -31,8 +31,6 @@
 
     </div>
 
-    <p v-else=""> No images provided..</p>
-
 </template>
 
 

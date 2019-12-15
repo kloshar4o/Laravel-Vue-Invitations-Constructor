@@ -9104,6 +9104,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       menu: {
         open: false,
+        ImagesTableKey: 1,
         active: 0
       }
     };
@@ -10008,8 +10009,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Popups_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Popups.vue */ "./resources/js/views/constructor/components/Popups.vue");
 /* harmony import */ var _content_Content_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./content/Content.vue */ "./resources/js/views/constructor/components/content/Content.vue");
 /* harmony import */ var _content_ContentButtons_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./content/ContentButtons.vue */ "./resources/js/views/constructor/components/content/ContentButtons.vue");
-//
-//
 //
 //
 //
@@ -54966,12 +54965,13 @@ var render = function() {
                     attrs: { cat: cat, index: i },
                     on: {
                       upload: function($event) {
-                        return _vm.$forceUpdate()
+                        _vm.ImagesTableKey++
                       }
                     }
                   }),
                   _vm._v(" "),
                   _c("ImagesTable", {
+                    key: _vm.ImagesTableKey,
                     attrs: { cat: cat, menuOpen: _vm.menu.open }
                   })
                 ],
@@ -56381,7 +56381,7 @@ var render = function() {
         ],
         1
       )
-    : _c("p", [_vm._v(" No images provided..")])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

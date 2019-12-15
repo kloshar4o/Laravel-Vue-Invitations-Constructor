@@ -39,9 +39,9 @@
                 <div class="admincontent elementcontent">
                     <h3>{{cat.menu_name}}</h3>
 
-                    <UploadForm :cat="cat" @upload="$forceUpdate()" :index="i"></UploadForm>
+                    <UploadForm :cat="cat" @upload="ImagesTableKey++" :index="i"></UploadForm>
 
-                    <ImagesTable :cat="cat" :menuOpen="menu.open" ></ImagesTable>
+                    <ImagesTable :cat="cat" :menuOpen="menu.open" :key="ImagesTableKey"></ImagesTable>
 
                 </div>
             </div>
@@ -59,6 +59,7 @@
             return {
                 menu: {
                     open: false,
+                    ImagesTableKey: 1,
                     active: 0,
                 }
             }
