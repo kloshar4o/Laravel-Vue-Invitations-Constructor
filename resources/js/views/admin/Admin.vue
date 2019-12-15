@@ -57,9 +57,9 @@
         components: {UploadForm, ImagesTable},
         data() {
             return {
+                ImagesTableKey: 1,
                 menu: {
                     open: false,
-                    ImagesTableKey: 1,
                     active: 0,
                 }
             }

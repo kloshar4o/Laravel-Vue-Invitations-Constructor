@@ -134,7 +134,7 @@
                 });
 
                 this.Api('update', images);
-                this.Api('destroy', image, "Файл " + image.src + " удален")
+                this.Api('destroy', image)
 
                 this.$forceUpdate();
 

@@ -9102,9 +9102,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      ImagesTableKey: 1,
       menu: {
         open: false,
-        ImagesTableKey: 1,
         active: 0
       }
     };
@@ -9424,7 +9424,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('draggable', vuedraggable__
         img.sort = i;
       });
       this.Api('update', images);
-      this.Api('destroy', image, "Файл " + image.src + " удален");
+      this.Api('destroy', image);
       this.$forceUpdate();
     }
   },

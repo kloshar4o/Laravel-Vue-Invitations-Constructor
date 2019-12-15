@@ -88,7 +88,7 @@ class ImagesController extends Controller
         if ($exists)
             return response()->json([
                 'toast' => [
-                    'message' => "Файл $fileName в папке $fileFolder уже существует",
+                    'message' => "Файл $fileName уже существует",
                     'type' => 'error',
                     'duration' => 20000
                 ]
