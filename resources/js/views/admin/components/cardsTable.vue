@@ -2,7 +2,7 @@
 
     <div class="constructor__admin" :class="{active: isActive()}">
         <div class="admincontent" v-if="cards[page]">
-            <h3>Открытки консультантов</h3>
+            <h3>Открытки {{lang(page)}}</h3>
             <span>Всего создано: {{cards[page].total}} </span><span>Их них скачано: {{cards[page].downloaded}}, поделиться ссылкой: {{cards[page].shared}}</span>
 
 
@@ -60,6 +60,16 @@
         },
 
         methods: {
+            lang(value){
+
+                switch (value) {
+
+                    case 'consultant':
+                        return 'консультантов'
+                    case 'client':
+                        return 'клиентов'
+                }
+            },
             destroy(id, page, currPag) {
 
                 this.$root.loading = true;

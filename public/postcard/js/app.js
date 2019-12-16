@@ -9334,8 +9334,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-toast-notification */ "./node_modules/vue-toast-notification/dist/index.min.js");
 /* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_toast_notification__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vue_toast_notification_dist_index_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-toast-notification/dist/index.css */ "./node_modules/vue-toast-notification/dist/index.css");
@@ -9396,6 +9396,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_I
     };
   },
   methods: {
+    lang: function lang(value) {
+      switch (value) {
+        case 'consultant':
+          return 'консультантов';
+
+        case 'client':
+          return 'клиентов';
+      }
+    },
     destroy: function destroy(id, page, currPag) {
       var _this = this;
 
@@ -9408,7 +9417,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_I
     },
     formatDate: function formatDate(date) {
       if (date) {
-        return moment__WEBPACK_IMPORTED_MODULE_5___default()(String(date)).format('DD.MM.YYYY');
+        return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(date)).format('DD.MM.YYYY');
       }
     },
     paginateTo: function paginateTo(page, pag) {
@@ -73133,7 +73142,7 @@ var render = function() {
     [
       _vm.cards[_vm.page]
         ? _c("div", { staticClass: "admincontent" }, [
-            _c("h3", [_vm._v("Открытки консультантов")]),
+            _c("h3", [_vm._v("Открытки " + _vm._s(_vm.lang(_vm.page)))]),
             _vm._v(" "),
             _c("span", [
               _vm._v(
