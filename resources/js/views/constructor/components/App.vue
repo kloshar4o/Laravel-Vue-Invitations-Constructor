@@ -3,7 +3,7 @@
 
     <div id="wrapper" v-if="imagesData && options && !$root.loading">
 
-        <VOptions :menu="menu" :imagesData="imagesData" :options="options" :openMenu="openMenu"
+        <VOptions :menu="menu" :imagesData="imagesData" :options="options" :openMenu="openMenu" :user="user"
                   @closeMenu="$emit('closeMenu')"></VOptions>
 
 

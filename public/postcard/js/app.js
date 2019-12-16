@@ -74266,7 +74266,8 @@ var render = function() {
               menu: _vm.menu,
               imagesData: _vm.imagesData,
               options: _vm.options,
-              openMenu: _vm.openMenu
+              openMenu: _vm.openMenu,
+              user: _vm.user
             },
             on: {
               closeMenu: function($event) {
