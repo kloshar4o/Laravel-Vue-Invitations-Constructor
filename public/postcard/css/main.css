@@ -3289,9 +3289,13 @@ a:hover {
     margin: 5px;
 }
 .alert.alert-danger {
-    color:
-        red;
+    color:red;
     padding: 10px;
+}
+.alert.alert-suc {
+    color:green;
+    padding: 10px 0;
+    text-align: left;
 }
 
 .title {

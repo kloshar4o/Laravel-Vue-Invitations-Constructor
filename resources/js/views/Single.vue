@@ -150,7 +150,6 @@
             },
             setData(err, data) {
 
-                console.log(data);
                 if (err) {
                     console.log(err);
                 } else {

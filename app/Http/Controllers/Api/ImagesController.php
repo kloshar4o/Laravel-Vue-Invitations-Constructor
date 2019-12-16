@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ImageResource;
 use Illuminate\Http\Request;
 use App\Image;
 use App\ImageType;

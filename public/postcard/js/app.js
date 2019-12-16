@@ -9011,8 +9011,6 @@ var getCard = function getCard(cardName, callback) {
       if (props.x === -999) props.x = this.$refs.printBox.clientWidth / 2 - props.w / 2;
     },
     setData: function setData(err, data) {
-      console.log(data);
-
       if (err) {
         console.log(err);
       } else {
@@ -9203,25 +9201,24 @@ __webpack_require__.r(__webpack_exports__);
           password: app.password
         },
         success: function success(res) {
-          console.log(res);
           app.$root.loading = false;
         },
         error: function error(res) {
           console.log(res);
-          app.$root.errors.form = true;
+          app.error = true;
           app.$root.loading = false;
+          app.$forceUpdate();
         },
         rememberMe: true,
         redirect: {
-          name: 'Admin'
+          name: 'Admin',
+          params: {
+            page: 'client'
+          }
         },
         fetchUser: true
       });
     }
-  },
-  beforeRouteLeave: function beforeRouteLeave(to, from, next) {
-    this.$root.errors.form = false;
-    next();
   }
 });
 
@@ -9236,6 +9233,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -9286,35 +9286,23 @@ __webpack_require__.r(__webpack_exports__);
           password: app.password
         },
         success: function success() {
-          this.$auth.login({
-            params: {
-              email: app.email,
-              password: app.password
-            },
-            success: function success() {},
-            error: function error() {},
-            rememberMe: true,
-            redirect: {
-              name: 'Admin'
-            },
-            fetchUser: true
-          });
+          app.success = true;
+          app.$root.loading = false;
         },
         error: function error(resp) {
-          console.log(resp.response.data.errors);
           app.$root.loading = false;
           app.error = true;
-          app.$root.errors.register = resp.response.data.errors;
-        },
-        redirect: null
+          app.errors.register = resp.response.data.errors;
+          app.$forceUpdate();
+        }
       });
     }
   },
   created: function created() {
-    this.$root.errors.register = this.$root.errors.register || {};
+    this.errors.register = this.errors.register || {};
   },
   beforeRouteLeave: function beforeRouteLeave(to, from, next) {
-    this.$root.errors.register = false;
+    this.errors.register = false;
     next();
   }
 });
@@ -9828,32 +9816,32 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('constructor', _components_
       }],
       sizes: [{
         img: 'facebook',
-        name: 'Facebook',
+        name: 'Для поста Facebook',
         width: 1200,
         height: 630
       }, {
         img: 'instargam',
-        name: 'Instagram',
+        name: 'Instagram и мессенджеры',
         width: 1080,
         height: 1080
       }, {
         img: 'insagram',
-        name: 'Instagram Stories',
+        name: 'Для поста Instagram Stories',
         width: 1080,
         height: 1920
       }, {
         img: 'vk',
-        name: 'Вконтакте',
+        name: 'Для поста Вконтакте',
         width: 1200,
         height: 630
       }, {
         img: 'ok',
-        name: 'OK.ru',
+        name: 'Для поста OK.ru',
         width: 1680,
         height: 1680
       }, {
         img: 'tw',
-        name: 'Twitter',
+        name: 'Для поста Twitter',
         width: 1024,
         height: 512
       }]
@@ -71477,8 +71465,8 @@ if (true) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-    /**
- * Vue Cookies v1.5.13
+/**
+ * Vue Cookies v1.6.1
  * https://github.com/cmp-cc/vue-cookies
  *
  * Copyright 2016, cmp-cc
@@ -71489,22 +71477,22 @@ if (true) {
 
     var defaultConfig = {
         expires : '1d',
-        path : '; path=/'
+        path : '; path=/',
+        domain:'',
+        secure:'',
     }
 
     var VueCookies = {
         // install of Vue
         install: function(Vue) {
             Vue.prototype.$cookies = this
-            Vue.cookies = this
+            Vue.$cookies = this
         },
-        config : function(expireTimes,path) {
-            if(expireTimes) {
-                defaultConfig.expires = expireTimes;
-            }
-            if(path) {
-                defaultConfig.path = '; path=' + path;
-            }
+        config : function(expireTimes,path,domain,secure) {
+            defaultConfig.expires = expireTimes ? expireTimes : '1d';
+            defaultConfig.path = path ? '; path=' + path : '; path=/';
+            defaultConfig.domain = domain ? '; domain=' + domain : '';
+            defaultConfig.secure = secure ? '; secure' : '';
         },
         get: function(key) {
             var value = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
@@ -71560,14 +71548,14 @@ if (true) {
                         break;
                 }
             }
-            document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path) + (secure ? "; secure" : "");
+            document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : defaultConfig.domain) + (path ? "; path=" + path : defaultConfig.path) + (secure === undefined ? defaultConfig.secure : secure ? "; secure" : "");
             return this;
         },
         remove: function(key, path, domain) {
             if (!key || !this.isKey(key)) {
                 return false;
             }
-            document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path);
+            document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : defaultConfig.domain) + (path ? "; path=" + path : defaultConfig.path);
             return this;
         },
         isKey: function(key) {
@@ -72874,7 +72862,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.$root.errors.form
+          _vm.error
             ? _c("div", { staticClass: "alert alert-danger" }, [
                 _c("p", [
                   _vm._v("Ошибка авторизации неправильный логин или пароль")
@@ -72984,15 +72972,34 @@ var render = function() {
           _c("h3", [_vm._v("Регистрация")]),
           _c("span", [_vm._v("Онлайн-редактор открыток ")]),
           _vm._v(" "),
+          _vm.success
+            ? _c("div", { staticClass: "alert alert-suc" }, [
+                _c(
+                  "p",
+                  [
+                    _vm._v("Пользватель "),
+                    _c("a", { attrs: { href: "mailto:" + _vm.email } }, [
+                      _vm._v(_vm._s(_vm.email))
+                    ]),
+                    _vm._v(" успешно добавлен, вы можете  "),
+                    _c("router-link", { attrs: { to: { name: "Login" } } }, [
+                      _vm._v("зайти")
+                    ])
+                  ],
+                  1
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "div",
             {
               staticClass: "form-group",
-              class: { "has-error": _vm.$root.errors.register.name }
+              class: { "has-error": _vm.errors.register.name }
             },
             [
-              _vm._l(_vm.$root.errors.register.name, function(err) {
-                return _vm.$root.errors.register.name
+              _vm._l(_vm.errors.register.name, function(err) {
+                return _vm.errors.register.name
                   ? _c("span", { staticClass: "help-block" }, [
                       _vm._v(_vm._s(err))
                     ])
@@ -73028,11 +73035,11 @@ var render = function() {
             "div",
             {
               staticClass: "form-group",
-              class: { "has-error": _vm.$root.errors.register.email }
+              class: { "has-error": _vm.errors.register.email }
             },
             [
-              _vm._l(_vm.$root.errors.register.email, function(err) {
-                return _vm.$root.errors.register.email
+              _vm._l(_vm.errors.register.email, function(err) {
+                return _vm.errors.register.email
                   ? _c("span", { staticClass: "help-block" }, [
                       _vm._v(_vm._s(err))
                     ])
@@ -73068,11 +73075,11 @@ var render = function() {
             "div",
             {
               staticClass: "form-group",
-              class: { "has-error": _vm.$root.errors.register.password }
+              class: { "has-error": _vm.errors.register.password }
             },
             [
-              _vm._l(_vm.$root.errors.register.password, function(err) {
-                return _vm.$root.errors.register.password
+              _vm._l(_vm.errors.register.password, function(err) {
+                return _vm.errors.register.password
                   ? _c("span", { staticClass: "help-block" }, [
                       _vm._v(_vm._s(err))
                     ])
@@ -74227,7 +74234,7 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _c("b", [_vm._v("Для поста " + _vm._s(size.name))]),
+                  _c("b", [_vm._v(_vm._s(size.name))]),
                   _c("em", [
                     _vm._v(
                       _vm._s(size.width) + " x " + _vm._s(size.height) + "px"
@@ -94013,7 +94020,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(__webpack_require__(/*! @websanov
   registerData: {
     url: 'auth/register',
     method: 'POST',
-    redirect: appPath + 'login'
+    redirect: ''
   },
   loginData: {
     url: 'auth/login',

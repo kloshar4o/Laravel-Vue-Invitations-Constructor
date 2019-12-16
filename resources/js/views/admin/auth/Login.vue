@@ -10,7 +10,7 @@
                 </span>
 
 
-                <div class="alert alert-danger" v-if="$root.errors.form">
+                <div class="alert alert-danger" v-if="error">
                     <p>Ошибка авторизации неправильный логин или пароль</p>
                 </div>
 
@@ -42,24 +42,20 @@
                     },
                     success: function (res) {
 
-                        console.log(res)
                         app.$root.loading = false;
                     },
                     error: function (res) {
                         console.log(res)
-                        app.$root.errors.form = true;
+                        app.error = true;
                         app.$root.loading = false;
+                        app.$forceUpdate();
 
                     },
                     rememberMe: true,
-                    redirect: {name : 'Admin'},
+                    redirect: {name : 'Admin', params: {page: 'client'}},
                     fetchUser: true,
                 });
             },
-        },
-        beforeRouteLeave (to, from, next) {
-            this.$root.errors.form = false;
-            next();
         }
 
     }

@@ -4,19 +4,22 @@
         <div class="login">
             <form action="#" class="formlog" autocomplete="off" @submit.prevent="register" method="post">
 
-
                 <h3>Регистрация</h3><span>Онлайн-редактор открыток </span>
 
-                <div class="form-group" v-bind:class="{ 'has-error': $root.errors.register.name }">
-                    <span class="help-block" v-if="$root.errors.register.name" v-for="err in $root.errors.register.name">{{ err }}</span>
+                <div class="alert alert-suc" v-if="success">
+                    <p>Пользватель <a :href="'mailto:'+email">{{email}}</a> успешно добавлен, вы можете  <router-link :to="{ name: 'Login' }">зайти</router-link></p>
+                </div>
+
+                <div class="form-group" v-bind:class="{ 'has-error': errors.register.name }">
+                    <span class="help-block" v-if="errors.register.name" v-for="err in errors.register.name">{{ err }}</span>
                     <input type="text" id="name" class="form-control" v-model="name" placeholder="Имя">
                 </div>
-                <div class="form-group" v-bind:class="{ 'has-error': $root.errors.register.email }">
-                    <span class="help-block" v-if="$root.errors.register.email" v-for="err in $root.errors.register.email">{{ err }}</span>
+                <div class="form-group" v-bind:class="{ 'has-error': errors.register.email }">
+                    <span class="help-block" v-if="errors.register.email" v-for="err in errors.register.email">{{ err }}</span>
                     <input type="email" id="email" class="form-control" placeholder="E-mail" v-model="email">
                 </div>
-                <div class="form-group" v-bind:class="{ 'has-error': $root.errors.register.password }">
-                    <span class="help-block" v-if="$root.errors.register.password" v-for="err in $root.errors.register.password">{{ err }}</span>
+                <div class="form-group" v-bind:class="{ 'has-error': errors.register.password }">
+                    <span class="help-block" v-if="errors.register.password" v-for="err in errors.register.password">{{ err }}</span>
                     <input type="password" id="password" class="form-control" v-model="password" placeholder="Пароль">
                 </div>
 
@@ -51,36 +54,25 @@
                         password: app.password
                     },
                     success: function () {
+                        app.success = true;
+                        app.$root.loading = false;
 
-                        this.$auth.login({
-                            params: {
-                                email: app.email,
-                                password: app.password
-                            },
-                            success: function () {
-                            },
-                            error: function () {
-                            },
-                            rememberMe: true,
-                            redirect: {name : 'Admin'},
-                            fetchUser: true,
-                        });
                     },
                     error: function (resp) {
-                        console.log(resp.response.data.errors)
+
                         app.$root.loading = false;
                         app.error = true;
-                        app.$root.errors.register = resp.response.data.errors;
-                    },
-                    redirect: null
+                        app.errors.register = resp.response.data.errors;
+                        app.$forceUpdate()
+                    }
                 });
             }
         },
         created(){
-            this.$root.errors.register = this.$root.errors.register || {};
+            this.errors.register = this.errors.register || {};
         },
         beforeRouteLeave (to, from, next) {
-            this.$root.errors.register = false;
+            this.errors.register = false;
             next();
         }
 

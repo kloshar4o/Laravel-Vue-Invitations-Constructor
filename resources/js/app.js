@@ -89,7 +89,7 @@ Vue.use(require('@websanova/vue-auth'), {
     authRedirect: {path: appPath + 'login'},
     forbiddenRedirect: {path: appPath + 'admin'},
     notFoundRedirect: {path: appPath + 'admin'},
-    registerData: {url: 'auth/register', method: 'POST', redirect: appPath + 'login'},
+    registerData: {url: 'auth/register', method: 'POST', redirect: ''},
     loginData: {url: 'auth/login', method: 'POST', redirect: appPath + 'admin', fetchUser: true},
     logoutData: {url: 'auth/logout', method: 'POST', redirect: appPath + 'login', makeRequest: false},
 });

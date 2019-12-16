@@ -76,12 +76,12 @@
                     {menu_name: 'Ссылка на страницу', title: 'Ссылка на страницу', type: 'textAreas', id: 'pagelink', client: 0},
                 ],
                 sizes: [
-                    {img: 'facebook', name: 'Facebook', width: 1200, height: 630},
-                    {img: 'instargam', name: 'Instagram', width: 1080, height: 1080},
-                    {img: 'insagram', name: 'Instagram Stories', width: 1080, height: 1920},
-                    {img: 'vk', name: 'Вконтакте', width: 1200, height: 630},
-                    {img: 'ok', name: 'OK.ru', width: 1680, height: 1680},
-                    {img: 'tw', name: 'Twitter', width: 1024, height: 512},
+                    {img: 'facebook', name: 'Для поста Facebook', width: 1200, height: 630},
+                    {img: 'instargam', name: 'Instagram и мессенджеры', width: 1080, height: 1080},
+                    {img: 'insagram', name: 'Для поста Instagram Stories', width: 1080, height: 1920},
+                    {img: 'vk', name: 'Для поста Вконтакте', width: 1200, height: 630},
+                    {img: 'ok', name: 'Для поста OK.ru', width: 1680, height: 1680},
+                    {img: 'tw', name: 'Для поста Twitter', width: 1024, height: 512},
                 ],
 
             }
