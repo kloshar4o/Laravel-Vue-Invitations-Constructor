@@ -9334,8 +9334,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-toast-notification */ "./node_modules/vue-toast-notification/dist/index.min.js");
 /* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_toast_notification__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vue_toast_notification_dist_index_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-toast-notification/dist/index.css */ "./node_modules/vue-toast-notification/dist/index.css");
@@ -9408,7 +9408,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_I
     },
     formatDate: function formatDate(date) {
       if (date) {
-        return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(date)).format('DD.MM.YYYY');
+        return moment__WEBPACK_IMPORTED_MODULE_5___default()(String(date)).format('DD.MM.YYYY');
       }
     },
     paginateTo: function paginateTo(page, pag) {
@@ -9793,6 +9793,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('constructor', _components_
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      user: 'Клиент',
       error: null,
       options: null,
       openMenu: false,
@@ -9800,18 +9801,21 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('constructor', _components_
         menu_name: 'Список средств',
         title: 'Список средств',
         type: 'lists',
-        id: 'listoffunds'
+        id: 'listoffunds',
+        client: 0
       }],
       textAreas: [{
         menu_name: 'Подпись',
         title: 'Подпись',
         type: 'textAreas',
-        id: 'signature'
+        id: 'signature',
+        client: 1
       }, {
         menu_name: 'Ссылка на страницу',
         title: 'Ссылка на страницу',
         type: 'textAreas',
-        id: 'pagelink'
+        id: 'pagelink',
+        client: 0
       }],
       sizes: [{
         img: 'facebook',
@@ -9819,7 +9823,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('constructor', _components_
         width: 1200,
         height: 630
       }, {
-        img: 'insagram',
+        img: 'instargam',
         name: 'Instagram',
         width: 1080,
         height: 1080
@@ -9847,6 +9851,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('constructor', _components_
     };
   },
   methods: {
+    lang: function lang(value) {
+      switch (value) {
+        case 'consultant':
+          return 'консультантов';
+
+        case 'client':
+          return 'клиентов';
+      }
+    },
     updateOptions: function updateOptions(options) {
       this.options = options;
     }
@@ -9866,6 +9879,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('constructor', _components_
       next(function (vm) {
         if (user === 'client' || user === 'consultant') {
           vm.$root.user = user;
+          vm.user = vm.lang(user);
           vm.$root.getData('images', to.path, function (err, data, query, user) {
             vm.$root.setData(err, data, query);
             vm.$forceUpdate();
@@ -9999,11 +10013,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_filters__WEBPACK_IMPORTED_MODULE_1___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['menu', 'options', 'imagesData', 'openMenu'],
+  props: ['menu', 'options', 'imagesData', 'openMenu', 'user'],
   mixins: [vue2_filters__WEBPACK_IMPORTED_MODULE_1___default.a.mixin],
   methods: {
     classes: function classes(tagClass) {
@@ -10051,7 +10066,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_filters__WEBPACK_IMPORTED_MO
 
       return classess;
     },
-    setOption: function setOption(type, image, j) {
+    setOption: function setOption(type, image, id) {
       var app = this;
       var maxw = 200;
       var defoultValues = {
@@ -10091,7 +10106,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_filters__WEBPACK_IMPORTED_MO
             break;
 
           case 'background':
-            if (j === app.options.background.active) {
+            if (id === app.options.background.active) {
               app.options.background.active = '';
               app.options.background.src = '';
             } else {
@@ -10214,12 +10229,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -10229,7 +10238,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MODULE_1___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'constructor',
-  props: ['imagesData', 'textAreas', 'sizes', 'lists', 'options', 'openMenu'],
+  props: ['imagesData', 'textAreas', 'sizes', 'lists', 'options', 'openMenu', 'user'],
   components: {
     VOptions: _Options_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     VContent: _content_Content_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
@@ -10304,6 +10313,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_simple_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_simple_svg__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_color__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-color */ "./node_modules/vue-color/dist/vue-color.min.js");
 /* harmony import */ var vue_color__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_color__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10532,7 +10549,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_clipboard2__WEBPACK_IMPORTED_
 var $ = jquery__WEBPACK_IMPORTED_MODULE_7___default.a;
 window.jQuery = $;
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['generate', 'options'],
+  props: ['generate', 'options', 'user'],
   data: function data() {
     return {
       scaleTimes: 2,
@@ -73668,9 +73685,13 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _vm._m(0),
+              _c("div", { staticClass: "header__text" }, [
+                _c("span", [
+                  _vm._v("Онлайн-редактор открыток для " + _vm._s(_vm.user))
+                ])
+              ]),
               _vm._v(" "),
-              _vm.$auth.check()
+              _vm.$auth.check() && false
                 ? _c(
                     "router-link",
                     {
@@ -73697,7 +73718,7 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _vm.$auth.check()
+              _vm.$auth.check() && false
                 ? _c(
                     "a",
                     {
@@ -73729,6 +73750,7 @@ var render = function() {
           sizes: _vm.sizes,
           options: _vm.options,
           lists: _vm.lists,
+          user: _vm.user,
           openMenu: _vm.openMenu
         },
         on: {
@@ -73742,16 +73764,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "header__text" }, [
-      _c("span", [_vm._v("Онлайн-редактор открыток для консультантов")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -73792,7 +73805,7 @@ var render = function() {
                 attrs: { "data-fancybox": "", "data-src": "#selectsize" }
               },
               [
-                _c("span", [_vm._v("Размер " + _vm._s(_vm.openMenu))]),
+                _c("span", [_vm._v("Размер")]),
                 _vm._v(" "),
                 _c("em", [
                   _vm._v("Для поста " + _vm._s(_vm.options.size.name) + " "),
@@ -73811,22 +73824,24 @@ var render = function() {
             _vm._l(
               [].concat(_vm.imagesData, _vm.menu.textAreas, _vm.menu.lists),
               function(menuItem, i) {
-                return _c(
-                  "div",
-                  {
-                    key: menuItem.id,
-                    ref: "menu",
-                    refInFor: true,
-                    staticClass: "menu__item js__tab-btn",
-                    class: { active: _vm.menu.active === i },
-                    on: {
-                      click: function($event) {
-                        _vm.menu.active = i
-                      }
-                    }
-                  },
-                  [_c("span", [_vm._v(_vm._s(menuItem.menu_name))])]
-                )
+                return menuItem.client || _vm.user === "консультантов"
+                  ? _c(
+                      "div",
+                      {
+                        key: menuItem.id,
+                        ref: "menu",
+                        refInFor: true,
+                        staticClass: "menu__item js__tab-btn",
+                        class: { active: _vm.menu.active === i },
+                        on: {
+                          click: function($event) {
+                            _vm.menu.active = i
+                          }
+                        }
+                      },
+                      [_c("span", [_vm._v(_vm._s(menuItem.menu_name))])]
+                    )
+                  : _vm._e()
               }
             )
           ],
@@ -74115,7 +74130,11 @@ var render = function() {
                                       ),
                                       on: {
                                         click: function($event) {
-                                          _vm.setOption(cat.type, image, j)
+                                          _vm.setOption(
+                                            cat.type,
+                                            image,
+                                            image.id
+                                          )
                                           _vm.$emit("closeMenu")
                                         }
                                       }
@@ -74282,34 +74301,7 @@ var render = function() {
                         return _vm.$emit("closeMenu")
                       }
                     }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.options.products.length,
-                          expression: "options.products.length"
-                        }
-                      ],
-                      staticClass: "canvas__footer"
-                    },
-                    [
-                      _c("span", [_vm._v("Список средств")]),
-                      _vm._v(" "),
-                      _vm._l(_vm.options.products, function(product, i) {
-                        return _c("div", { key: i }, [
-                          _c("a", { attrs: { href: product.link } }, [
-                            _vm._v(_vm._s(i + 1) + ". " + _vm._s(product.name))
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  )
+                  })
                 ],
                 1
               )
@@ -74350,164 +74342,193 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      ref: "printBox",
-      staticClass: "canvas",
-      style: {
-        width: _vm.options.size.width + "px",
-        height: _vm.options.size.height + "px",
-        background: _vm.options.background.src
-          ? "url(" + _vm.options.background.src + ")"
-          : "white"
-      }
-    },
-    [
-      _c("div", {
-        staticClass: "overlayWhite",
+  return _c("div", [
+    _c(
+      "div",
+      {
+        ref: "printBox",
+        staticClass: "canvas",
         style: {
-          "background-color":
-            "rgba(255, 255, 255, " + _vm.options.background.opacity + " )"
+          width: _vm.options.size.width + "px",
+          height: _vm.options.size.height + "px",
+          background: _vm.options.background.src
+            ? "url(" + _vm.options.background.src + ")"
+            : "white"
         }
-      }),
-      _vm._v(" "),
-      _vm._l(_vm.options.drags, function(el, i) {
-        return _c(
-          "drr",
-          {
-            key: i,
-            ref: "drrs",
-            refInFor: true,
-            attrs: {
-              x: el.x,
-              y: el.y,
-              w: el.w,
-              h: el.h,
-              angle: el.angle,
-              aspectRatio: true
-            },
-            on: {
-              select: function($event) {
-                return _vm.selectDrr(i, el)
+      },
+      [
+        _c("div", {
+          staticClass: "overlayWhite",
+          style: {
+            "background-color":
+              "rgba(255, 255, 255, " + _vm.options.background.opacity + " )"
+          }
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.options.drags, function(el, i) {
+          return _c(
+            "drr",
+            {
+              key: i,
+              ref: "drrs",
+              refInFor: true,
+              attrs: {
+                x: el.x,
+                y: el.y,
+                w: el.w,
+                h: el.h,
+                angle: el.angle,
+                aspectRatio: true
               },
-              change: function($event) {
-                return _vm.dragChange($event, el)
+              on: {
+                select: function($event) {
+                  return _vm.selectDrr(i, el)
+                },
+                change: function($event) {
+                  return _vm.dragChange($event, el)
+                }
               }
-            }
-          },
-          [
-            _c("div", { staticClass: "dragHolder" }, [
-              el.type === "svg"
-                ? _c(
-                    "div",
-                    { staticClass: "svgHolder" },
-                    [
-                      _c("simple-svg", {
-                        ref: "svg" + i,
-                        refInFor: true,
-                        style: { fill: el.color },
-                        attrs: { width: "100%", height: "100%", src: el.src },
+            },
+            [
+              _c("div", { staticClass: "dragHolder" }, [
+                el.type === "svg"
+                  ? _c(
+                      "div",
+                      { staticClass: "svgHolder" },
+                      [
+                        _c("simple-svg", {
+                          ref: "svg" + i,
+                          refInFor: true,
+                          style: { fill: el.color },
+                          attrs: { width: "100%", height: "100%", src: el.src },
+                          on: {
+                            load: function($event) {
+                              return _vm.svgLoaded(i)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                el.type === "img"
+                  ? _c("div", { staticClass: "imgHolder" }, [
+                      _c("img", {
+                        attrs: { src: el.src },
                         on: {
                           load: function($event) {
-                            return _vm.svgLoaded(i)
+                            return _vm.imgLoaded(el)
                           }
                         }
                       })
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              el.type === "img"
-                ? _c("div", { staticClass: "imgHolder" }, [
-                    _c("img", {
-                      attrs: { src: el.src },
-                      on: {
-                        load: function($event) {
-                          return _vm.imgLoaded(el)
-                        }
-                      }
-                    })
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", {
-                staticClass: "handle handle-mr delete",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.$delete(_vm.options.drags, i)
-                  },
-                  touchend: function($event) {
-                    $event.preventDefault()
-                    return _vm.$delete(_vm.options.drags, i)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              el.type === "svg"
-                ? _c(
-                    "div",
-                    {
-                      staticClass: "colorHolder",
-                      on: {
-                        touchstart: function($event) {
-                          $event.preventDefault()
-                          return $event.target.click()
-                        }
-                      }
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "handle handle-mr delete",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.$delete(_vm.options.drags, i)
                     },
-                    [
-                      _c("Compact", {
-                        attrs: { value: el.color },
+                    touchend: function($event) {
+                      $event.preventDefault()
+                      return _vm.$delete(_vm.options.drags, i)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                el.type === "svg"
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "colorHolder",
                         on: {
-                          input: function($event) {
-                            return _vm.colorUpdate($event, el)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("div", {
-                        staticClass: "handle handle-mb color",
-                        on: {
-                          click: function($event) {
+                          touchstart: function($event) {
                             $event.preventDefault()
-                            return _vm.showColor($event)
+                            return $event.target.click()
                           }
                         }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e()
-            ])
+                      },
+                      [
+                        _c("Compact", {
+                          attrs: { value: el.color },
+                          on: {
+                            input: function($event) {
+                              return _vm.colorUpdate($event, el)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", {
+                          staticClass: "handle handle-mb color",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.showColor($event)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e()
+              ])
+            ]
+          )
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.options.signature || _vm.options.pagelink,
+                expression: "options.signature || options.pagelink"
+              }
+            ],
+            staticClass: "signature"
+          },
+          [
+            _c("p", [_vm._v(_vm._s(_vm.options.signature))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.options.pagelink))])
           ]
         )
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.options.signature || _vm.options.pagelink,
-              expression: "options.signature || options.pagelink"
-            }
-          ],
-          staticClass: "signature"
-        },
-        [
-          _c("p", [_vm._v(_vm._s(_vm.options.signature))]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.options.pagelink))])
-        ]
-      )
-    ],
-    2
-  )
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.options.products.length,
+            expression: "options.products.length"
+          }
+        ],
+        staticClass: "canvas__footer"
+      },
+      [
+        _c("span", [_vm._v("Список средств")]),
+        _vm._v(" "),
+        _vm._l(_vm.options.products, function(product, i) {
+          return _c("div", { key: i }, [
+            _c("a", { attrs: { href: product.link, target: "_blank" } }, [
+              _vm._v(_vm._s(i + 1) + ". " + _vm._s(product.name))
+            ])
+          ])
+        })
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -74599,33 +74620,9 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c(
-      "a",
-      {
-        attrs: { href: "#" },
-        on: {
-          click: function($event) {
-            return _vm.updateCard("shared")
-          }
-        }
-      },
-      [
-        _c(
-          "svg",
-          {
-            staticClass: "svg svg-share",
-            attrs: { width: "50", height: "50" }
-          },
-          [
-            _c("use", {
-              attrs: { "xlink:href": "ico/sprite/sprite.svg#share" }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c("span", [_vm._v("Поделиться")])
-      ]
-    ),
+    false
+      ? undefined
+      : _vm._e(),
     _vm._v(" "),
     _c("a", { attrs: { href: "#" }, on: { click: _vm.clearOptions } }, [
       _c(
@@ -93972,7 +93969,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     redirect: {
       name: 'Admin',
       params: {
-        page: 'dashboard'
+        page: 'client'
       }
     }
   }, {
@@ -95093,7 +95090,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xamp\htdocs\invitations_laravel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\invitations_laravel\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

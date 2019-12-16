@@ -16,12 +16,6 @@
 
                     <VContent :options="options" @closeMenu="$emit('closeMenu')" ref="content"></VContent>
 
-                    <div class="canvas__footer" v-show="options.products.length">
-                        <span>Список средств</span>
-                        <div v-for="(product, i) in options.products" :key="i">
-                            <a :href="product.link">{{i + 1}}. {{product.name}}</a>
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -47,7 +41,7 @@
     Vue.use(VueCookies)
     export default {
         name: 'constructor',
-        props: ['imagesData', 'textAreas', 'sizes', 'lists', 'options', 'openMenu'],
+        props: ['imagesData', 'textAreas', 'sizes', 'lists', 'options', 'openMenu', 'user'],
         components: {VOptions, VContent, VPopups, VContentButtons},
         watch: {
             'options': {

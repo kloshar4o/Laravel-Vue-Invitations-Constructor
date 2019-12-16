@@ -1,61 +1,69 @@
 <template>
-    <div ref="printBox" class="canvas" :style="{
+    <div>
+
+        <div ref="printBox" class="canvas" :style="{
                     'width': options.size.width + 'px',
                     'height': options.size.height + 'px',
                     'background': (options.background.src) ? 'url(' + options.background.src + ')' : 'white',}">
 
-        <div class="overlayWhite"
-             :style="{'background-color': 'rgba(255, 255, 255, ' + options.background.opacity + ' )'}"></div>
+            <div class="overlayWhite"
+                 :style="{'background-color': 'rgba(255, 255, 255, ' + options.background.opacity + ' )'}"></div>
 
-        <drr v-for="(el, i) in options.drags" ref="drrs"
-             :key="i"
-             :x="el.x"
-             :y="el.y"
-             :w="el.w"
-             :h="el.h"
-             :angle="el.angle"
-             :aspectRatio="true"
-             @select="selectDrr(i, el)"
-             @change="dragChange($event, el)">
+            <drr v-for="(el, i) in options.drags" ref="drrs"
+                 :key="i"
+                 :x="el.x"
+                 :y="el.y"
+                 :w="el.w"
+                 :h="el.h"
+                 :angle="el.angle"
+                 :aspectRatio="true"
+                 @select="selectDrr(i, el)"
+                 @change="dragChange($event, el)">
 
-            <div class="dragHolder">
+                <div class="dragHolder">
 
-                <div class="svgHolder" v-if="el.type === 'svg'">
-                    <simple-svg width="100%"
-                                height="100%"
-                                :ref="'svg' + i"
-                                :style="{fill: el.color}"
-                                :src="el.src"
-                                @load="svgLoaded(i)">
-                    </simple-svg>
+                    <div class="svgHolder" v-if="el.type === 'svg'">
+                        <simple-svg width="100%"
+                                    height="100%"
+                                    :ref="'svg' + i"
+                                    :style="{fill: el.color}"
+                                    :src="el.src"
+                                    @load="svgLoaded(i)">
+                        </simple-svg>
+                    </div>
+
+                    <div class="imgHolder" v-if="el.type === 'img'">
+                        <img :src="el.src" @load="imgLoaded(el)">
+                    </div>
+
+                    <div class="handle handle-mr delete" @click.prevent="$delete(options.drags, i)"
+                         @touchend.prevent="$delete(options.drags, i)"></div>
+
+                    <div class="colorHolder" v-if="el.type === 'svg'"
+                         @touchstart.prevent="$event.target.click()">
+                        <Compact @input="colorUpdate($event, el)" :value="el.color"></Compact>
+                        <div @click.prevent="showColor($event)" class="handle handle-mb color"></div>
+                    </div>
+
                 </div>
 
-                <div class="imgHolder" v-if="el.type === 'img'">
-                    <img :src="el.src" @load="imgLoaded(el)">
-                </div>
+            </drr>
 
-                <div class="handle handle-mr delete" @click.prevent="$delete(options.drags, i)"
-                     @touchend.prevent="$delete(options.drags, i)"></div>
 
-                <div class="colorHolder" v-if="el.type === 'svg'"
-                     @touchstart.prevent="$event.target.click()">
-                    <Compact @input="colorUpdate($event, el)" :value="el.color"></Compact>
-                    <div @click.prevent="showColor($event)" class="handle handle-mb color"></div>
-                </div>
-
+            <div class="signature" v-show="options.signature || options.pagelink">
+                <p>{{options.signature}}</p>
+                <p>{{options.pagelink}}</p>
             </div>
 
-        </drr>
-
-
-        <div class="signature" v-show="options.signature || options.pagelink">
-            <p>{{options.signature}}</p>
-            <p>{{options.pagelink}}</p>
         </div>
 
+        <div class="canvas__footer" v-show="options.products.length">
+            <span>Список средств</span>
+            <div v-for="(product, i) in options.products" :key="i">
+                <a :href="product.link" target="_blank">{{i + 1}}. {{product.name}}</a>
+            </div>
+        </div>
     </div>
-
-
 </template>
 
 <script>
@@ -63,7 +71,6 @@
     import drr from '@minogin/vue-drag-resize-rotate'
     import VueSimpleSVG from 'vue-simple-svg'
     import {Compact} from 'vue-color'
-
 
 
     export default {

@@ -18,19 +18,18 @@
                     </div>
 
                     <div class="header__text">
-                        <span>Онлайн-редактор открыток для консультантов</span>
+                        <span>Онлайн-редактор открыток для {{user}}</span>
                     </div>
 
 
-                    <!--<router-link :to="{ name: 'Constructor' }">Редактор</router-link>-->
-                    <router-link :to="{ name: 'Admin', params: {page: $root.adminPage || 'client'} }" v-if="$auth.check()">Админ</router-link>
+                    <router-link :to="{ name: 'Admin', params: {page: $root.adminPage || 'client'} }" v-if="$auth.check() && false">Админ</router-link>
 
                     <router-link :to="{ name: 'Login' }" v-if="!$auth.check()">Логин</router-link>
 
                     <router-link :to="{ name: 'Register' }" v-if="!$auth.check()">Регистрация</router-link>
 
 
-                    <a href="#" @click.prevent="$auth.logout()" v-if="$auth.check()">Выйти</a>
+                    <a href="#" @click.prevent="$auth.logout()" v-if="$auth.check() && false ">Выйти</a>
 
                     <a href="#Вернуться-на-сайт">Вернуться на сайт</a>
 
@@ -46,6 +45,7 @@
             :sizes="sizes"
             :options="options"
             :lists="lists"
+            :user="user"
             :openMenu="openMenu"
             @closeMenu="openMenu = false"
             @optionsUpdated="updateOptions">
@@ -64,19 +64,20 @@
     export default {
         data() {
             return {
+                user: 'Клиент',
                 error: null,
                 options: null,
                 openMenu: false,
                 lists: [
-                    {menu_name: 'Список средств', title: 'Список средств', type: 'lists', id: 'listoffunds'}
+                    {menu_name: 'Список средств', title: 'Список средств', type: 'lists', id: 'listoffunds', client: 0}
                 ],
                 textAreas: [
-                    {menu_name: 'Подпись', title: 'Подпись', type: 'textAreas', id: 'signature'},
-                    {menu_name: 'Ссылка на страницу', title: 'Ссылка на страницу', type: 'textAreas', id: 'pagelink'},
+                    {menu_name: 'Подпись', title: 'Подпись', type: 'textAreas', id: 'signature', client: 1},
+                    {menu_name: 'Ссылка на страницу', title: 'Ссылка на страницу', type: 'textAreas', id: 'pagelink', client: 0},
                 ],
                 sizes: [
                     {img: 'facebook', name: 'Facebook', width: 1200, height: 630},
-                    {img: 'insagram', name: 'Instagram', width: 1080, height: 1080},
+                    {img: 'instargam', name: 'Instagram', width: 1080, height: 1080},
                     {img: 'insagram', name: 'Instagram Stories', width: 1080, height: 1920},
                     {img: 'vk', name: 'Вконтакте', width: 1200, height: 630},
                     {img: 'ok', name: 'OK.ru', width: 1680, height: 1680},
@@ -86,6 +87,16 @@
             }
         },
         methods: {
+            lang(value){
+
+                switch (value) {
+
+                    case 'consultant':
+                        return 'консультантов'
+                    case 'client':
+                        return 'клиентов'
+                }
+            },
             updateOptions(options) {
                 this.options = options
             },
@@ -111,6 +122,7 @@
                 next(vm => {
                     if (user === 'client' || user === 'consultant') {
                         vm.$root.user = user;
+                        vm.user = vm.lang(user)
                         vm.$root.getData('images', to.path, (err, data, query, user) => {
                             vm.$root.setData(err, data, query);
                             vm.$forceUpdate();

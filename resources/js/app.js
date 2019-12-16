@@ -58,7 +58,7 @@ const router = new VueRouter({
             path: appPath + 'admin/',
             redirect: {
                 name: 'Admin',
-                params: {page: 'dashboard'}
+                params: {page: 'client'},
             }
         },
         {

@@ -17,7 +17,7 @@
             </svg>
             <span>Скопировать ссылку</span>
         </a>
-        <a href="#" @click="updateCard('shared')">
+        <a href="#" @click="updateCard('shared')" v-if="false">
             <svg class="svg svg-share" width="50" height="50">
                 <use xlink:href="ico/sprite/sprite.svg#share"></use>
             </svg>
@@ -92,7 +92,7 @@
     window.jQuery = $;
 
     export default {
-        props: ['generate', 'options'],
+        props: ['generate', 'options', 'user'],
         data() {
             return {
                 scaleTimes: 2,

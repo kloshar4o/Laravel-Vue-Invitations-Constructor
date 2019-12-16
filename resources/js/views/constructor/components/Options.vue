@@ -4,11 +4,12 @@
         <div class="menu">
 
             <div class="menu__item" data-fancybox data-src="#selectsize">
-                <span>Размер {{openMenu}}</span>
+                <span>Размер</span>
                 <em>Для поста {{options.size.name}} <br> {{options.size.width}} x {{options.size.height}}px</em>
             </div>
 
             <div v-for="(menuItem, i) in [].concat(imagesData, menu.textAreas, menu.lists)" class="menu__item js__tab-btn"
+                 v-if="menuItem.client || user === 'консультантов'"
                  :key="menuItem.id"
                  :ref="'menu'"
                  :class="{ 'active': menu.active === i }"
@@ -78,7 +79,7 @@
                                  v-if="image['show_'+$root.user]"
                                  v-for="(image, j) in orderBy(cat.images, 'sort')"
                                  :key="j"
-                                 @click="setOption(cat.type, image, j); $emit('closeMenu')">
+                                 @click="setOption(cat.type, image, image.id); $emit('closeMenu')">
 
                                 <img :src="image.src" alt="IMG">
                             </div>
@@ -103,7 +104,7 @@
     Vue.use(Vue2Filters)
 
     export default {
-        props: ['menu', 'options',  'imagesData', 'openMenu'],
+        props: ['menu', 'options',  'imagesData', 'openMenu', 'user'],
         mixins: [Vue2Filters.mixin],
         methods: {
             classes(tagClass, cat = {}, i = 0, imageId = 0) {
@@ -147,10 +148,9 @@
                 }
                 return classess;
             },
-            setOption(type, image, j) {
+            setOption(type, image, id) {
                 let app = this;
                 let maxw = 200;
-
 
 
                 let defoultValues = {
@@ -197,7 +197,7 @@
 
                         case 'background':
 
-                            if (j === app.options.background.active) {
+                            if (id === app.options.background.active) {
                                 app.options.background.active = '';
                                 app.options.background.src = ''
                             } else {
