@@ -24,7 +24,7 @@ class CardsController extends Controller
         );
 
 
-        $data = $stats->merge($cards->paginate(2));
+        $data = $stats->merge($cards->paginate(50));
 
         return $data;
     }
