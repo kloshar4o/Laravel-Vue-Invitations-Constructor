@@ -9687,7 +9687,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_I
       formData.append('sort', totalImages);
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/images/save', formData, config).then(function (res) {
         //Vue.$toast.open(res.data.toast);
-        if (res.data.image) cat.images.push(res.data.image);
+        var newImage = res.data.image;
+        if (newImage) cat.images.push(newImage);
       })["catch"](function (error) {
         var validator = error.response.data.messeges;
         if (validator) Object.keys(validator).forEach(function (input) {
@@ -10017,6 +10018,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_filters__WEBPACK_IMPORTED_MO
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['menu', 'options', 'imagesData', 'openMenu', 'user'],
   mixins: [vue2_filters__WEBPACK_IMPORTED_MODULE_1___default.a.mixin],
+  watch: {
+    'options.signatureWatch': function optionsSignatureWatch(text) {
+      this.options.signature = text.replace(/\w{0,5}[хx]([хx\s\!@#$%\^&*+-\|\/]{0,6})[уy]([уy\s\!@#$%\^&*+-\|\/]{0,6})[ёiлeеюийя]\w{0,7}|\w{0,6}[пp]([пp\s\!@#$%\^&*+-\|\/]{0,6})[iие]([iие\s\!@#$%\^&*+-\|\/]{0,6})[3зс]([3зс\s\!@#$%\^&*+-\|\/]{0,6})[дd]\w{0,10}|[сcs][уy]([уy\!@#$%\^&*+-\|\/]{0,6})[4чkк]\w{1,3}|\w{0,4}[bб]([bб\s\!@#$%\^&*+-\|\/]{0,6})[lл]([lл\s\!@#$%\^&*+-\|\/]{0,6})[yя]\w{0,10}|\w{0,8}[её][bб][лске@eыиаa][наи@йвл]\w{0,8}|\w{0,4}[еe]([еe\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[uу]([uу\s\!@#$%\^&*+-\|\/]{0,6})[н4ч]\w{0,4}|\w{0,4}[еeё]([еeё\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[нn]([нn\s\!@#$%\^&*+-\|\/]{0,6})[уy]\w{0,4}|\w{0,4}[еe]([еe\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[оoаa@]([оoаa@\s\!@#$%\^&*+-\|\/]{0,6})[тnнt]\w{0,4}|\w{0,10}[ё]([ё\!@#$%\^&*+-\|\/]{0,6})[б]\w{0,6}|\w{0,4}[pп]([pп\s\!@#$%\^&*+-\|\/]{0,6})[иeеi]([иeеi\s\!@#$%\^&*+-\|\/]{0,6})[дd]([дd\s\!@#$%\^&*+-\|\/]{0,6})[oоаa@еeиi]([oоаa@еeиi\s\!@#$%\^&*+-\|\/]{0,6})[рr]\w{0,12}/ig, 'Цензура');
+    }
+  },
   methods: {
     classes: function classes(tagClass) {
       var cat = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -73947,15 +73953,17 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.options[cat.id],
-                                    expression: "options[cat.id]"
+                                    value: _vm.options[cat.id + "Watch"],
+                                    expression: "options[cat.id + 'Watch']"
                                   }
                                 ],
                                 attrs: {
                                   name: cat.id,
                                   placeholder: cat.menu_name
                                 },
-                                domProps: { value: _vm.options[cat.id] },
+                                domProps: {
+                                  value: _vm.options[cat.id + "Watch"]
+                                },
                                 on: {
                                   input: function($event) {
                                     if ($event.target.composing) {
@@ -73963,7 +73971,7 @@ var render = function() {
                                     }
                                     _vm.$set(
                                       _vm.options,
-                                      cat.id,
+                                      cat.id + "Watch",
                                       $event.target.value
                                     )
                                   }

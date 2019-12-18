@@ -54,9 +54,10 @@
                     .then(res => {
 
                         //Vue.$toast.open(res.data.toast);
+                        let newImage = res.data.image
 
-                        if (res.data.image)
-                            cat.images.push(res.data.image);
+                        if (newImage)
+                            cat.images.push(newImage);
                     })
                     .catch(error => {
 
