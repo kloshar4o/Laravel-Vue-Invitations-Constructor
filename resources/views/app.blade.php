@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Invitations</title>
-    <link rel="stylesheet" href="/postcard/css/main.css?v={{time()}}">
-    <link rel="icon" href="/postcard/favicon.ico">
+    <link rel="stylesheet" href="/css/main.css?v={{time()}}">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
 
@@ -15,6 +15,6 @@
     <app></app>
 </div>
 
-<script src="/postcard/js/app.js?v={{time()}}"></script>
+<script src="/js/app.js?v={{time()}}"></script>
 </body>
 </html>

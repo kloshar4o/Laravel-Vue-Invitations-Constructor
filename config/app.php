@@ -53,7 +53,7 @@ return [
     */
 
     //'url' => env('APP_URL', 'http://localhost'),
-    'url' => '/postcard/',
+    'url' => '/',
 
     'asset_url' => env('ASSET_URL', null),
 

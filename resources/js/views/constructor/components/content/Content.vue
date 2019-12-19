@@ -22,7 +22,7 @@
 
                 <div class="dragHolder">
 
-                    <div class="svgHolder" v-if="el.type === 'svg'">
+                    <div v-if="el.type === 'svg'" class="svgHolder">
                         <simple-svg width="100%"
                                     height="100%"
                                     :ref="'svg' + i"
@@ -32,14 +32,14 @@
                         </simple-svg>
                     </div>
 
-                    <div class="imgHolder" v-if="el.type === 'img'">
+                    <div v-if="el.type === 'img'" class="imgHolder">
                         <img :src="el.src" @load="imgLoaded(el)">
                     </div>
 
                     <div class="handle handle-mr delete" @click.prevent="$delete(options.drags, i)"
                          @touchend.prevent="$delete(options.drags, i)"></div>
 
-                    <div class="colorHolder" v-if="el.type === 'svg'"
+                    <div v-if="el.type === 'svg'" class="colorHolder"
                          @touchstart.prevent="$event.target.click()">
                         <Compact @input="colorUpdate($event, el)" :value="el.color"></Compact>
                         <div @click.prevent="showColor($event)" class="handle handle-mb color"></div>
@@ -108,7 +108,7 @@
                 let el = this.$refs['svg' + i][0].$el;
                 el.style.fill = prop.color;
 
-                if (prop.x === -999) {
+                if (prop.x === -999) { //default -999
 
                     prop.h = el.scrollHeight;
                     prop.w = el.scrollWidth;
@@ -120,7 +120,7 @@
                 }
             },
             imgLoaded(props) {
-                if (props.x === -999)
+                if (props.x === -999) //default -999
                     props.x = (this.$refs.printBox.clientWidth / 2) - props.w / 2;
             }
         },

@@ -82,17 +82,15 @@
     import axios from 'axios';
 
     import VueClipboard from 'vue-clipboard2'
-    import fancybox from '@fancyapps/fancybox'
-
     Vue.use(VueClipboard)
 
     import JQuery from 'jquery'
-
     let $ = JQuery;
     window.jQuery = $;
+    import fancybox from '@fancyapps/fancybox'
 
     export default {
-        props: ['generate', 'options', 'user'],
+        props: ['generate', 'options', 'userType'],
         data() {
             return {
                 scaleTimes: 2,
@@ -114,8 +112,8 @@
             },
             generateName() {
 
+                //generate random string
                 let string = '';
-
                 for (let i = 0; i < 2; i++) {
                     let chars = 'abcdefghijklmnopqrstuvwxyz';
                     let randomIndex = Math.floor(Math.random() * chars.length);
@@ -124,6 +122,7 @@
                     string += randomChar;
                 }
 
+                //generate random number
                 let number = Math.floor(Math.random() * Math.floor(100000))
 
                 return string + number
@@ -137,9 +136,9 @@
                 $.fancybox.open($('#copylink'));
                 this.sendData()
             },
-            updateCard(stats) {
+            updateCard(stats) { // downloaded and shared status in database
                 if(this.cardId){
-                    this[stats] = 1;
+                    this[stats] = 1; //set to true
                     this.sendData();
                 }
             },
@@ -149,7 +148,7 @@
                     {
                         id: app.cardId,
                         name: app.name,
-                        user: app.$root.user,
+                        user: app.userType,
                         downloaded: app.downloaded,
                         shared: app.shared,
                         data: app.options
@@ -214,7 +213,7 @@
 
 
                 let size = this.options.size;
-                //Pixel Manipulation (generate a greyscale moire pattern)
+                //Pixel Manipulation (generate a greyscale moire pattern.. whatever that means..)
                 downscale(imgData, size.width, size.height, {quality: 1, imageType: 'png'})
                     .then(dataURL => {
 

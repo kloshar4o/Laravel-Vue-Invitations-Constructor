@@ -1,9 +1,8 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import axios from 'axios';
-import VueAxios from 'vue-axios';
 
 import App from './views/App.vue'
+import Single from './views/Single.vue';
 import Page404 from './views/404.vue';
 import Constructor from './views/constructor/Constructor.vue'
 
@@ -11,16 +10,20 @@ import Admin from './views/admin/Admin.vue';
 import Login from './views/admin/auth/Login.vue';
 import Register from './views/admin/auth/Register.vue';
 
-import Single from './views/Single.vue';
 
+import VueRouter from 'vue-router'
 Vue.use(VueRouter);
+
+
+import VueAxios from 'vue-axios';
 Vue.use(VueAxios, axios);
 
-let axiosPages = ['client', 'consultant', 'admin'];
-let appPath = '/postcard/';
-
-
+let appPath = '/';
 axios.defaults.baseURL = appPath + 'api';
+
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/index.css';
+Vue.use(VueToast);
 
 const router = new VueRouter({
     mode: 'history',
@@ -95,62 +98,41 @@ Vue.use(require('@websanova/vue-auth'), {
 });
 
 
-App.router = Vue.router;
 
 const app = new Vue({
+    router,
     el: '#app',
     components: {App},
     data() {
         return {
-            appPath: null,
-            errors: {},
+            appPath: appPath,
             data: {},
             loading: false,
         }
     },
     methods: {
-        setData(err, data, query) {
+        setRootData(query, callback = null) {
+            if (!this.data[query]) { //get data only once
 
-            this.loading = false;
+                this.loading = true;
 
-            if (err) {
-                this.errors[query] = err.toString();
-            } else {
-                this.data[query] = data;
-            }
+                axios.get(query).then(res => {
 
-        },
-        fetchApi(query, callback) {
+                    this.data[query] = res.data;
 
-            axios.get(query).then(response => {
+                    if(callback)
+                        callback(res.data);
 
-                callback(null, response.data);
+                }).catch(error => {
 
-            }).catch(error => {
+                    Vue.$toast.error(error.toString());
 
-                console.log(error)
-                callback(error, error.response.data);
+                }).finally(() => {
 
-            });
-        },
-        getData(query, curPath, callback) {
-            if (!this.data[query]) {
-
-                axiosPages.forEach(page => {
-                    if (appPath + page === curPath || curPath === page) {
-
-                        this.loading = true;
-                        this.fetchApi(query, (err, data) => {
-
-                            callback(err, data, query)
-                        });
-                    }
+                    this.loading = false;
                 });
             }
         }
-    },
-    created() {
-        this.appPath = appPath;
     }
 });
 

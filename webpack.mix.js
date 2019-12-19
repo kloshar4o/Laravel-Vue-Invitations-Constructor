@@ -1,4 +1,4 @@
-const mix = require('laravel-mix').setPublicPath('public/postcard/js');
+const mix = require('laravel-mix').setPublicPath('public/js');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,4 +11,4 @@ const mix = require('laravel-mix').setPublicPath('public/postcard/js');
  |
  */
 
-mix.js('resources/js/app.js', 'public/postcard/js');
+mix.js('resources/js/app.js', 'public/js');

@@ -88,10 +88,7 @@
         beforeRouteEnter(to, from, next) {
 
             next(vm => {
-                vm.$root.getData('images', 'admin', (err, data, query) => {
-                    vm.$root.setData(err, data, query);
-                    vm.$forceUpdate();
-                });
+                vm.$root.setRootData('images', () => vm.$forceUpdate())
             })
         },
 

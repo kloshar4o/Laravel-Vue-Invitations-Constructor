@@ -6,7 +6,7 @@
                 <h3>Выберите размер</h3>
                 <div class="selectsize__grid">
                     <div class="selectsize__item js__popup-select"
-                         v-for="size in menu.sizes"
+                         v-for="size in sizes"
                          :key="size.name"
                          :class="{'checked': (size.name === options.size.name)}"
                          @click="options.size = size">
@@ -28,7 +28,7 @@
     require("@fancyapps/fancybox");
 
     export default {
-        props: ['options', 'menu', 'generate'],
+        props: ['options', 'sizes'],
         methods: {
         },
         created() {

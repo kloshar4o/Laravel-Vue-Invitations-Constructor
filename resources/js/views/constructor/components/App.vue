@@ -1,10 +1,19 @@
 <template>
 
 
-    <div id="wrapper" v-if="imagesData && options && !$root.loading">
+    <div id="wrapper" v-if="images && options && !$root.loading">
 
-        <VOptions :menu="menu" :imagesData="imagesData" :options="options" :openMenu="openMenu" :user="user"
-                  @closeMenu="$emit('closeMenu')"></VOptions>
+        <VOptions
+            v-if="options"
+            :options="options"
+            :lists="lists"
+            :textAreas="textAreas"
+            :imagesData="images"
+            :openMenu="openMenu"
+            :userType="userType"
+            @closeMenu="$emit('closeMenu')">
+
+        </VOptions>
 
 
         <div class="constructor__content">
@@ -12,16 +21,15 @@
 
                 <div class="canvas__block" @click="$emit('closeMenu')">
 
-                    <VContentButtons :options="options" @clearOptions="clearOptions" :generate="generate"></VContentButtons>
+                    <VContentButtons :options="options" :generate="generate" :userType="userType" @clearOptions="clearOptions"></VContentButtons>
 
-                    <VContent :options="options" @closeMenu="$emit('closeMenu')" ref="content"></VContent>
-
+                    <VContent :options="options" ref="content" @closeMenu="$emit('closeMenu')"></VContent>
 
                 </div>
             </div>
         </div>
 
-        <VPopups :options="options" :menu="menu" :generate="generate"></VPopups>
+        <VPopups :options="options" :sizes="sizes" :generate="generate"></VPopups>
 
     </div>
 
@@ -30,7 +38,6 @@
 
 <script>
     import Vue from 'vue'
-    import VueCookies from 'vue-cookies'
 
     import VOptions from './Options.vue'
     import VPopups from './Popups.vue'
@@ -38,60 +45,33 @@
     import VContent from './content/Content.vue'
     import VContentButtons from './content/ContentButtons.vue'
 
-    Vue.use(VueCookies)
+    import VueCookies from 'vue-cookies'
+    Vue.use(VueCookies);
+
     export default {
         name: 'constructor',
-        props: ['imagesData', 'textAreas', 'sizes', 'lists', 'options', 'openMenu', 'user'],
-        components: {VOptions, VContent, VPopups, VContentButtons},
-        watch: {
-            'options': {
-                handler(val) {
-                    VueCookies.set('options', val);
-                },
-                deep: true
-            }
-        },
+        props: ['user', 'userType', 'openMenu', 'textAreas', 'lists', 'options', 'images', 'sizes'],
+        components: {VOptions, VPopups, VContent, VContentButtons},
         data() {
             return {
                 generate: {
-                    steps: [],
                     src: '',
-                    name: ''
+                    name: '',
+                    steps: []
                 },
                 menu: {
-                    open: false,
                     active: 0,
-                    sizes: this.sizes,
                     textAreas: this.textAreas,
                     lists: this.lists,
-                    size: '',
                 }
             }
         },
         methods: {
             clearOptions() {
                 VueCookies.set('options', '');
-                this.initOptions();
-            },
-            initOptions() {
-                let options = VueCookies.get('options') || {
-                    size: this.menu.sizes[0],
-                    colors: [],
-                    drags: [],
-                    background: {},
-                    signature: '',
-                    link: '',
-                    products: [],
-                    activeImages: [],
-                }
-                this.$emit('optionsUpdated', options)
+                this.$emit('initOptions')
             },
         },
-        created() {
-            if (!this.options) {
-                this.initOptions();
-            }
-        }
 
     }
 </script>

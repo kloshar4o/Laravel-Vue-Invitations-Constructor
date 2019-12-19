@@ -15,9 +15,11 @@
                 </div>
 
                 <input type="email" id="email" class="form-control" placeholder="E-mail" v-model="email" required>
-                <input type="password" id="password" class="form-control" v-model="password" placeholder="Пароль" required>
+                <input type="password" id="password" class="form-control" v-model="password" placeholder="Пароль"
+                       required>
 
-                <button type="submit">Войти</button><br><br>
+                <button type="submit">Войти</button>
+                <br><br>
             </form>
         </div>
     </div>
@@ -25,14 +27,15 @@
 
 <script>
     export default {
-        data(){
+        data() {
             return {
                 email: null,
                 password: null,
                 error: false
             }
-        },    methods: {
-            login(){
+        },
+        methods: {
+            login() {
                 let app = this;
                 app.$root.loading = true;
                 this.$auth.login({
@@ -52,7 +55,7 @@
 
                     },
                     rememberMe: true,
-                    redirect: {name : 'Admin', params: {page: 'client'}},
+                    redirect: {name: 'Admin', params: {page: 'client'}},
                     fetchUser: true,
                 });
             },
