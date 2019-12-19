@@ -1253,10 +1253,7 @@ html, body {
     height: 100%;
 }
 #wrapper{
-
     min-height: 100%;
-    min-width: 1000px;
-    overflow: auto;
 }
 
 #wrapper, .VOptions {
@@ -2431,7 +2428,6 @@ a:hover {
 .header {
     height: 63px;
     background-color: #000;
-    min-width: 1000px;
 }
 
 .header__wrap {

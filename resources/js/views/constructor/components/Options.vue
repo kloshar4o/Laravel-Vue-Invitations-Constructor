@@ -3,9 +3,9 @@
     <div class="constructor__menu js__scroll" :class="{active : openMenu}">
         <div class="menu">
 
-            <div class="menu__item" data-fancybox data-src="#selectsize">
+            <div class="menu__item" data-fancybox data-src="#selectsize" v-if="options.size">
                 <span>Размер</span>
-                <em>Для поста {{options.size.name}} <br> {{options.size.width}} x {{options.size.height}}px</em>
+                <em>Для поста {{options.size.name}} <br/> {{options.size.width}} x {{options.size.height}}px</em>
             </div>
 
             <div v-for="(menuItem, i) in [].concat(imagesData, menu.textAreas, menu.lists)" class="menu__item js__tab-btn"

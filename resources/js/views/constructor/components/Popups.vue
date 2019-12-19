@@ -34,16 +34,6 @@
         created() {
 
             //hamburger menu init
-            $(".js__open-menu").click(function() {
-                [
-                    $(this).find(".hamburger"),
-                    $(".constructor__menu"),
-                    $(".constructor__option"),
-
-                ].forEach(function (el) {
-                    el.toggleClass("active");
-                })
-            });
 
             $.fancybox.defaults.touch = false;
         },

@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Invitations</title>
-    <link rel="stylesheet" href="/postcard/css/main.css">
+    <link rel="stylesheet" href="/postcard/css/main.css?v={{time()}}">
     <link rel="icon" href="/postcard/favicon.ico">
 </head>
 <body>
@@ -15,6 +15,6 @@
     <app></app>
 </div>
 
-<script src="/postcard/js/app.js"></script>
+<script src="/postcard/js/app.js?v={{time()}}"></script>
 </body>
 </html>

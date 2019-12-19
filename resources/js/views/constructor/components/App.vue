@@ -64,6 +64,7 @@
                     sizes: this.sizes,
                     textAreas: this.textAreas,
                     lists: this.lists,
+                    size: '',
                 }
             }
         },

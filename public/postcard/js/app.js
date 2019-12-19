@@ -10182,11 +10182,6 @@ __webpack_require__(/*! @fancyapps/fancybox */ "./node_modules/@fancyapps/fancyb
   methods: {},
   created: function created() {
     //hamburger menu init
-    $(".js__open-menu").click(function () {
-      [$(this).find(".hamburger"), $(".constructor__menu"), $(".constructor__option")].forEach(function (el) {
-        el.toggleClass("active");
-      });
-    });
     $.fancybox.defaults.touch = false;
   }
 });
@@ -10276,7 +10271,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
         active: 0,
         sizes: this.sizes,
         textAreas: this.textAreas,
-        lists: this.lists
+        lists: this.lists,
+        size: ''
       }
     };
   },
@@ -73682,21 +73678,27 @@ var render = function() {
             "div",
             { staticClass: "header__wrap" },
             [
-              _c("div", { staticClass: "header__menubtn js__open-menu" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "hamburger",
-                    class: { active: _vm.openMenu },
-                    on: {
-                      click: function($event) {
-                        _vm.openMenu = !_vm.openMenu
-                      }
+              _c(
+                "div",
+                {
+                  staticClass: "header__menubtn js__open-menu",
+                  on: {
+                    click: function($event) {
+                      _vm.openMenu = _vm.openMenu ? false : true
                     }
-                  },
-                  [_c("span")]
-                )
-              ]),
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "hamburger",
+                      class: { active: _vm.openMenu }
+                    },
+                    [_c("span")]
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -73828,28 +73830,32 @@ var render = function() {
           "div",
           { staticClass: "menu" },
           [
-            _c(
-              "div",
-              {
-                staticClass: "menu__item",
-                attrs: { "data-fancybox": "", "data-src": "#selectsize" }
-              },
-              [
-                _c("span", [_vm._v("Размер")]),
-                _vm._v(" "),
-                _c("em", [
-                  _vm._v("Для поста " + _vm._s(_vm.options.size.name) + " "),
-                  _c("br"),
-                  _vm._v(
-                    " " +
-                      _vm._s(_vm.options.size.width) +
-                      " x " +
-                      _vm._s(_vm.options.size.height) +
-                      "px"
-                  )
-                ])
-              ]
-            ),
+            _vm.options.size
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "menu__item",
+                    attrs: { "data-fancybox": "", "data-src": "#selectsize" }
+                  },
+                  [
+                    _c("span", [_vm._v("Размер")]),
+                    _vm._v(" "),
+                    _c("em", [
+                      _vm._v(
+                        "Для поста " + _vm._s(_vm.options.size.name) + " "
+                      ),
+                      _c("br"),
+                      _vm._v(
+                        " " +
+                          _vm._s(_vm.options.size.width) +
+                          " x " +
+                          _vm._s(_vm.options.size.height) +
+                          "px"
+                      )
+                    ])
+                  ]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _vm._l(
               [].concat(_vm.imagesData, _vm.menu.textAreas, _vm.menu.lists),

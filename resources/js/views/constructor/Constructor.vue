@@ -4,8 +4,8 @@
             <div class="container">
                 <div class="header__wrap">
 
-                    <div class="header__menubtn js__open-menu">
-                        <div class="hamburger" @click="openMenu = !openMenu;" :class="{active: openMenu}"><span></span>
+                    <div class="header__menubtn js__open-menu" @click="openMenu = openMenu ? false : true;">
+                        <div class="hamburger" :class="{active: openMenu}"><span></span>
                         </div>
                     </div>
 
