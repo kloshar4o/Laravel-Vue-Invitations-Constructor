@@ -10,7 +10,7 @@
                          :key="size.name"
                          :class="{'checked': (size.name === options.size.name)}"
                          @click="options.size = size">
-                        <i><img :src="'img/'+size.img+'.png'" alt="IMG"/></i>
+                        <i><img :src="size.img" alt="IMG"/></i>
                         <b>{{size.name}}</b><em>{{size.width}} x {{size.height}}px</em>
                     </div>
                 </div>
