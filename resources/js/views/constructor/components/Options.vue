@@ -67,7 +67,7 @@
                                     </svg>
                                 </div>
 
-                                <div class="options__add" @click="options.products.push({name:'', link:''})">
+                                <div class="options__add" @click="options.products.push({name:'', link:'',nameMat:'', linkMat:'',})">
                             <span>
                                 <svg class="svg svg-plus" width="50" height="50">
                                     <use xlink:href="ico/sprite/sprite.svg#plus"></use>

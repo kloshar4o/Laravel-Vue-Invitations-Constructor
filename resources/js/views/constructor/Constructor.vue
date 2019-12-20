@@ -112,14 +112,17 @@
 
                     });
 
+                    if(!oldValue.products)
+                        oldValue.products = [];
+
                      val.products.forEach((product, i) => {
+
+                         if(!oldValue.products[i])
+                             oldValue.products.push({});
 
                          for (let inputId in product) {
 
-                             if(!oldValue.products)
-                                 oldValue.products = [];
-
-                             if (oldValue.products[i] && val.products[i][inputId] !== oldValue.products[i][inputId])
+                             if (val.products[i][inputId] !== oldValue.products[i][inputId])
                                 product = this.matFilter(inputId, product)
 
                          }

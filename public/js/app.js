@@ -9833,10 +9833,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
           var id = input.id;
           if (val[id] !== oldValue[id]) val = _this.matFilter(id, val);
         });
+        if (!oldValue.products) oldValue.products = [];
         val.products.forEach(function (product, i) {
+          if (!oldValue.products[i]) oldValue.products.push({});
+
           for (var inputId in product) {
-            if (!oldValue.products) oldValue.products = [];
-            if (oldValue.products[i] && val.products[i][inputId] !== oldValue.products[i][inputId]) product = _this.matFilter(inputId, product);
+            if (val.products[i][inputId] !== oldValue.products[i][inputId]) product = _this.matFilter(inputId, product);
           }
         });
         this.oldOptions = JSON.parse(JSON.stringify(val));
@@ -74138,7 +74140,9 @@ var render = function() {
                                 click: function($event) {
                                   return _vm.options.products.push({
                                     name: "",
-                                    link: ""
+                                    link: "",
+                                    nameMat: "",
+                                    linkMat: ""
                                   })
                                 }
                               }
