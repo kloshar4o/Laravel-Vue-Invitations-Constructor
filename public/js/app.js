@@ -8946,7 +8946,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -72610,7 +72609,18 @@ var render = function() {
                     [
                       _c("p", [_vm._v(_vm._s(_vm.options.signatureMat))]),
                       _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(_vm.options.pagelinkMat))])
+                      _c("p", [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: _vm.options.pagelinkMat,
+                              target: "_blank"
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.options.pagelinkMat))]
+                        )
+                      ])
                     ]
                   )
                 ],

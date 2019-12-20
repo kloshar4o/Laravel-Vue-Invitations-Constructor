@@ -52,10 +52,9 @@
 
                     </drr>
 
-
                     <div class="signature" v-show="options.signature || options.pagelink">
                         <p>{{options.signatureMat}}</p>
-                        <p>{{options.pagelinkMat}}</p>
+                        <p><a :href="options.pagelinkMat" target="_blank">{{options.pagelinkMat}}</a></p>
                     </div>
 
                 </div>

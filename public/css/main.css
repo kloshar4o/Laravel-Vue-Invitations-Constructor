@@ -3205,9 +3205,10 @@ a:hover {
 
 .signature p:last-child {
     color: #999
-
 }
-
+.signature p:last-child a {
+    color: inherit;
+}
 @-webkit-keyframes load5 {
     0%,
     100% {
