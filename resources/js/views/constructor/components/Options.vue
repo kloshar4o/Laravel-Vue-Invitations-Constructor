@@ -46,7 +46,7 @@
                             <slot v-if="cat.type === 'textAreas'">
                                 <div class="blocktextarea">
                                     <textarea :name="cat.id" :placeholder="cat.menu_name"
-                                              v-model="options[cat.id + 'Watch']"></textarea>
+                                              v-model="options[cat.id]"></textarea>
                                     <span @click="options[cat.id] = ''">
                                 <svg class="svg svg-x" width="50" height="50">
                                     <use xlink:href="ico/sprite/sprite.svg#x"></use>
@@ -115,7 +115,7 @@
             }
         },
         watch: {
-            'options.signatureWatch'(text) {
+            'options.signature'(text) {
                 if(text){
 
                     text = text.replace(this.mat, ' ');
@@ -124,9 +124,9 @@
                         text = text.replace(new RegExp(word, 'g'), '');
                     });
 
-                    this.options.signature = text;
+                    this.options.signatureMat = text;
                 } else {
-                    this.options.signature = '';
+                    this.options.signatureMat = '';
                 }
             },
         },

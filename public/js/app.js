@@ -10019,15 +10019,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_filters__WEBPACK_IMPORTED_MO
     };
   },
   watch: {
-    'options.signatureWatch': function optionsSignatureWatch(text) {
+    'options.signature': function optionsSignature(text) {
       if (text) {
         text = text.replace(this.mat, ' ');
         this.matArray.forEach(function (word) {
           text = text.replace(new RegExp(word, 'g'), '');
         });
-        this.options.signature = text;
+        this.options.signatureMat = text;
       } else {
-        this.options.signature = '';
+        this.options.signatureMat = '';
       }
     }
   },
@@ -73956,17 +73956,15 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.options[cat.id + "Watch"],
-                                  expression: "options[cat.id + 'Watch']"
+                                  value: _vm.options[cat.id],
+                                  expression: "options[cat.id]"
                                 }
                               ],
                               attrs: {
                                 name: cat.id,
                                 placeholder: cat.menu_name
                               },
-                              domProps: {
-                                value: _vm.options[cat.id + "Watch"]
-                              },
+                              domProps: { value: _vm.options[cat.id] },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
@@ -73974,7 +73972,7 @@ var render = function() {
                                   }
                                   _vm.$set(
                                     _vm.options,
-                                    cat.id + "Watch",
+                                    cat.id,
                                     $event.target.value
                                   )
                                 }
@@ -74519,7 +74517,7 @@ var render = function() {
             staticClass: "signature"
           },
           [
-            _c("p", [_vm._v(_vm._s(_vm.options.signature))]),
+            _c("p", [_vm._v(_vm._s(_vm.options.signatureMat))]),
             _vm._v(" "),
             _c("p", [_vm._v(_vm._s(_vm.options.pagelink))])
           ]

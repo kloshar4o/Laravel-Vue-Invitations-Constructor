@@ -51,7 +51,7 @@
 
 
             <div class="signature" v-show="options.signature || options.pagelink">
-                <p>{{options.signature}}</p>
+                <p>{{options.signatureMat}}</p>
                 <p>{{options.pagelink}}</p>
             </div>
 
