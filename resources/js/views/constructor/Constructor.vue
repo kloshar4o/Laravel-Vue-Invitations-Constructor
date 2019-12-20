@@ -23,15 +23,15 @@
 
 
                     <router-link :to="{ name: 'Admin', params: {page: $root.adminPage || 'client'} }"
-                                 v-if="$auth.check() && false">Админ
+                                 v-if="$auth.check() || false">Админ
                     </router-link>
 
-                    <router-link :to="{ name: 'Login' }" v-if="!$auth.check()">Логин</router-link>
+                    <router-link :to="{ name: 'Login' }" v-if="!$auth.check() || false">Логин</router-link>
 
-                    <router-link :to="{ name: 'Register' }" v-if="!$auth.check()">Регистрация</router-link>
+                    <router-link :to="{ name: 'Register' }" v-if="!$auth.check() || false">Регистрация</router-link>
 
 
-                    <a href="#" @click.prevent="$auth.logout()" v-if="$auth.check() && false ">Выйти</a>
+                    <a href="#" @click.prevent="$auth.logout()" v-if="$auth.check() || false ">Выйти</a>
 
                     <a href="/">Вернуться на сайт</a>
 

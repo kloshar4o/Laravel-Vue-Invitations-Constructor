@@ -73718,7 +73718,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm.$auth.check() && false
+              _vm.$auth.check() || false
                 ? _c(
                     "router-link",
                     {
@@ -73733,19 +73733,19 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              !_vm.$auth.check()
+              !_vm.$auth.check() || false
                 ? _c("router-link", { attrs: { to: { name: "Login" } } }, [
                     _vm._v("Логин")
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              !_vm.$auth.check()
+              !_vm.$auth.check() || false
                 ? _c("router-link", { attrs: { to: { name: "Register" } } }, [
                     _vm._v("Регистрация")
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _vm.$auth.check() && false
+              _vm.$auth.check() || false
                 ? _c(
                     "a",
                     {
