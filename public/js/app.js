@@ -9796,8 +9796,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
       user: 'Клиент',
       userType: 'client',
       options: false,
+      oldOptions: false,
       openMenu: false,
       showNav: false,
+      matArray: this.$root.data['mat.json'],
+      mat: /\w{0,5}[хx]([хx\s\!@#$%\^&*+-\|\/]{0,6})[уy]([уy\s\!@#$%\^&*+-\|\/]{0,6})[ёiлeеюийя]\w{0,7}|\w{0,6}[пp]([пp\s\!@#$%\^&*+-\|\/]{0,6})[iие]([iие\s\!@#$%\^&*+-\|\/]{0,6})[3зс]([3зс\s\!@#$%\^&*+-\|\/]{0,6})[дd]\w{0,10}|[сcs][уy]([уy\!@#$%\^&*+-\|\/]{0,6})[4чkк]\w{1,3}|\w{0,4}[bб]([bб\s\!@#$%\^&*+-\|\/]{0,6})[lл]([lл\s\!@#$%\^&*+-\|\/]{0,6})[yя]\w{0,10}|\w{0,8}[её][bб][лске@eыиаa][наи@йвл]\w{0,8}|\w{0,4}[еe]([еe\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[uу]([uу\s\!@#$%\^&*+-\|\/]{0,6})[н4ч]\w{0,4}|\w{0,4}[еeё]([еeё\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[нn]([нn\s\!@#$%\^&*+-\|\/]{0,6})[уy]\w{0,4}|\w{0,4}[еe]([еe\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[оoаa@]([оoаa@\s\!@#$%\^&*+-\|\/]{0,6})[тnнt]\w{0,4}|\w{0,10}[ё]([ё\!@#$%\^&*+-\|\/]{0,6})[б]\w{0,6}|\w{0,4}[pп]([pп\s\!@#$%\^&*+-\|\/]{0,6})[иeеi]([иeеi\s\!@#$%\^&*+-\|\/]{0,6})[дd]([дd\s\!@#$%\^&*+-\|\/]{0,6})[oоаa@еeиi]([oоаa@еeиi\s\!@#$%\^&*+-\|\/]{0,6})[рr]\w{0,12}/ig,
       lists: [{
         menu_name: 'Список средств',
         title: 'Список средств',
@@ -9823,12 +9826,52 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
   watch: {
     'options': {
       handler: function handler(val) {
+        var _this = this;
+
+        var oldValue = this.oldOptions || {};
+        this['textAreas'].forEach(function (input) {
+          var id = input.id;
+          if (val[id] !== oldValue[id]) val = _this.matFilter(id, val);
+        });
+        val.products.forEach(function (product, i) {
+          for (var inputId in product) {
+            if (!oldValue.products) oldValue.products = [];
+            if (oldValue.products[i] && val.products[i][inputId] !== oldValue.products[i][inputId]) product = _this.matFilter(inputId, product);
+          }
+        });
+        this.oldOptions = JSON.parse(JSON.stringify(val));
         vue_cookies__WEBPACK_IMPORTED_MODULE_3___default.a.set('options', val);
       },
       deep: true
     }
   },
+
+  /*            'options.signature'(text) {
+          if(text){
+               text = text.replace(this.mat, ' ');
+               this.matArray.forEach(word => {
+                  text = text.replace(new RegExp(word, 'g'), '');
+              });
+               this.options.signatureMat = text;
+          } else {
+              this.options.signatureMat = '';
+          }
+      },*/
   methods: {
+    matFilter: function matFilter(id, val) {
+      if (val[id]) {
+        var text = '';
+        text = val[id].replace(this.mat, ' ');
+        this.$root.data['mat.json'].forEach(function (word) {
+          text = text.replace(new RegExp(word, 'ig'), '');
+        });
+        val[id + 'Mat'] = text;
+      } else {
+        val[id + 'Mat'] = '';
+      }
+
+      return val;
+    },
     lang: function lang(value) {
       switch (value) {
         case 'consultant':
@@ -9872,7 +9915,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
           vm.userType = user;
           vm.$root.setRootData('images', function () {
             vm.$root.setRootData('sizes.json', function () {
-              vm.initOptions();
+              vm.$root.setRootData('mat.json', function () {
+                vm.initOptions();
+              });
             });
           });
         } else vm.$router.push({
@@ -10005,6 +10050,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -10014,23 +10061,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_filters__WEBPACK_IMPORTED_MO
   mixins: [vue2_filters__WEBPACK_IMPORTED_MODULE_2___default.a.mixin],
   data: function data() {
     return {
-      active: 0,
-      matArray: this.$root.data['mat.json'],
-      mat: /\w{0,5}[хx]([хx\s\!@#$%\^&*+-\|\/]{0,6})[уy]([уy\s\!@#$%\^&*+-\|\/]{0,6})[ёiлeеюийя]\w{0,7}|\w{0,6}[пp]([пp\s\!@#$%\^&*+-\|\/]{0,6})[iие]([iие\s\!@#$%\^&*+-\|\/]{0,6})[3зс]([3зс\s\!@#$%\^&*+-\|\/]{0,6})[дd]\w{0,10}|[сcs][уy]([уy\!@#$%\^&*+-\|\/]{0,6})[4чkк]\w{1,3}|\w{0,4}[bб]([bб\s\!@#$%\^&*+-\|\/]{0,6})[lл]([lл\s\!@#$%\^&*+-\|\/]{0,6})[yя]\w{0,10}|\w{0,8}[её][bб][лске@eыиаa][наи@йвл]\w{0,8}|\w{0,4}[еe]([еe\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[uу]([uу\s\!@#$%\^&*+-\|\/]{0,6})[н4ч]\w{0,4}|\w{0,4}[еeё]([еeё\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[нn]([нn\s\!@#$%\^&*+-\|\/]{0,6})[уy]\w{0,4}|\w{0,4}[еe]([еe\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[оoаa@]([оoаa@\s\!@#$%\^&*+-\|\/]{0,6})[тnнt]\w{0,4}|\w{0,10}[ё]([ё\!@#$%\^&*+-\|\/]{0,6})[б]\w{0,6}|\w{0,4}[pп]([pп\s\!@#$%\^&*+-\|\/]{0,6})[иeеi]([иeеi\s\!@#$%\^&*+-\|\/]{0,6})[дd]([дd\s\!@#$%\^&*+-\|\/]{0,6})[oоаa@еeиi]([oоаa@еeиi\s\!@#$%\^&*+-\|\/]{0,6})[рr]\w{0,12}/ig
+      active: 0
     };
-  },
-  watch: {
-    'options.signature': function optionsSignature(text) {
-      if (text) {
-        text = text.replace(this.mat, ' ');
-        this.matArray.forEach(function (word) {
-          text = text.replace(new RegExp(word, 'g'), '');
-        });
-        this.options.signatureMat = text;
-      } else {
-        this.options.signatureMat = '';
-      }
-    }
   },
   methods: {
     classes: function classes(tagClass) {
@@ -10133,9 +10165,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_filters__WEBPACK_IMPORTED_MO
         }
       };
     }
-  },
-  created: function created() {
-    this.$root.setRootData('mat.json');
   }
 });
 
@@ -71464,8 +71493,8 @@ if (true) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-    /**
- * Vue Cookies v1.5.13
+/**
+ * Vue Cookies v1.6.1
  * https://github.com/cmp-cc/vue-cookies
  *
  * Copyright 2016, cmp-cc
@@ -71476,22 +71505,22 @@ if (true) {
 
     var defaultConfig = {
         expires : '1d',
-        path : '; path=/'
+        path : '; path=/',
+        domain:'',
+        secure:'',
     }
 
     var VueCookies = {
         // install of Vue
         install: function(Vue) {
             Vue.prototype.$cookies = this
-            Vue.cookies = this
+            Vue.$cookies = this
         },
-        config : function(expireTimes,path) {
-            if(expireTimes) {
-                defaultConfig.expires = expireTimes;
-            }
-            if(path) {
-                defaultConfig.path = '; path=' + path;
-            }
+        config : function(expireTimes,path,domain,secure) {
+            defaultConfig.expires = expireTimes ? expireTimes : '1d';
+            defaultConfig.path = path ? '; path=' + path : '; path=/';
+            defaultConfig.domain = domain ? '; domain=' + domain : '';
+            defaultConfig.secure = secure ? '; secure' : '';
         },
         get: function(key) {
             var value = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
@@ -71547,14 +71576,14 @@ if (true) {
                         break;
                 }
             }
-            document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path) + (secure ? "; secure" : "");
+            document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : defaultConfig.domain) + (path ? "; path=" + path : defaultConfig.path) + (secure === undefined ? defaultConfig.secure : secure ? "; secure" : "");
             return this;
         },
         remove: function(key, path, domain) {
             if (!key || !this.isKey(key)) {
                 return false;
             }
-            document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path);
+            document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : defaultConfig.domain) + (path ? "; path=" + path : defaultConfig.path);
             return this;
         },
         isKey: function(key) {
@@ -74520,7 +74549,7 @@ var render = function() {
           [
             _c("p", [_vm._v(_vm._s(_vm.options.signatureMat))]),
             _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.options.pagelink))])
+            _c("p", [_vm._v(_vm._s(_vm.options.pagelinkMat))])
           ]
         )
       ],
@@ -74545,8 +74574,8 @@ var render = function() {
         _vm._v(" "),
         _vm._l(_vm.options.products, function(product, i) {
           return _c("div", { key: i }, [
-            _c("a", { attrs: { href: product.link, target: "_blank" } }, [
-              _vm._v(_vm._s(i + 1) + ". " + _vm._s(product.name))
+            _c("a", { attrs: { href: product.linkMat, target: "_blank" } }, [
+              _vm._v(_vm._s(i + 1) + ". " + _vm._s(product.nameMat))
             ])
           ])
         })
@@ -95105,7 +95134,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xamp\htdocs\invitations_laravel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\invitations_laravel\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })
