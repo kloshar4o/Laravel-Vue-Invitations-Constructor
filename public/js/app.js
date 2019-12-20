@@ -72608,9 +72608,9 @@ var render = function() {
                       staticClass: "signature"
                     },
                     [
-                      _c("p", [_vm._v(_vm._s(_vm.options.signature))]),
+                      _c("p", [_vm._v(_vm._s(_vm.options.signatureMat))]),
                       _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(_vm.options.pagelink))])
+                      _c("p", [_vm._v(_vm._s(_vm.options.pagelinkMat))])
                     ]
                   )
                 ],
@@ -72637,8 +72637,8 @@ var render = function() {
               _vm._v(" "),
               _vm._l(_vm.options.products, function(product, i) {
                 return _c("div", { key: i }, [
-                  _c("a", { attrs: { href: product.link } }, [
-                    _vm._v(_vm._s(i + 1) + ". " + _vm._s(product.name))
+                  _c("a", { attrs: { href: product.linkMat } }, [
+                    _vm._v(_vm._s(i + 1) + ". " + _vm._s(product.nameMat))
                   ])
                 ])
               })
