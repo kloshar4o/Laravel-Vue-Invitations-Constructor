@@ -9140,7 +9140,8 @@ __webpack_require__.r(__webpack_exports__);
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     next(function (vm) {
       vm.$root.setRootData('images', function () {
-        return vm.$forceUpdate();
+        vm.$forceUpdate();
+        vm.$root.loading = false;
       });
     });
   }
@@ -9847,6 +9848,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
         products: [],
         activeImages: []
       };
+      this.$root.loading = false;
       this.$forceUpdate();
     }
   },
@@ -72662,9 +72664,15 @@ var render = function() {
           _c(
             "span",
             [
-              _c("router-link", { attrs: { to: { name: "Constructor" } } }, [
-                _vm._v("Онлайн-редактор")
-              ]),
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: { name: "Constructor", params: { user: "consultant" } }
+                  }
+                },
+                [_vm._v("Онлайн-редактор")]
+              ),
               _vm._v(" открыток")
             ],
             1
@@ -93964,8 +93972,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_I
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_9__["default"]({
   mode: 'history',
   routes: [{
-    path: appPath + '/',
-    name: 'Constructor',
+    path: appPath,
+    name: 'Home',
     component: _views_constructor_Constructor_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     path: appPath + 'login',
@@ -94070,8 +94078,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         })["catch"](function (error) {
           vue__WEBPACK_IMPORTED_MODULE_0___default.a.$toast.error(error.toString());
         })["finally"](function () {
-          _this.loading = false;
+          if (!callback) _this.loading = false;
         });
+      } else {
+        if (callback) callback();
       }
     }
   }

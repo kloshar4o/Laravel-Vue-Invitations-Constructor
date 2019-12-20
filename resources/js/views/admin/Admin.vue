@@ -7,7 +7,7 @@
                     </div>
                 </div>
                 <div class="header__logo"><b>Режим администратора</b> <span>
-                    <router-link :to="{ name: 'Constructor' }">Онлайн-редактор</router-link> открыток</span>
+                    <router-link :to="{ name: 'Constructor', params: {user: 'consultant'} }">Онлайн-редактор</router-link> открыток</span>
                 </div>
                 <div class="header__text link">
                     <a href="#" @click="goTo('consultant')">Открытки консультантов</a>
@@ -88,7 +88,10 @@
         beforeRouteEnter(to, from, next) {
 
             next(vm => {
-                vm.$root.setRootData('images', () => vm.$forceUpdate())
+                vm.$root.setRootData('images', () => {
+                    vm.$forceUpdate()
+                    vm.$root.loading = false;
+                })
             })
         },
 

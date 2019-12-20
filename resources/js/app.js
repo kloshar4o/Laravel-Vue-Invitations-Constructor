@@ -29,8 +29,8 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: appPath + '/',
-            name: 'Constructor',
+            path: appPath,
+            name: 'Home',
             component: Constructor,
         },
         {
@@ -129,8 +129,13 @@ const app = new Vue({
 
                 }).finally(() => {
 
-                    this.loading = false;
+                    if(!callback)
+                        this.loading = false;
                 });
+            } else {
+
+                if(callback)
+                    callback();
             }
         }
     }

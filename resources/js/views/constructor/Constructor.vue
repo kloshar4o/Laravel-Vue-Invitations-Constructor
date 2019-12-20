@@ -120,6 +120,7 @@
                     activeImages: [],
                 }
 
+                this.$root.loading = false;
                 this.$forceUpdate();
 
             },
@@ -155,6 +156,7 @@
                                 vm.initOptions();
                             })
                         })
+
                     } else
                         vm.$router.push({name: '404'});
 
