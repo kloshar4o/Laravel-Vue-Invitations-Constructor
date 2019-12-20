@@ -9797,6 +9797,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
       userType: 'client',
       options: false,
       openMenu: false,
+      showNav: false,
       lists: [{
         menu_name: 'Список средств',
         title: 'Список средств',
@@ -73718,14 +73719,14 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm.$auth.check() || false
+              _vm.$auth.check() && _vm.showNav
                 ? _c(
                     "router-link",
                     {
                       attrs: {
                         to: {
                           name: "Admin",
-                          params: { page: _vm.$root.adminPage || "client" }
+                          params: { page: _vm.$root.adminPage }
                         }
                       }
                     },
@@ -73733,19 +73734,19 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              !_vm.$auth.check() || false
+              !_vm.$auth.check() && _vm.showNav
                 ? _c("router-link", { attrs: { to: { name: "Login" } } }, [
                     _vm._v("Логин")
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              !_vm.$auth.check() || false
+              !_vm.$auth.check() && _vm.showNav
                 ? _c("router-link", { attrs: { to: { name: "Register" } } }, [
                     _vm._v("Регистрация")
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _vm.$auth.check() || false
+              _vm.$auth.check() && _vm.showNav
                 ? _c(
                     "a",
                     {
