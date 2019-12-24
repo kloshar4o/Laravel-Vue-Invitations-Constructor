@@ -74420,7 +74420,7 @@ var render = function() {
           width: _vm.options.size.width + "px",
           height: _vm.options.size.height + "px",
           background: _vm.options.background.src
-            ? "url(" + _vm.options.background.src + ")"
+            ? "url('" + _vm.options.background.src + "')"
             : "white"
         }
       },

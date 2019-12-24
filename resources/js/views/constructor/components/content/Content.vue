@@ -4,7 +4,7 @@
         <div ref="printBox" class="canvas" :style="{
                     'width': options.size.width + 'px',
                     'height': options.size.height + 'px',
-                    'background': (options.background.src) ? 'url(' + options.background.src + ')' : 'white',}">
+                    'background': (options.background.src) ? 'url(\'' + options.background.src + '\')' : 'white',}">
 
             <div class="overlayWhite"
                  :style="{'background-color': 'rgba(255, 255, 255, ' + options.background.opacity + ' )'}"></div>
