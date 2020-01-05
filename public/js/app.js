@@ -9388,10 +9388,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_I
     lang: function lang(value) {
       switch (value) {
         case 'consultant':
-          return 'консультантов';
+          return 'consultants created';
 
         case 'client':
-          return 'клиентов';
+          return 'clients created';
       }
     },
     destroy: function destroy(id, page, currPag) {
@@ -9406,7 +9406,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_I
     },
     formatDate: function formatDate(date) {
       if (date) {
-        return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(date)).format('DD.MM.YYYY');
+        return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(date)).format('MM/DD/YYYY');
       }
     },
     paginateTo: function paginateTo(page, pag) {
@@ -9792,30 +9792,28 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      user: 'Клиент',
+      user: 'Client',
       userType: 'client',
       options: false,
       oldOptions: false,
       openMenu: false,
-      showNav: false,
-      matArray: this.$root.data['mat.json'],
-      mat: /\w{0,5}[хx]([хx\s\!@#$%\^&*+-\|\/]{0,6})[уy]([уy\s\!@#$%\^&*+-\|\/]{0,6})[ёiлeеюийя]\w{0,7}|\w{0,6}[пp]([пp\s\!@#$%\^&*+-\|\/]{0,6})[iие]([iие\s\!@#$%\^&*+-\|\/]{0,6})[3зс]([3зс\s\!@#$%\^&*+-\|\/]{0,6})[дd]\w{0,10}|[сcs][уy]([уy\!@#$%\^&*+-\|\/]{0,6})[4чkк]\w{1,3}|\w{0,4}[bб]([bб\s\!@#$%\^&*+-\|\/]{0,6})[lл]([lл\s\!@#$%\^&*+-\|\/]{0,6})[yя]\w{0,10}|\w{0,8}[её][bб][лске@eыиаa][наи@йвл]\w{0,8}|\w{0,4}[еe]([еe\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[uу]([uу\s\!@#$%\^&*+-\|\/]{0,6})[н4ч]\w{0,4}|\w{0,4}[еeё]([еeё\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[нn]([нn\s\!@#$%\^&*+-\|\/]{0,6})[уy]\w{0,4}|\w{0,4}[еe]([еe\s\!@#$%\^&*+-\|\/]{0,6})[бb]([бb\s\!@#$%\^&*+-\|\/]{0,6})[оoаa@]([оoаa@\s\!@#$%\^&*+-\|\/]{0,6})[тnнt]\w{0,4}|\w{0,10}[ё]([ё\!@#$%\^&*+-\|\/]{0,6})[б]\w{0,6}|\w{0,4}[pп]([pп\s\!@#$%\^&*+-\|\/]{0,6})[иeеi]([иeеi\s\!@#$%\^&*+-\|\/]{0,6})[дd]([дd\s\!@#$%\^&*+-\|\/]{0,6})[oоаa@еeиi]([oоаa@еeиi\s\!@#$%\^&*+-\|\/]{0,6})[рr]\w{0,12}/ig,
+      showNav: true,
       lists: [{
-        menu_name: 'Список средств',
-        title: 'Список средств',
+        menu_name: 'List of products',
+        title: 'List of products',
         type: 'lists',
         id: 'listoffunds',
         client: 0
       }],
       textAreas: [{
-        menu_name: 'Подпись',
-        title: 'Подпись',
+        menu_name: 'Signature',
+        title: 'Signature',
         type: 'textAreas',
         id: 'signature',
         client: 1
       }, {
-        menu_name: 'Ссылка на страницу',
-        title: 'Ссылка на страницу',
+        menu_name: 'Page link',
+        title: 'Page link',
         type: 'textAreas',
         id: 'pagelink',
         client: 0
@@ -9825,61 +9823,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookies__WEBPACK_IMPORTED_MOD
   watch: {
     'options': {
       handler: function handler(val) {
-        var _this = this;
-
-        var oldValue = this.oldOptions || {};
-        this['textAreas'].forEach(function (input) {
-          var id = input.id;
-          if (val[id] !== oldValue[id]) val = _this.matFilter(id, val);
-        });
-        if (!oldValue.products) oldValue.products = [];
-        val.products.forEach(function (product, i) {
-          if (!oldValue.products[i]) oldValue.products.push({});
-
-          for (var inputId in product) {
-            if (val.products[i][inputId] !== oldValue.products[i][inputId]) product = _this.matFilter(inputId, product);
-          }
-        });
-        this.oldOptions = JSON.parse(JSON.stringify(val));
         vue_cookies__WEBPACK_IMPORTED_MODULE_3___default.a.set('options', val);
       },
       deep: true
     }
   },
-
-  /*            'options.signature'(text) {
-          if(text){
-               text = text.replace(this.mat, ' ');
-               this.matArray.forEach(word => {
-                  text = text.replace(new RegExp(word, 'g'), '');
-              });
-               this.options.signatureMat = text;
-          } else {
-              this.options.signatureMat = '';
-          }
-      },*/
   methods: {
-    matFilter: function matFilter(id, val) {
-      if (val[id]) {
-        var text = '';
-        text = val[id].replace(this.mat, ' ');
-        this.$root.data['mat.json'].forEach(function (word) {
-          text = text.replace(new RegExp(word, 'ig'), '');
-        });
-        val[id + 'Mat'] = text;
-      } else {
-        val[id + 'Mat'] = '';
-      }
-
-      return val;
-    },
     lang: function lang(value) {
       switch (value) {
         case 'consultant':
-          return 'консультантов';
+          return 'consultants';
 
         case 'client':
-          return 'клиентов';
+          return 'clients';
       }
     },
     initOptions: function initOptions() {
@@ -10558,8 +10514,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -10575,7 +10529,7 @@ window.jQuery = $;
   data: function data() {
     return {
       scaleTimes: 2,
-      copyText: 'Сылка создана',
+      copyText: 'Link created',
       origin: window.location.origin,
       path: window.location.pathname,
       link: null,
@@ -10605,7 +10559,7 @@ window.jQuery = $;
       return string + number;
     },
     onCopy: function onCopy() {
-      this.copyText = 'Ссылка скопирована';
+      this.copyText = 'Link is copied to your clipboard';
       $.fancybox.open($('#copylink'));
       this.sendData();
     },
@@ -10676,7 +10630,7 @@ window.jQuery = $;
               scaleBox(this.scaleTimes);
               _context.prev = 10;
               //Html convert to canvas
-              generate.steps.push('Html на Canvas');
+              generate.steps.push('Html to Canvas');
               _context.next = 14;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(html2canvas__WEBPACK_IMPORTED_MODULE_3___default()(box));
 
@@ -10693,14 +10647,14 @@ window.jQuery = $;
             case 20:
               //Canvas to DataUrl
               imgData = canvas.toDataURL('image/' + type, 1.0);
-              generate.steps.push('Canvas на PNG');
+              generate.steps.push('Canvas to PNG');
               size = this.options.size; //Pixel Manipulation (generate a greyscale moire pattern.. whatever that means..)
 
               downscale__WEBPACK_IMPORTED_MODULE_2___default()(imgData, size.width, size.height, {
                 quality: 1,
                 imageType: 'png'
               }).then(function (dataURL) {
-                generate.steps.push('Улучшение качество');
+                generate.steps.push('Quality improve');
                 generate.src = dataURL;
                 generate.name = name + '.' + type; //Scale back to 1
 
@@ -72381,7 +72335,7 @@ var staticRenderFns = [
         _c("div", [
           _c("h1", { staticClass: "title" }, [_vm._v("Error 404")]),
           _vm._v(" "),
-          _c("p", [_vm._v("Страница не найдена")])
+          _c("p", [_vm._v("Page not found")])
         ])
       ])
     ])
@@ -72643,7 +72597,7 @@ var render = function() {
               staticClass: "canvas__footer"
             },
             [
-              _c("span", [_vm._v("Список средств")]),
+              _c("span", [_vm._v("List of products")]),
               _vm._v(" "),
               _vm._l(_vm.options.products, function(product, i) {
                 return _c("div", { key: i }, [
@@ -72701,7 +72655,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "header__logo" }, [
-          _c("b", [_vm._v("Режим администратора")]),
+          _c("b", [_vm._v("Dashboard")]),
           _vm._v(" "),
           _c(
             "span",
@@ -72713,9 +72667,8 @@ var render = function() {
                     to: { name: "Constructor", params: { user: "consultant" } }
                   }
                 },
-                [_vm._v("Онлайн-редактор")]
-              ),
-              _vm._v(" открыток")
+                [_vm._v("Online invitations editor")]
+              )
             ],
             1
           )
@@ -72732,7 +72685,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Открытки консультантов")]
+            [_vm._v("Consultant invitations")]
           ),
           _vm._v(" "),
           _c(
@@ -72745,7 +72698,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Открытки клиентов")]
+            [_vm._v("Client invitations")]
           )
         ]),
         _vm._v(" "),
@@ -72762,7 +72715,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Выйти")]
+                [_vm._v("Logout")]
               )
             : _vm._e()
         ])
@@ -72895,24 +72848,21 @@ var render = function() {
           }
         },
         [
-          _c("h3", [_vm._v("Режим администратора")]),
+          _c("h3", [_vm._v("Administrator")]),
           _vm._v(" "),
           _c(
             "span",
             [
               _c("router-link", { attrs: { to: { name: "Constructor" } } }, [
-                _vm._v("Онлайн-редактор")
-              ]),
-              _vm._v(" открыток\n            ")
+                _vm._v("Online invitations editor")
+              ])
             ],
             1
           ),
           _vm._v(" "),
           _vm.error
             ? _c("div", { staticClass: "alert alert-danger" }, [
-                _c("p", [
-                  _vm._v("Ошибка авторизации неправильный логин или пароль")
-                ])
+                _c("p", [_vm._v("Auth error, wrong login or password")])
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -72970,7 +72920,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("button", { attrs: { type: "submit" } }, [_vm._v("Войти")]),
+          _c("button", { attrs: { type: "submit" } }, [_vm._v("Login")]),
           _vm._v(" "),
           _c("br"),
           _c("br")
@@ -73016,21 +72966,21 @@ var render = function() {
           }
         },
         [
-          _c("h3", [_vm._v("Регистрация")]),
-          _c("span", [_vm._v("Онлайн-редактор открыток ")]),
+          _c("h3", [_vm._v("Register")]),
+          _c("span", [_vm._v("Online invitations constructor")]),
           _vm._v(" "),
           _vm.success
             ? _c("div", { staticClass: "alert alert-suc" }, [
                 _c(
                   "p",
                   [
-                    _vm._v("Пользватель "),
+                    _vm._v("User "),
                     _c("a", { attrs: { href: "mailto:" + _vm.email } }, [
                       _vm._v(_vm._s(_vm.email))
                     ]),
-                    _vm._v(" успешно добавлен, вы можете  "),
+                    _vm._v(" successfully created, you can "),
                     _c("router-link", { attrs: { to: { name: "Login" } } }, [
-                      _vm._v("зайти")
+                      _vm._v("login")
                     ])
                   ],
                   1
@@ -73162,7 +73112,7 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _c("button", { attrs: { type: "submit" } }, [_vm._v("Регистрация")])
+          _c("button", { attrs: { type: "submit" } }, [_vm._v("Register")])
         ]
       )
     ])
@@ -73196,18 +73146,15 @@ var render = function() {
     [
       _vm.cards[_vm.page]
         ? _c("div", { staticClass: "admincontent" }, [
-            _c("h3", [_vm._v("Открытки " + _vm._s(_vm.lang(_vm.page)))]),
+            _c("h3", [_vm._v("Invitations " + _vm._s(_vm.lang(_vm.page)))]),
             _vm._v(" "),
             _c("span", [
               _vm._v(
-                "Всего создано: " + _vm._s(_vm.cards[_vm.page].total) + " "
-              )
-            ]),
-            _c("span", [
-              _vm._v(
-                "Их них скачано: " +
+                "Total created: " +
+                  _vm._s(_vm.cards[_vm.page].total) +
+                  ", Downloaded: " +
                   _vm._s(_vm.cards[_vm.page].downloaded) +
-                  ", поделиться ссылкой: " +
+                  ", Shared: " +
                   _vm._s(_vm.cards[_vm.page].shared)
               )
             ]),
@@ -73287,7 +73234,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Удалить")]
+                      [_vm._v("Delete")]
                     )
                   ],
                   1
@@ -73512,7 +73459,7 @@ var render = function() {
                             [
                               _c("use", {
                                 attrs: {
-                                  "xlink:href": "ico/sprite/sprite.svg#up"
+                                  "xlink:href": "/ico/sprite/sprite.svg#up"
                                 }
                               })
                             ]
@@ -73532,7 +73479,7 @@ var render = function() {
                             [
                               _c("use", {
                                 attrs: {
-                                  "xlink:href": "ico/sprite/sprite.svg#down"
+                                  "xlink:href": "/ico/sprite/sprite.svg#down"
                                 }
                               })
                             ]
@@ -73555,7 +73502,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_c("span", [_vm._v("Удалить")])]
+                        [_c("span", [_vm._v("Delete")])]
                       )
                     ]
                   )
@@ -73580,15 +73527,15 @@ var staticRenderFns = [
       _c("div", { staticClass: "elementtable__tr elementtable__tr-1" }),
       _vm._v(" "),
       _c("div", { staticClass: "elementtable__tr elementtable__tr-2" }, [
-        _c("span", [_vm._v("Для консультантов")])
+        _c("span", [_vm._v("For consultant")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "elementtable__tr elementtable__tr-3" }, [
-        _c("span", [_vm._v("Для клиентов")])
+        _c("span", [_vm._v("For clients")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "elementtable__tr elementtable__tr-4" }, [
-        _c("span", [_vm._v("Изменить порядок")])
+        _c("span", [_vm._v("Sort")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "elementtable__tr elementtable__tr-5" })
@@ -73632,7 +73579,7 @@ var render = function() {
         _c(
           "label",
           { staticClass: "btn", attrs: { for: _vm.cat.id + "file" } },
-          [_vm._v(" Выберите файл/ы (" + _vm._s(_vm.cat.accepted) + ")")]
+          [_vm._v(" Select files (" + _vm._s(_vm.cat.accepted) + ")")]
         ),
         _vm._v(" "),
         _c("input", {
@@ -73675,7 +73622,7 @@ var render = function() {
               _c(
                 "label",
                 { staticClass: "btn", attrs: { for: _vm.cat.id + "submit" } },
-                [_vm._v(" Загрузить")]
+                [_vm._v(" Upload")]
               )
             ],
             2
@@ -73756,7 +73703,9 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "header__text" }, [
                 _c("span", [
-                  _vm._v("Онлайн-редактор открыток для " + _vm._s(_vm.user))
+                  _vm._v(
+                    "Online invitations constructor for " + _vm._s(_vm.user)
+                  )
                 ])
               ]),
               _vm._v(" "),
@@ -73771,19 +73720,19 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Админ\n                ")]
+                    [_vm._v("Admin\n                ")]
                   )
                 : _vm._e(),
               _vm._v(" "),
               !_vm.$auth.check() && _vm.showNav
                 ? _c("router-link", { attrs: { to: { name: "Login" } } }, [
-                    _vm._v("Логин")
+                    _vm._v("Login")
                   ])
                 : _vm._e(),
               _vm._v(" "),
               !_vm.$auth.check() && _vm.showNav
                 ? _c("router-link", { attrs: { to: { name: "Register" } } }, [
-                    _vm._v("Регистрация")
+                    _vm._v("Register")
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -73799,11 +73748,11 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Выйти")]
+                    [_vm._v("Logout")]
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _c("a", { attrs: { href: "/" } }, [_vm._v("Вернуться на сайт")])
+              _c("a", { attrs: { href: "#" } }, [_vm._v("Back to website")])
             ],
             1
           )
@@ -73873,10 +73822,10 @@ var render = function() {
                 attrs: { "data-fancybox": "", "data-src": "#selectsize" }
               },
               [
-                _c("span", [_vm._v("Размер")]),
+                _c("span", [_vm._v("Size")]),
                 _vm._v(" "),
                 _c("em", [
-                  _vm._v("Для поста " + _vm._s(_vm.options.size.name) + " "),
+                  _vm._v("For posts " + _vm._s(_vm.options.size.name) + " "),
                   _c("br"),
                   _vm._v(
                     " " +
@@ -73950,7 +73899,7 @@ var render = function() {
                   },
                   [
                     _c("label", { attrs: { for: "transparent" } }, [
-                      _vm._v("Прозрачность")
+                      _vm._v("Opacity")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -74046,9 +73995,7 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("em", [
-                                  _vm._v("Удалить " + _vm._s(cat.name))
-                                ])
+                                _c("em", [_vm._v("Delete " + _vm._s(cat.name))])
                               ]
                             )
                           ])
@@ -74255,7 +74202,7 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "popup__wrap" }, [
-          _c("h3", [_vm._v("Выберите размер")]),
+          _c("h3", [_vm._v("Select image size")]),
           _vm._v(" "),
           _c(
             "div",
@@ -74561,9 +74508,9 @@ var render = function() {
             staticClass: "signature"
           },
           [
-            _c("p", [_vm._v(_vm._s(_vm.options.signatureMat))]),
+            _c("p", [_vm._v(_vm._s(_vm.options.signature))]),
             _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.options.pagelinkMat))])
+            _c("p", [_vm._v(_vm._s(_vm.options.pagelink))])
           ]
         )
       ],
@@ -74584,12 +74531,12 @@ var render = function() {
         staticClass: "canvas__footer"
       },
       [
-        _c("span", [_vm._v("Список средств")]),
+        _c("span", [_vm._v("Products list")]),
         _vm._v(" "),
         _vm._l(_vm.options.products, function(product, i) {
           return _c("div", { key: i }, [
-            _c("a", { attrs: { href: product.linkMat, target: "_blank" } }, [
-              _vm._v(_vm._s(i + 1) + ". " + _vm._s(product.nameMat))
+            _c("a", { attrs: { href: product.link, target: "_blank" } }, [
+              _vm._v(_vm._s(i + 1) + ". " + _vm._s(product.name))
             ])
           ])
         })
@@ -74645,7 +74592,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c("span", [_vm._v("Скачать")])
+        _c("span", [_vm._v("Download")])
       ]
     ),
     _vm._v(" "),
@@ -74675,7 +74622,7 @@ var render = function() {
             arg: "error"
           }
         ],
-        attrs: { href: "javascript:;" }
+        attrs: { href: "#" }
       },
       [
         _c(
@@ -74684,7 +74631,7 @@ var render = function() {
           [_c("use", { attrs: { "xlink:href": "ico/sprite/sprite.svg#link" } })]
         ),
         _vm._v(" "),
-        _c("span", [_vm._v("Скопировать ссылку")])
+        _c("span", [_vm._v("Copy link")])
       ]
     ),
     _vm._v(" "),
@@ -74699,7 +74646,7 @@ var render = function() {
         [_c("use", { attrs: { "xlink:href": "ico/sprite/sprite.svg#x" } })]
       ),
       _vm._v(" "),
-      _c("span", [_vm._v("Очистить")])
+      _c("span", [_vm._v("Clear")])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "popup copylink", attrs: { id: "copylink" } }, [
@@ -74711,7 +74658,9 @@ var render = function() {
             _c("span", [_vm._v(_vm._s(_vm.copyText))])
           ]),
           _vm._v(" "),
-          _c("em", [_vm._v("Ваша открытка доступна по уникальной ссылке.")]),
+          _c("em", [
+            _vm._v("Your invitation is available by the link bellow.")
+          ]),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(_vm.link))]),
           _vm._v(" "),
@@ -74725,24 +74674,16 @@ var render = function() {
         _c("div", { staticClass: "copylink__wrap" }, [
           _vm._m(1),
           _vm._v(" "),
-          _vm.generate.src
-            ? _c(
-                "a",
-                {
-                  staticClass: "bigbtn fancybox-button",
-                  attrs: {
-                    download: _vm.generate.name,
-                    href: _vm.generate.src
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.updateCard("downloaded")
-                    }
-                  }
-                },
-                [_c("span", [_vm._v("Скачать")])]
-              )
-            : _vm._e(),
+          _c(
+            "ul",
+            _vm._l(_vm.generate.steps, function(step, i) {
+              return _c("ol", { key: i, style: { width: 100 / 3 + "%" } }, [
+                _c("img", { attrs: { src: "ico/check.svg", alt: "IMG" } }),
+                _c("p", [_vm._v(_vm._s(i + 1) + ". " + _vm._s(step))])
+              ])
+            }),
+            0
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "progressBar" }, [
             _c("span", {
@@ -74763,6 +74704,25 @@ var render = function() {
                     })
                   : _vm._e()
               ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.generate.src
+            ? _c(
+                "a",
+                {
+                  staticClass: "bigbtn fancybox-button",
+                  attrs: {
+                    download: _vm.generate.name,
+                    href: _vm.generate.src
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.updateCard("downloaded")
+                    }
+                  }
+                },
+                [_c("span", [_vm._v("Download")])]
+              )
             : _vm._e()
         ])
       ])
@@ -74784,7 +74744,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h2", [_c("span", [_vm._v("Сохранение изображения")])])
+    return _c("h2", [_c("span", [_vm._v("Saving image")])])
   }
 ]
 render._withStripped = true
@@ -94102,7 +94062,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     return {
       appPath: appPath,
       data: {},
-      loading: false
+      loading: false,
+      adminPage: 'consultant'
     };
   },
   methods: {

@@ -3,7 +3,7 @@
 
         <div class="popup selectsize" id="selectsize" ref="selectSize">
             <div class="popup__wrap">
-                <h3>Выберите размер</h3>
+                <h3>Select image size</h3>
                 <div class="selectsize__grid">
                     <div class="selectsize__item js__popup-select"
                          v-for="size in sizes"

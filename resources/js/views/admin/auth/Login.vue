@@ -4,21 +4,21 @@
             <form action="#" class="formlog" autocomplete="off" @submit.prevent="login" method="post">
 
 
-                <h3>Режим администратора</h3>
+                <h3>Administrator</h3>
                 <span>
-                    <router-link :to="{ name: 'Constructor' }">Онлайн-редактор</router-link> открыток
+                    <router-link :to="{ name: 'Constructor' }">Online invitations editor</router-link>
                 </span>
 
 
                 <div class="alert alert-danger" v-if="error">
-                    <p>Ошибка авторизации неправильный логин или пароль</p>
+                    <p>Auth error, wrong login or password</p>
                 </div>
 
                 <input type="email" id="email" class="form-control" placeholder="E-mail" v-model="email" required>
                 <input type="password" id="password" class="form-control" v-model="password" placeholder="Пароль"
                        required>
 
-                <button type="submit">Войти</button>
+                <button type="submit">Login</button>
                 <br><br>
             </form>
         </div>

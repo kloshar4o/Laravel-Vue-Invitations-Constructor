@@ -4,8 +4,8 @@
             <div class="menu">
 
                 <div class="menu__item" data-fancybox data-src="#selectsize">
-                    <span>Размер</span>
-                    <em>Для поста {{options.size.name}} <br/> {{options.size.width}} x {{options.size.height}}px</em>
+                    <span>Size</span>
+                    <em>For posts {{options.size.name}} <br/> {{options.size.width}} x {{options.size.height}}px</em>
                 </div>
 
                 <div v-for="(cat, i) in [].concat(imagesData, textAreas, lists)" class="menu__item js__tab-btn"
@@ -34,7 +34,7 @@
                         <span>{{cat.title}}</span>
 
                         <div class="block-range" v-show="cat.type === 'background'">
-                            <label for="transparent">Прозрачность</label>
+                            <label for="transparent">Opacity</label>
                             <input id="transparent" type="range" min="0" max="1" step="0.01"
                                    v-model="options.background.opacity" :disabled="!options.background.src">
                         </div>
@@ -51,7 +51,7 @@
                                 <svg class="svg svg-x" width="50" height="50">
                                     <use xlink:href="ico/sprite/sprite.svg#x"></use>
                                 </svg>
-                                <em>Удалить {{cat.name}}</em>
+                                <em>Delete {{cat.name}}</em>
                             </span>
                                 </div>
                             </slot>

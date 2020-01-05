@@ -5,9 +5,9 @@
             <svg class="svg svg-download" width="50" height="50">
                 <use xlink:href="ico/sprite/sprite.svg#download"></use>
             </svg>
-            <span>Скачать</span>
+            <span>Download</span>
         </a>
-        <a href="javascript:;"
+        <a href="#"
            v-clipboard:copy="link"
            v-clipboard:success="onCopy"
            v-clipboard:error="errorCopy">
@@ -15,19 +15,19 @@
             <svg class="svg svg-link" width="50" height="50">
                 <use xlink:href="ico/sprite/sprite.svg#link"></use>
             </svg>
-            <span>Скопировать ссылку</span>
+            <span>Copy link</span>
         </a>
         <a href="#" @click="updateCard('shared')" v-if="false">
             <svg class="svg svg-share" width="50" height="50">
                 <use xlink:href="ico/sprite/sprite.svg#share"></use>
             </svg>
-            <span>Поделиться</span>
+            <span>Share</span>
         </a>
         <a href="#" @click="clearOptions">
             <svg class="svg svg-share" width="50" height="50">
                 <use xlink:href="ico/sprite/sprite.svg#x"></use>
             </svg>
-            <span>Очистить</span>
+            <span>Clear</span>
         </a>
 
 
@@ -35,7 +35,7 @@
             <div class="popup__wrap">
                 <div class="copylink__wrap">
                     <h2><img src="ico/check.svg" alt="IMG"> <span>{{copyText}}</span></h2>
-                    <em>Ваша открытка доступна по уникальной ссылке.</em>
+                    <em>Your invitation is available by the link bellow.</em>
                     <span>{{link}}</span>
                     <button class="bigbtn" data-fancybox-close><span>OK</span>
                     </button>
@@ -46,18 +46,14 @@
         <div class="popup generate" id="generate">
             <div class="popup__wrap">
                 <div class="copylink__wrap">
-                    <h2><span>Сохранение изображения</span></h2>
+                    <h2><span>Saving image</span></h2>
 
-                    <!--
                     <ul>
                        <ol v-for="(step, i) in generate.steps" :key="i" :style="{width: 100 / 3 + '%'}">
                            <img src="ico/check.svg" alt="IMG"><p>{{i+1}}. {{step}}</p>
                        </ol>
                     </ul>
-                    -->
 
-                    <a v-if="generate.src"  :download="generate.name" :href="generate.src" @click="updateCard('downloaded')"
-                       class="bigbtn fancybox-button"><span>Скачать</span></a>
                     <div class="progressBar">
                         <span :style="{width: (generate.steps.length * 100 / 3) + '%'}"></span>
                     </div>
@@ -68,6 +64,8 @@
                         <img v-if="generate.src" :src="generate.src" alt="" class="blink_me">
                     </div>
 
+                    <a v-if="generate.src"  :download="generate.name" :href="generate.src" @click="updateCard('downloaded')"
+                       class="bigbtn fancybox-button"><span>Download</span></a>
                 </div>
             </div>
         </div>
@@ -94,7 +92,7 @@
         data() {
             return {
                 scaleTimes: 2,
-                copyText: 'Сылка создана',
+                copyText: 'Link created',
 
                 origin: window.location.origin,
                 path: window.location.pathname,
@@ -128,7 +126,7 @@
                 return string + number
             },
             onCopy() {
-                this.copyText = 'Ссылка скопирована';
+                this.copyText = 'Link is copied to your clipboard';
                 $.fancybox.open($('#copylink'));
                 this.sendData()
             },
@@ -200,7 +198,7 @@
 
                 try {
                     //Html convert to canvas
-                    generate.steps.push('Html на Canvas')
+                    generate.steps.push('Html to Canvas')
                     canvas = await html2canvas(box);
                 } catch (error) {
                     generate.error = error;
@@ -209,7 +207,7 @@
                 //Canvas to DataUrl
                 let imgData = canvas.toDataURL('image/' + type, 1.0);
 
-                generate.steps.push('Canvas на PNG')
+                generate.steps.push('Canvas to PNG')
 
 
                 let size = this.options.size;
@@ -217,7 +215,7 @@
                 downscale(imgData, size.width, size.height, {quality: 1, imageType: 'png'})
                     .then(dataURL => {
 
-                        generate.steps.push('Улучшение качество')
+                        generate.steps.push('Quality improve')
                         generate.src = dataURL;
                         generate.name = name + '.' + type;
 

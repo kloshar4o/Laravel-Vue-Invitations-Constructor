@@ -61,7 +61,7 @@
             </div>
 
             <div class="canvas__footer" v-show="options.products.length">
-                <span>Список средств</span>
+                <span>List of products</span>
                 <div v-for="(product, i) in options.products" :key="i">
                     <a :href="product.linkMat">{{i + 1}}. {{product.nameMat}}</a>
                 </div>

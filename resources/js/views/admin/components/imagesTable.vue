@@ -2,11 +2,11 @@
     <div class="elementtable" >
         <div class="elementtable__head">
             <div class="elementtable__tr elementtable__tr-1"></div>
-            <div class="elementtable__tr elementtable__tr-2"><span>Для консультантов</span>
+            <div class="elementtable__tr elementtable__tr-2"><span>For consultant</span>
             </div>
-            <div class="elementtable__tr elementtable__tr-3"><span>Для клиентов</span>
+            <div class="elementtable__tr elementtable__tr-3"><span>For clients</span>
             </div>
-            <div class="elementtable__tr elementtable__tr-4"><span>Изменить порядок</span>
+            <div class="elementtable__tr elementtable__tr-4"><span>Sort</span>
             </div>
             <div class="elementtable__tr elementtable__tr-5"></div>
         </div>
@@ -43,19 +43,19 @@
                             <div class="updown__up">
                                 <svg class="svg svg-up" width="50" height="50"
                                      :class="{unactive: j === 0}">
-                                    <use xlink:href="ico/sprite/sprite.svg#up"></use>
+                                    <use xlink:href="/ico/sprite/sprite.svg#up"></use>
                                 </svg>
                             </div>
                             <div class="updown__down">
                                 <svg class="svg svg-down" width="50" height="50"
                                      :class="{unactive: j === cat.images.length -1}">
-                                    <use xlink:href="ico/sprite/sprite.svg#down"></use>
+                                    <use xlink:href="/ico/sprite/sprite.svg#down"></use>
                                 </svg>
                             </div>
                         </div>
                     </div>
                     <div class="elementtable__tr elementtable__tr-5">
-                        <button @click="deleteImage(cat.images, image, j)"><span>Удалить</span>
+                        <button @click="deleteImage(cat.images, image, j)"><span>Delete</span>
                         </button>
                     </div>
 

@@ -6,14 +6,14 @@
                     <div class="hamburger" @click="menu = !menu;" :class="{active: menu}"><span></span>
                     </div>
                 </div>
-                <div class="header__logo"><b>Режим администратора</b> <span>
-                    <router-link :to="{ name: 'Constructor', params: {user: 'consultant'} }">Онлайн-редактор</router-link> открыток</span>
+                <div class="header__logo"><b>Dashboard</b> <span>
+                    <router-link :to="{ name: 'Constructor', params: {user: 'consultant'} }">Online invitations editor</router-link></span>
                 </div>
                 <div class="header__text link">
-                    <a href="#" @click="goTo('consultant')">Открытки консультантов</a>
-                    <a href="#" @click="goTo('client')">Открытки клиентов</a>
+                    <a href="#" @click="goTo('consultant')">Consultant invitations</a>
+                    <a href="#" @click="goTo('client')">Client invitations</a>
                 </div>
-                <div class="header__link"><a href="#" @click.prevent="$auth.logout()" v-if="$auth.check()">Выйти</a>
+                <div class="header__link"><a href="#" @click.prevent="$auth.logout()" v-if="$auth.check()">Logout</a>
                 </div>
             </div>
         </header>

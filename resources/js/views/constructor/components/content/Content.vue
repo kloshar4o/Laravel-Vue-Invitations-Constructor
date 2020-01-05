@@ -51,16 +51,16 @@
 
 
             <div class="signature" v-show="options.signature || options.pagelink">
-                <p>{{options.signatureMat}}</p>
-                <p>{{options.pagelinkMat}}</p>
+                <p>{{options.signature}}</p>
+                <p>{{options.pagelink}}</p>
             </div>
 
         </div>
 
         <div class="canvas__footer" v-show="options.products.length">
-            <span>Список средств</span>
+            <span>Products list</span>
             <div v-for="(product, i) in options.products" :key="i">
-                <a :href="product.linkMat" target="_blank">{{i + 1}}. {{product.nameMat}}</a>
+                <a :href="product.link" target="_blank">{{i + 1}}. {{product.name}}</a>
             </div>
         </div>
     </div>

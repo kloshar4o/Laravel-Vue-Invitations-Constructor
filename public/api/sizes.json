@@ -1,8 +1,8 @@
 [
-    {"img": "img/facebook.png",  "name": "Для поста Facebook",          "width": 1200, "height": 630},
-    {"img": "img/instargam.png", "name": "Instagram и мессенджеры",     "width": 1080, "height": 1080},
-    {"img": "img/insagram.png",  "name": "Для поста Instagram Stories", "width": 1080, "height": 1920},
-    {"img": "img/vk.png",        "name": "Для поста Вконтакте",         "width": 1200, "height": 630},
-    {"img": "img/ok.png",        "name": "Для поста OK.ru",             "width": 1680, "height": 1680},
-    {"img": "img/tw.png",        "name": "Для поста Twitter",           "width": 1024, "height": 512}
+    {"img": "img/facebook.png",  "name": "For Facebook",          "width": 1200, "height": 630},
+    {"img": "img/instargam.png", "name": "For Instagram и messengers",     "width": 1080, "height": 1080},
+    {"img": "img/insagram.png",  "name": "For Instagram Stories", "width": 1080, "height": 1920},
+    {"img": "img/vk.png",        "name": "For VK",         "width": 1200, "height": 630},
+    {"img": "img/ok.png",        "name": "For OK.ru",             "width": 1680, "height": 1680},
+    {"img": "img/tw.png",        "name": "For Twitter",           "width": 1024, "height": 512}
 ]

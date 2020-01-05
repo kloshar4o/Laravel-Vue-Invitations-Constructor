@@ -3,7 +3,7 @@
         <div class="login">
             <div>
                 <h1 class="title">Error 404</h1>
-                <p>Страница не найдена</p>
+                <p>Page not found</p>
             </div>
         </div>
     </div>

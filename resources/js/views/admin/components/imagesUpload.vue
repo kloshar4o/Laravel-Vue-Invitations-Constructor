@@ -2,7 +2,7 @@
     <form @submit.prevent="uploadImage($event, cat, index)" enctype="multipart/form-data">
 
         <div class="elementcontent__btn">
-            <label class="btn" :for="cat.id + 'file'"> Выберите файл/ы ({{cat.accepted}})</label>
+            <label class="btn" :for="cat.id + 'file'"> Select files ({{cat.accepted}})</label>
             <input type="file" multiple :id="cat.id + 'file'" class="form-control"
                    :accept="cat.accepted"
                    @change="onInputFile($event, cat)" style="display: none;">
@@ -13,7 +13,7 @@
         <div v-if="cat.files && cat.files.length" class="files">
             <p>Файлы для загрузки:</p>
             <span v-for="file in cat.files">{{file.name}}</span>
-            <label class="btn" :for="cat.id + 'submit'"> Загрузить</label>
+            <label class="btn" :for="cat.id + 'submit'"> Upload</label>
         </div>
 
     </form>

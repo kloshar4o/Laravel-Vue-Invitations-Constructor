@@ -108,6 +108,7 @@ const app = new Vue({
             appPath: appPath,
             data: {},
             loading: false,
+            adminPage: 'consultant'
         }
     },
     methods: {

@@ -2,8 +2,8 @@
 
     <div class="constructor__admin" :class="{active: isActive()}">
         <div class="admincontent" v-if="cards[page]">
-            <h3>Открытки {{lang(page)}}</h3>
-            <span>Всего создано: {{cards[page].total}} </span><span>Их них скачано: {{cards[page].downloaded}}, поделиться ссылкой: {{cards[page].shared}}</span>
+            <h3>Invitations {{lang(page)}}</h3>
+            <span>Total created: {{cards[page].total}}, Downloaded: {{cards[page].downloaded}}, Shared: {{cards[page].shared}}</span>
 
 
             <div class="pagination" v-if="cards[page].last_page > 1">
@@ -27,7 +27,7 @@
                     </router-link>
                     <em>{{formatDate(card.created_at)}}</em>
 
-                    <button @click="destroy(card.id, page, cards[page].current_page)">Удалить</button>
+                    <button @click="destroy(card.id, page, cards[page].current_page)">Delete</button>
 
                 </div>
 
@@ -65,9 +65,9 @@
                 switch (value) {
 
                     case 'consultant':
-                        return 'консультантов'
+                        return 'consultants created'
                     case 'client':
-                        return 'клиентов'
+                        return 'clients created'
                 }
             },
             destroy(id, page, currPag) {
@@ -88,7 +88,7 @@
             },
             formatDate(date) {
                 if (date) {
-                    return moment(String(date)).format('DD.MM.YYYY')
+                    return moment(String(date)).format('MM/DD/YYYY')
                 }
             },
             paginateTo(page, pag) {

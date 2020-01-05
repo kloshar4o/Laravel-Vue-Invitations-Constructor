@@ -4,10 +4,10 @@
         <div class="login">
             <form action="#" class="formlog" autocomplete="off" @submit.prevent="register" method="post">
 
-                <h3>Регистрация</h3><span>Онлайн-редактор открыток </span>
+                <h3>Register</h3><span>Online invitations constructor</span>
 
                 <div class="alert alert-suc" v-if="success">
-                    <p>Пользватель <a :href="'mailto:'+email">{{email}}</a> успешно добавлен, вы можете  <router-link :to="{ name: 'Login' }">зайти</router-link></p>
+                    <p>User <a :href="'mailto:'+email">{{email}}</a> successfully created, you can <router-link :to="{ name: 'Login' }">login</router-link></p>
                 </div>
 
                 <div class="form-group" v-bind:class="{ 'has-error': errors.register.name }">
@@ -23,7 +23,7 @@
                     <input type="password" id="password" class="form-control" v-model="password" placeholder="Пароль">
                 </div>
 
-                <button type="submit">Регистрация</button>
+                <button type="submit">Register</button>
             </form>
         </div>
     </div>
