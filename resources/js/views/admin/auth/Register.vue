@@ -12,7 +12,7 @@
 
                 <div class="form-group" v-bind:class="{ 'has-error': errors.register.name }">
                     <span class="help-block" v-if="errors.register.name" v-for="err in errors.register.name">{{ err }}</span>
-                    <input type="text" id="name" class="form-control" v-model="name" placeholder="Имя">
+                    <input type="text" id="name" class="form-control" v-model="name" placeholder="Name">
                 </div>
                 <div class="form-group" v-bind:class="{ 'has-error': errors.register.email }">
                     <span class="help-block" v-if="errors.register.email" v-for="err in errors.register.email">{{ err }}</span>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group" v-bind:class="{ 'has-error': errors.register.password }">
                     <span class="help-block" v-if="errors.register.password" v-for="err in errors.register.password">{{ err }}</span>
-                    <input type="password" id="password" class="form-control" v-model="password" placeholder="Пароль">
+                    <input type="password" id="password" class="form-control" v-model="password" placeholder="Password">
                 </div>
 
                 <button type="submit">Register</button>

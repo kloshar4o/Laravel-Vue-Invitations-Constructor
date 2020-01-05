@@ -15,8 +15,7 @@
                 </div>
 
                 <input type="email" id="email" class="form-control" placeholder="E-mail" v-model="email" required>
-                <input type="password" id="password" class="form-control" v-model="password" placeholder="Пароль"
-                       required>
+                <input type="password" id="password" class="form-control" v-model="password" placeholder="Password" required>
 
                 <button type="submit">Login</button>
                 <br><br>
