@@ -3,7 +3,7 @@ Demo:
 
 Client: http://invitations.alteh.md/ 
 
-Consultant: invitations.alteh.md/consultant
+Consultant: http://invitations.alteh.md/consultant
 
 Admin http://invitations.alteh.md/admin
 
